@@ -24,6 +24,9 @@ public:
 
     virtual void fillMovements() = 0;
 
+public slots:
+    void updatePosition();
+
 protected:
     Point coordinates_;
 

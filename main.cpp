@@ -26,11 +26,12 @@ int main(int argc, char *argv[])
     King* king = new King(4,4, &mainWindow);
     king->fillMovements();
 
-    // connect king to every box to detect avalid positions
+    // connect king to every box to detect valid positions
     for (int i{0}; i < chessboard->board_->rowCount(); ++i) {
         for (int j{0}; j <  chessboard->board_->columnCount(); ++j) {
             QWidget* widget =  chessboard->board_->itemAtPosition(i, j)->widget();
             QObject::connect(king, SIGNAL(released()), widget, SLOT(highlightColor()));
+            QObject::connect(widget, SIGNAL(goTo()), king, SLOT(updatePosition()));
         }
     }
     mainWindow.setFixedSize(1200,1200);

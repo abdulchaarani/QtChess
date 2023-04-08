@@ -1,6 +1,7 @@
 
-
+#include <QDebug>
 #include "pieces.hpp"
+#include "box.hpp"
 
 const int OFFSET{148};
 const int MARGIN{34};
@@ -44,4 +45,15 @@ void King::fillMovements(){
     movements.push_back(Point(coordinates_.getRow() - 1, coordinates_.getColumn()));
     movements.push_back(Point(coordinates_.getRow(), coordinates_.getColumn() + 1));
     movements.push_back(Point(coordinates_.getRow(), coordinates_.getColumn() - 1));
+}
+
+void Piece::updatePosition(){
+    QObject* senderObject = QObject::sender();
+    if (senderObject == nullptr)
+        return;
+
+    auto box = qobject_cast<Box*>(senderObject);
+    qDebug() << box->getCoordinates().getRow() << "," << box->getCoordinates().getColumn();
+    this->changePosition(box->getCoordinates().getRow(), box->getCoordinates().getColumn()); // copie?
+    this->fillMovements();
 }

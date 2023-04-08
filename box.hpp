@@ -18,6 +18,7 @@ public:
     ~Box() = default;
     bool nextPos_{false};
 
+    Point& getCoordinates() { return coordinates_; }
 private:
     Point coordinates_;
 
@@ -37,6 +38,7 @@ private:
 
 signals:
     void revert();
+    void goTo();
 
 public slots:
     void highlightColor();

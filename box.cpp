@@ -73,6 +73,10 @@ void Box::handleClick()
     auto mf = parent_->getWhoWasPressed();
     if (mf == nullptr)
         return;
-    if (!mf->nextPos_)
-        revertColor();
+    else if (mf == this)
+        if (mf->nextPos_)
+            emit goTo();
+
+    revertColor();
+    nextPos_ = false;
 }
