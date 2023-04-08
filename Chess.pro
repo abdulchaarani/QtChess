@@ -8,7 +8,10 @@ CONFIG += c++20 cmdline
 
 SOURCES += \
         box.cpp \
-        main.cpp
+        chessboard.cpp \
+        main.cpp \
+        pieces.cpp \
+        point.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -18,4 +21,9 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 QT += widgets
 
 HEADERS += \
-    box.hpp
+    box.hpp \
+    chessboard.hpp \
+    pieces.hpp \
+    point.hpp
+
+QT += widgets

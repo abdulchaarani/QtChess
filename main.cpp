@@ -1,24 +1,38 @@
 #include <QApplication>
+#include <QObject>
 #include <QWidget>
 #include <QGridLayout>
+#include <QVBoxLayout>
 #include <QPushButton>
+#include <QFont>
 #include "box.hpp"
+#include "pieces.hpp"
+#include "chessboard.hpp"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     QWidget mainWindow;
+    QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
+    mainWindow.setLayout(mainLayout);
 
-    QGridLayout* chessBoard = new QGridLayout;
+    ChessBoard* chessboard = new ChessBoard(&mainWindow);
 
-    for (int i{0}; i < 8; ++i){
-        for(int j{0}; j < 8; ++j){
-            Box* box = new Box(j, i, &mainWindow);
-            box->setFixedSize(150, 150);
-            chessBoard->addWidget(box, i, j);
+    mainLayout->addWidget(chessboard);
+    // create chessBoard
+
+
+    // create king object
+    King* king = new King(4,4, &mainWindow);
+    king->fillMovements();
+
+    // connect king to every box to detect avalid positions
+    for (int i{0}; i < chessboard->board_->rowCount(); ++i) {
+        for (int j{0}; j <  chessboard->board_->columnCount(); ++j) {
+            QWidget* widget =  chessboard->board_->itemAtPosition(i, j)->widget();
+            QObject::connect(king, SIGNAL(released()), widget, SLOT(highlightColor()));
         }
     }
-    mainWindow.setLayout(chessBoard);
     mainWindow.setFixedSize(1200,1200);
     mainWindow.adjustSize();
     mainWindow.show();

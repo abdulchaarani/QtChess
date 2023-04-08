@@ -3,6 +3,10 @@
 #define BOX_HPP
 #include <QApplication>
 #include <QPushButton>
+#include "point.hpp"
+#include "pieces.hpp"
+
+class ChessBoard;
 
 class Box : public QPushButton
 
@@ -10,22 +14,35 @@ class Box : public QPushButton
     Q_OBJECT
 
 public:
-    Box(int x, int y, QWidget *parent = nullptr);
+    Box(int row, int column, ChessBoard* parent = nullptr);
     ~Box() = default;
+    bool nextPos_{false};
 
 private:
-    int x_;
-    int y_;
+    Point coordinates_;
 
     int BOX_SIZE{150};
-    int X_OFFSET{750};
-    int Y_OFFSET{100};
-
 
     inline static bool counter_{false};
 
+    bool color_;
+
+
     void setColorWhite();
     void setColorBlack();
+
+    ChessBoard* parent_;
+
+    void revertColor();
+
+signals:
+    void revert();
+
+public slots:
+    void highlightColor();
+
+    void handleClick();
+
 };
 
 
