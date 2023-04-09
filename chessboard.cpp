@@ -4,6 +4,8 @@
 ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 {
 
+    // creates a 8x8 grid of boxes and connects correct signals
+
     grid_ = new QGridLayout(this);
 
     for (int row = 0; row < 8; ++row) {
@@ -17,7 +19,7 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
     }
 }
 
-
+ // to alternate playes every move
 void ChessBoard::changePlayer(){
     if (currentPlayer == WHITE) {
         currentPlayer = BLACK;

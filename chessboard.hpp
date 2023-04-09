@@ -33,8 +33,6 @@ public:
         for (int i{0}; i < grid_->rowCount(); ++i) {
             for (int j{0}; j <  grid_->columnCount(); ++j) {
                 QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-                if (i == row && j == column)
-                    piece->possessBox(qobject_cast<Box*>(widget));
                 connect(piece, SIGNAL(released()), widget, SLOT(highlightColor()));
                 connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
             }

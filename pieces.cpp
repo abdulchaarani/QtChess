@@ -4,6 +4,8 @@
 #include "box.hpp"
 #include "chessboard.hpp"
 
+//Styling constants
+
 const int OFFSET{148};
 const int MARGIN{34};
 const int PIECE_SIZE{100};
@@ -22,8 +24,10 @@ Piece::Piece(int row, int column, ChessBoard* board, QWidget* parent) : QPushBut
 {
     connect(this, SIGNAL(movedPiece()), chessboard_, SLOT(validateMovements()));
     connect(chessboard_, SIGNAL(updateMovements()), this, SLOT(fillAllMovements()));
-    id_ = ++idCount;
     setStyleSheet(PIECE_STYLE);
+
+    // UNUSED
+    id_ = ++idCount;
 
 }
 
@@ -41,34 +45,30 @@ void Piece::changePosition(int row, int column)
 }
 
 
-Point& Piece::getCoordinates() {return coordinates_;}
+Point& Piece::getCoordinates() { return coordinates_; }
 
 void Piece::updatePosition(){
+    // get which box just got clicked
     QObject* senderObject = QObject::sender();
     if (senderObject == nullptr)
         return;
 
     auto box = qobject_cast<Box*>(senderObject);
-    //qDebug() << box->getCoordinates().getRow() << ", " << box->getCoordinates().getColumn();
 
-    if (box->getParent()->getPiecePressed() == this && !box->isOccupied()){
-        possessBox(box);
-        changePosition(box->getCoordinates().getRow(), box->getCoordinates().getColumn()); // copie?
+    // get the boxes' coordinates
+    int newRow{box->getCoordinates().getRow()};
+    int newColumn {box->getCoordinates().getColumn()};
+
+    // if there are no friendlies on this position, go to box
+    if (box->getParent()->getPiecePressed() == this && chessboard_->board_[newRow][newColumn] == nullptr){
+        changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
 
     }
 }
 
-void Piece::possessBox(Box* box){
-    if (possessedBox_ != nullptr)
-        possessedBox_->unoccupyBox();
-
-
-    possessedBox_ = box;
-    box->occupyBox();
-}
-
-
+// recieve the signal that a piece has moved
 void Piece::fillAllMovements(){
+    // calls correct overloaded function
     fillMovements();
 }
 
@@ -79,6 +79,8 @@ King::King(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row
     changePosition(row, column);
 }
 
+
+// Error bound checking
 void King::fillMovements(){ // to beautify :(
     movements.clear();
 
@@ -106,6 +108,7 @@ Knight::Knight(int row,  int column, ChessBoard* board, QWidget* parent) : Piece
     changePosition(row, column);
 }
 
+// Error bound checking
 void Knight::fillMovements(){// to beautify :(
     movements.clear();
 
@@ -145,7 +148,7 @@ Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row
     changePosition(row, column);
 }
 
-
+// Error bound checking
 void Pawn::fillMovements(){ // to beautify :(
     movements.clear();
 

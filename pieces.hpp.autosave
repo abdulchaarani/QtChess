@@ -12,6 +12,9 @@
 class Box;
 class ChessBoard;
 
+
+// ABSTRACT piece class
+
 class Piece : public QPushButton
 {
     Q_OBJECT
@@ -19,9 +22,11 @@ class Piece : public QPushButton
 public:
     Piece(int column, int row, ChessBoard* board, QWidget *parent = nullptr);
     virtual ~Piece() = default;
-
+   
     void changePosition(int column, int row);
-    std::list<Point> movements; //change to ptr
+    
+    // List of valid moves 
+    std::list<Point> movements; // TODO change to Point* eventually
 
     static std::unordered_map<int, Piece*> friendlies;
 
@@ -46,6 +51,9 @@ private slots:
     void fillAllMovements();
 
 };
+
+
+// Concrete pieces classes
 
 class King : public Piece
 {

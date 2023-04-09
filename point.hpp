@@ -2,6 +2,8 @@
 #ifndef POINT_HPP
 #define POINT_HPP
 
+// This class' only purpose is to hold coordinates in row, column form
+
 class Point {
 public:
     Point(int row, int column);

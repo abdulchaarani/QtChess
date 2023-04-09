@@ -13,3 +13,5 @@
 -Fix allignement
 
 -Put shit const
+
+-make size fit all screens

@@ -2,6 +2,8 @@
 #include "box.hpp"
 #include "chessboard.hpp"
 
+// Stylesheets for the box colors
+
 const QString WHITE = "QPushButton{"
                      "  background-color: rgb(238, 238, 212);"
                      "  border-style: inset;"
@@ -33,8 +35,8 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
     if (coordinates_.getColumn() != 7)
         counter_ = !counter_;
 
-    parent_ = parent;
-    //parent_ = dynamic_cast<ChessBoard*>(parent);
+    // save chessboard as an attribute
+    board_ = parent;
 }
 
 
@@ -53,35 +55,42 @@ void Box::setColorBlack(){
 void Box::highlightColor(){
     handleClick();
 
+    // which piece got clicked
     QObject* senderObject = QObject::sender();
     if (senderObject == nullptr)
         return;
 
     auto piece = qobject_cast<Piece*>(senderObject);
 
-    parent_->setPiecePressed(piece);
+    board_->setPiecePressed(piece);
+
+    // If box is in the possible moveset of the clicked piece, highlight
 
     for(auto && movement : piece->movements)
-        if (movement == this->coordinates_){
-            nextPos_ = true;
-            //if (!occupied_)
-                this->setStyleSheet(HIGHLIGHT);
-        }
+        if (movement == this->coordinates_)
+            movableBox_ = true;
+                this->setStyleSheet(HIGHLIGHT); 
 }
 
 void Box::revertColor(){
     color_ ? setColorWhite() : setColorBlack();
 }
 
+
+
 void Box::handleClick()
 {
-    auto mf = parent_->getBoxPressed();
-    if (mf == nullptr)
+
+    // if the next clicked box is not a highlighted one, cancel movement
+    // else make the piece goto said box
+
+    auto currentBox = board_->getBoxPressed();
+    if (currentBox == nullptr)
         return;
-    else if (mf == this)
-        if (mf->nextPos_)
+    else if (currentBox == this)
+        if (currentBox->movableBox_)
             emit goTo();
 
     revertColor();
-    nextPos_ = false;
+    movableBox_ = false;
 }

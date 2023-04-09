@@ -1,6 +1,8 @@
 
 #include "point.hpp"
 
+// This class' only purpose is to hold coordinates in row, column form
+
 Point::Point(int row, int column) : row_{row}, column_{column} {}
 
 int Point::getRow() const{ return row_; }
