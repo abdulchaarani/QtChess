@@ -31,9 +31,6 @@ public:
 
     virtual void fillMovements() = 0;
 
-public slots:
-    void updatePosition();
-    void fillAllMovements();
 
 protected:
     Point coordinates_;
@@ -46,6 +43,10 @@ private:
 
 signals:
     void movedPiece();
+
+private slots:
+    void updatePosition();
+    void fillAllMovements();
 
 };
 
@@ -69,5 +70,16 @@ public:
 
 };
 
+class Pawn : public Piece
+{
+    Q_OBJECT
+
+public:
+    Pawn(int column,  int row, ChessBoard* board, QWidget* parent);
+    void fillMovements() override;
+
+private:
+    bool firstMove_{false};
+};
 
 #endif // PIECES_HPP

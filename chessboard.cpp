@@ -17,40 +17,17 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
     }
 }
 
-//TO TEMPLATE BELOW//
 
-void ChessBoard::addKing(int row, int column){
-    King* king = new King(row, column, this, parent_);
-    king->fillMovements();
-
-    // connect king to every box to detect valid positions
-    for (int i{0}; i < grid_->rowCount(); ++i) {
-        for (int j{0}; j <  grid_->columnCount(); ++j) {
-            QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-            if (i == row && j == column)
-                king->possessBox(qobject_cast<Box*>(widget));
-            QObject::connect(king, SIGNAL(released()), widget, SLOT(highlightColor()));
-            QObject::connect(widget, SIGNAL(goTo()), king, SLOT(updatePosition()));
-        }
+void ChessBoard::changePlayer(){
+    if (currentPlayer == WHITE) {
+        currentPlayer = BLACK;
+        qDebug() << "BLACK";
+    } else {
+        currentPlayer = WHITE;
+        qDebug() << "WHITE";
     }
 }
 
-void ChessBoard::addKnight(int row, int column){
-    Knight* knight = new Knight(row, column, this, parent_);
-    knight->fillMovements();
-
-    // connect knight to every box to detect valid positions
-    for (int i{0}; i < grid_->rowCount(); ++i) {
-        for (int j{0}; j <  grid_->columnCount(); ++j) {
-            QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-            if (i == row && j == column)
-                knight->possessBox(qobject_cast<Box*>(widget));
-            QObject::connect(knight, SIGNAL(released()), widget, SLOT(highlightColor()));
-            QObject::connect(widget, SIGNAL(goTo()), knight, SLOT(updatePosition()));
-        }
-    }
+void ChessBoard::startGame(){
+    currentPlayer = WHITE;
 }
-
-
-//DEBUG ONLY//
-

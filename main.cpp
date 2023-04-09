@@ -1,11 +1,7 @@
 #include <QApplication>
 #include <QObject>
 #include <QWidget>
-#include <QGridLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QFont>
-#include "box.hpp"
+
 #include "pieces.hpp"
 #include "chessboard.hpp"
 
@@ -18,10 +14,15 @@ int main(int argc, char *argv[])
 
     ChessBoard* chessboard = new ChessBoard(&mainWindow);
 
-    chessboard->addKing(0,2);
-    chessboard->addKing(0,3);
-    chessboard->addKing(4,4);
-    chessboard->addKnight(5,3);
+    chessboard->addPiece<King>(0,2);
+    chessboard->addPiece<King>(0,3);
+    chessboard->addPiece<King>(4,4);
+
+    chessboard->addPiece<Knight>(5, 3);
+
+    chessboard->addPiece<Pawn>(6,1);
+
+    chessboard->startGame();
 
     mainLayout->addWidget(chessboard);
     mainWindow.setFixedSize(1200,1200);

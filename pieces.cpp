@@ -137,3 +137,29 @@ void Knight::fillMovements(){// to beautify :(
         if(chessboard_->board_[row - 2][column - 1] == nullptr)
             movements.push_back(Point(row - 2, column - 1));
 }
+
+Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+{
+    setText("♙");
+    setFont(PIECE_FONT);
+    changePosition(row, column);
+}
+
+
+void Pawn::fillMovements(){ // to beautify :(
+    movements.clear();
+
+    int row{coordinates_.getRow()};
+    int column{coordinates_.getColumn()};
+
+    if ((row + 1) < 8)
+        if(chessboard_->board_[row + 1][column] == nullptr) // or enemy
+            movements.push_back(Point(row + 1, column));
+    if ((row - 1) >= 0)
+        if(chessboard_->board_[row - 1][column] == nullptr)
+            movements.push_back(Point(row - 1, column));
+    if (firstMove_)
+        if ((row + 2) < 8)
+            if(chessboard_->board_[row + 2][column] == nullptr) // or enemy
+                movements.push_back(Point(row + 2, column));
+}

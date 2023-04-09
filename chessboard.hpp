@@ -10,26 +10,49 @@
 #include <list>
 #include <array>
 
+#include <QDebug>
+
 #include "box.hpp"
 
 class ChessBoard : public QWidget
 {
     Q_OBJECT
 
-
-
 public:
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* grid_;
+
+    std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
+
+    template <typename T>
+    void addPiece(int row, int column){
+        T* piece = new T(row, column, this, parent_);
+        piece->fillMovements();
+
+        // connect king to every box to detect valid positions
+        for (int i{0}; i < grid_->rowCount(); ++i) {
+            for (int j{0}; j <  grid_->columnCount(); ++j) {
+                QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
+                if (i == row && j == column)
+                    piece->possessBox(qobject_cast<Box*>(widget));
+                connect(piece, SIGNAL(released()), widget, SLOT(highlightColor()));
+                connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
+            }
+        }
+    }
 
     Box* getBoxPressed() { return boxPressed_; }
     Piece* getPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
-    void addKing(int row, int column);
-    void addKnight(int row, int column);
+    enum Player{
+        WHITE,
+        BLACK,
+    };
 
-    std::array<std::array<Piece*, 8>, 8> board_{}; //overload[]
+    Player currentPlayer;
+
+    void startGame();
 private:
     Box* boxPressed_;
     Piece* piecePressed_;
@@ -37,6 +60,9 @@ private:
     std::list<Box*> occupiedWhiteBoxes;
 
     QWidget* parent_;
+
+    void changePlayer();
+
 
 signals:
     void buttonTriggered();
@@ -53,9 +79,9 @@ private slots:
     }
 
     void validateMovements(){
+        changePlayer();
         emit updateMovements();
     }
-
 };
 
 
