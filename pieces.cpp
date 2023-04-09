@@ -72,11 +72,19 @@ void Piece::fillAllMovements(){
     fillMovements();
 }
 
-King::King(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+King::King(int row,  int column, ChessBoard* board, QWidget* parent, Colour colour) : Piece(row, column, board, parent)
 {
-    setText("♔");
-    setFont(PIECE_FONT);
-    changePosition(row, column);
+    if(colour == BLACK) {
+        setText("♚");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
+    else if(colour == WHITE) {
+        setText("♔");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
+
 }
 
 
@@ -100,12 +108,27 @@ void King::fillMovements(){ // to beautify :(
         if(chessboard_->board_[row][column - 1] == nullptr)
             movements.push_back(Point(row, column - 1));
 }
-
-Knight::Knight(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+// Checking for checks
+void King::check()
 {
-    setText("♘");
-    setFont(PIECE_FONT);
-    changePosition(row, column);
+    if(this->colour_ == WHITE) // not sure if best way to write it yet..
+    {
+        for(auto& piece : blackPieces)
+    }
+}
+
+Knight::Knight(int row,  int column, ChessBoard* board, QWidget* parent, Colour colour) : Piece(row, column, board, parent)
+{
+    if(colour == BLACK) {
+        setText("♞");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
+    else if(colour == WHITE) {
+        setText("♘");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
 }
 
 // Error bound checking
@@ -141,11 +164,19 @@ void Knight::fillMovements(){// to beautify :(
             movements.push_back(Point(row - 2, column - 1));
 }
 
-Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent, Colour colour) : Piece(row, column, board, parent)
 {
-    setText("♙");
-    setFont(PIECE_FONT);
-    changePosition(row, column);
+
+    if(colour == BLACK) {
+        setText("♟︎");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
+    else if(colour == WHITE) {
+        setText("♙");
+        setFont(PIECE_FONT);
+        changePosition(row, column);
+    }
 }
 
 // Error bound checking

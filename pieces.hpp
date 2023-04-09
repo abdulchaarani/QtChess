@@ -37,10 +37,17 @@ public:
     // function that fills list of valid moves
     virtual void fillMovements() = 0;
 
+    enum Colour
+    {
+        WHITE,
+        BLACK,
+    };
+
 
 protected:
     Point coordinates_;
     ChessBoard* chessboard_;
+    Colour colour_;
 
 private:
     // UNUSED
@@ -67,8 +74,9 @@ class King : public Piece
     Q_OBJECT
 
 public:
-    King(int column,  int row, ChessBoard* board, QWidget* parent);
+    King(int column,  int row, ChessBoard* board, QWidget* parent, Colour colour);
     void fillMovements() override;
+    void check();
 
 };
 
@@ -77,7 +85,7 @@ class Knight : public Piece
     Q_OBJECT
 
 public:
-    Knight(int column,  int row, ChessBoard* board, QWidget* parent);
+    Knight(int row,  int column, ChessBoard* board, QWidget* parent, Colour colour);
     void fillMovements() override;
 
 };
@@ -87,7 +95,7 @@ class Pawn : public Piece
     Q_OBJECT
 
 public:
-    Pawn(int column,  int row, ChessBoard* board, QWidget* parent);
+    Pawn(int column,  int row, ChessBoard* board, QWidget* parent, Colour colour);
     void fillMovements() override;
 
 private:

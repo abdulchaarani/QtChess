@@ -27,11 +27,21 @@ public:
     // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
 
+    //list of white pieces
+    std::vector<Piece*> whitePieces;
+
+    //list of black pieces
+    std::vector<Piece*> blackPieces;
+
+    enum Player{
+        WHITE,
+        BLACK,
+    };
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(int row, int column){
-        T* piece = new T(row, column, this, parent_);
+    void addPiece(int row, int column, Piece::Colour colour){
+        T* piece = new T(row, column, this, parent_, colour);
         piece->fillMovements();
 
         // connect king to every box to detect valid positions
@@ -42,6 +52,10 @@ public:
                 connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
             }
         }
+        if(colour == Piece::WHITE)
+            whitePieces.push_back(piece);
+        else if(colour == Piece::BLACK)
+            blackPieces.push_back(piece);
     }
 
 
@@ -50,10 +64,7 @@ public:
     Piece* getPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
-    enum Player{
-        WHITE,
-        BLACK,
-    };
+
 
     Player currentPlayer;
 

@@ -19,13 +19,13 @@ int main(int argc, char *argv[])
     ChessBoard* chessboard = new ChessBoard(&mainWindow);
 
     // add pieces to chessboard
-    chessboard->addPiece<King>(0,2);
-    chessboard->addPiece<King>(0,3);
-    chessboard->addPiece<King>(4,4);
+    chessboard->addPiece<King>(0,2, Piece::WHITE);
+    chessboard->addPiece<King>(0,3, Piece::BLACK);
+/*    chessboard->addPiece<King>(4,4);
 
     chessboard->addPiece<Knight>(5, 3);
 
-    chessboard->addPiece<Pawn>(6,1);
+    chessboard->addPiece<Pawn>(6,1)*/;
 
     chessboard->startGame();
 
