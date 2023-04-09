@@ -64,7 +64,7 @@ void Box::highlightColor(){
     for(auto && movement : piece->movements)
         if (movement == this->coordinates_){
             nextPos_ = true;
-            if (!occupied_)
+            //if (!occupied_)
                 this->setStyleSheet(HIGHLIGHT);
         }
 }
