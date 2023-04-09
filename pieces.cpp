@@ -2,6 +2,7 @@
 #include <QDebug>
 #include "pieces.hpp"
 #include "box.hpp"
+#include "chessboard.hpp"
 
 const int OFFSET{148};
 const int MARGIN{34};
@@ -33,6 +34,31 @@ void Piece::changePosition(int row, int column)
 
 Point& Piece::getCoordinates() {return coordinates_;}
 
+void Piece::updatePosition(){
+    QObject* senderObject = QObject::sender();
+    if (senderObject == nullptr)
+        return;
+
+    auto box = qobject_cast<Box*>(senderObject);
+    //qDebug() << box->getCoordinates().getRow() << ", " << box->getCoordinates().getColumn();
+
+    if (box->getParent()->getPiecePressed() == this && !box->isOccupied()){
+        this->possessBox(box);
+        this->changePosition(box->getCoordinates().getRow(), box->getCoordinates().getColumn()); // copie?
+        this->fillMovements();
+    }
+}
+
+void Piece::possessBox(Box* box){
+    if (possessedBox_ != nullptr)
+        possessedBox_->unoccupyBox();
+
+
+    possessedBox_ = box;
+    box->occupyBox();
+}
+
+
 King::King(int row,  int column,  QWidget* parent) : Piece(column, row, parent)
 {
     this->setText("♔");
@@ -47,13 +73,21 @@ void King::fillMovements(){
     movements.push_back(Point(coordinates_.getRow(), coordinates_.getColumn() - 1));
 }
 
-void Piece::updatePosition(){
-    QObject* senderObject = QObject::sender();
-    if (senderObject == nullptr)
-        return;
+Knight::Knight(int row,  int column,  QWidget* parent) : Piece(column, row, parent)
+{
+    this->setText("♘");
+    this->setFont(PIECE_FONT);
+}
 
-    auto box = qobject_cast<Box*>(senderObject);
-    qDebug() << box->getCoordinates().getRow() << "," << box->getCoordinates().getColumn();
-    this->changePosition(box->getCoordinates().getRow(), box->getCoordinates().getColumn()); // copie?
-    this->fillMovements();
+void Knight::fillMovements(){
+    movements.clear();
+    movements.push_back(Point(coordinates_.getRow() + 1, coordinates_.getColumn() + 2));
+    movements.push_back(Point(coordinates_.getRow() - 1, coordinates_.getColumn() + 2));
+    movements.push_back(Point(coordinates_.getRow() + 1, coordinates_.getColumn() - 2));
+    movements.push_back(Point(coordinates_.getRow() - 1, coordinates_.getColumn() - 2));
+    movements.push_back(Point(coordinates_.getRow() + 2 , coordinates_.getColumn() + 1));
+    movements.push_back(Point(coordinates_.getRow() - 2 , coordinates_.getColumn() + 1));
+    movements.push_back(Point(coordinates_.getRow() + 2 , coordinates_.getColumn() - 1));
+    movements.push_back(Point(coordinates_.getRow() - 2 , coordinates_.getColumn() - 1));
+
 }

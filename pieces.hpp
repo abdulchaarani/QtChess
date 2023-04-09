@@ -8,6 +8,8 @@
 #include "point.hpp"
 #include <list>
 
+class Box;
+
 class Piece : public QPushButton
 {
     Q_OBJECT
@@ -21,6 +23,7 @@ public:
 
     Point& getCoordinates();
 
+    void possessBox(Box* box);
 
     virtual void fillMovements() = 0;
 
@@ -29,6 +32,7 @@ public slots:
 
 protected:
     Point coordinates_;
+    Box* possessedBox_{nullptr};
 
 };
 
@@ -41,5 +45,16 @@ public:
     void fillMovements() override;
 
 };
+
+class Knight : public Piece
+{
+    Q_OBJECT
+
+public:
+    Knight(int row,  int column,  QWidget* parent);
+    void fillMovements() override;
+
+};
+
 
 #endif // PIECES_HPP

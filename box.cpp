@@ -51,16 +51,21 @@ void Box::setColorBlack(){
 }
 
 void Box::highlightColor(){
+    handleClick();
+
     QObject* senderObject = QObject::sender();
     if (senderObject == nullptr)
         return;
 
     auto piece = qobject_cast<Piece*>(senderObject);
 
+    parent_->setPiecePressed(piece);
+
     for(auto && movement : piece->movements)
         if (movement == this->coordinates_){
             nextPos_ = true;
-            this->setStyleSheet(HIGHLIGHT);
+            if (!occupied_)
+                this->setStyleSheet(HIGHLIGHT);
         }
 }
 
@@ -70,7 +75,7 @@ void Box::revertColor(){
 
 void Box::handleClick()
 {
-    auto mf = parent_->getWhoWasPressed();
+    auto mf = parent_->getBoxPressed();
     if (mf == nullptr)
         return;
     else if (mf == this)

@@ -7,6 +7,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
+#include <list>
 
 #include "box.hpp"
 
@@ -20,10 +21,15 @@ public:
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* board_;
 
-    Box* getWhoWasPressed() { return whoWasPressed_; }
+    Box* getBoxPressed() { return boxPressed_; }
+    Piece* getPiecePressed() { return piecePressed_; }
+    void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
 private:
-    Box* whoWasPressed_;
+    Box* boxPressed_;
+    Piece* piecePressed_;
+
+    std::list<Box*> occupiedWhiteBoxes;
 
 signals:
     void buttonTriggered();
@@ -34,7 +40,7 @@ private slots:
         QObject* senderObject = QObject::sender();
         if (senderObject == nullptr)
             return;
-        whoWasPressed_ = qobject_cast<Box*>(senderObject);
+        boxPressed_ = qobject_cast<Box*>(senderObject);
         emit buttonTriggered();
     }
 };

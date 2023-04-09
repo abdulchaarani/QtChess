@@ -1,6 +1,7 @@
 
 #ifndef BOX_HPP
 #define BOX_HPP
+
 #include <QApplication>
 #include <QPushButton>
 #include "point.hpp"
@@ -19,6 +20,11 @@ public:
     bool nextPos_{false};
 
     Point& getCoordinates() { return coordinates_; }
+    ChessBoard* getParent() { return parent_; }
+
+    void occupyBox() { occupied_ = true; }
+    void unoccupyBox() { occupied_ = false; }
+    bool isOccupied() { return occupied_; }
 private:
     Point coordinates_;
 
@@ -28,7 +34,7 @@ private:
 
     bool color_;
 
-
+    bool occupied_{false};
     void setColorWhite();
     void setColorBlack();
 
@@ -37,7 +43,6 @@ private:
     void revertColor();
 
 signals:
-    void revert();
     void goTo();
 
 public slots:
