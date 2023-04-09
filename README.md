@@ -15,3 +15,5 @@
 -Put shit const
 
 -make size fit all screens
+
+-Display whos turn is it
