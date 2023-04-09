@@ -67,9 +67,11 @@ void Box::highlightColor(){
     // If box is in the possible moveset of the clicked piece, highlight
 
     for(auto && movement : piece->movements)
-        if (movement == this->coordinates_)
+        if (movement == this->coordinates_){
+
             movableBox_ = true;
-                this->setStyleSheet(HIGHLIGHT); 
+                this->setStyleSheet(HIGHLIGHT);
+        }
 }
 
 void Box::revertColor(){

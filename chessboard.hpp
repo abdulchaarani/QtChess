@@ -2,6 +2,8 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 
+// this class acts as the controller-ish model to keep track of the events
+// and positions of stuff on the board
 
 #include <QObject>
 #include <QWidget>
@@ -22,8 +24,11 @@ public:
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* grid_;
 
+    // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
 
+
+    // to add a piece to the board and to connect the right signals
     template <typename T>
     void addPiece(int row, int column){
         T* piece = new T(row, column, this, parent_);
@@ -39,6 +44,8 @@ public:
         }
     }
 
+
+    // Getters : to keep track of current pressed piece and box
     Box* getBoxPressed() { return boxPressed_; }
     Piece* getPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
@@ -51,14 +58,18 @@ public:
     Player currentPlayer;
 
     void startGame();
+
 private:
+
+    // Getters : to keep track of current pressed piece and box
+
     Box* boxPressed_;
     Piece* piecePressed_;
 
-    std::list<Box*> occupiedWhiteBoxes;
-
+    // necessary or program crashes lol
     QWidget* parent_;
 
+    //to alternate playes every move
     void changePlayer();
 
 
@@ -67,6 +78,8 @@ signals:
     void updateMovements();
 
 private slots:
+
+    // acts as the controller of who pressed what
     void onButtonTrigger()
     {
         QObject* senderObject = QObject::sender();
@@ -76,6 +89,8 @@ private slots:
         emit buttonTriggered();
     }
 
+    // at everymove, signal the pieces to recalculate their next possible move
+    // and change player
     void validateMovements(){
         changePlayer();
         emit updateMovements();
