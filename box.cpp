@@ -30,7 +30,7 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
 {
     // to alternate black and white colors on the chessboard
     counter_ ? setColorBlack() : setColorWhite();
-    if (coordinates_.getRow() != 7)
+    if (coordinates_.getColumn() != 7)
         counter_ = !counter_;
 
     parent_ = parent;

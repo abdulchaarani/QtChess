@@ -6,11 +6,11 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent)
 
     board_ = new QGridLayout(this);
 
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            Box* box = new Box(j, i, this); // !!
+    for (int row = 0; row < 8; ++row) {
+        for (int column = 0; column < 8; ++column) {
+            Box* box = new Box(row, column, this); // !!
             box->setFixedSize(150, 150);
-            board_->addWidget(box, i, j);
+            board_->addWidget(box, row, column);
             connect(box, SIGNAL(released()), this, SLOT(onButtonTrigger()));
             connect(this, SIGNAL(buttonTriggered()), box, SLOT(handleClick()));
         }

@@ -15,10 +15,10 @@ class Piece : public QPushButton
     Q_OBJECT
 
 public:
-    Piece(int row, int column,  QWidget *parent = nullptr);
+    Piece(int column, int row,  QWidget *parent = nullptr);
     virtual ~Piece() = default;
 
-    void changePosition(int row, int column);
+    void changePosition(int column, int row);
     std::list<Point> movements;
 
     Point& getCoordinates();
@@ -41,7 +41,7 @@ class King : public Piece
     Q_OBJECT
 
 public:
-    King(int row,  int column,  QWidget* parent);
+    King(int column,  int row,  QWidget* parent);
     void fillMovements() override;
 
 };
@@ -51,7 +51,7 @@ class Knight : public Piece
     Q_OBJECT
 
 public:
-    Knight(int row,  int column,  QWidget* parent);
+    Knight(int column,  int row,  QWidget* parent);
     void fillMovements() override;
 
 };

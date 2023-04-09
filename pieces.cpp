@@ -18,7 +18,7 @@ QString PIECE_STYLE = "QPushButton{"
                           "   border-style: inset;"
                           "}";
 
-Piece::Piece(int row, int column, QWidget* parent) : QPushButton(parent), coordinates_(row,column)
+Piece::Piece(int row, int column, QWidget* parent) : QPushButton(parent), coordinates_(row, column)
 {
     changePosition(row, column);
     this->setStyleSheet(PIECE_STYLE);
@@ -28,7 +28,7 @@ void Piece::changePosition(int row, int column)
 {
     this->coordinates_.setRow(row);
     this->coordinates_.setColumn(column);
-    this->setGeometry(row * OFFSET + MARGIN +row/2, column * OFFSET + MARGIN  + column/2, PIECE_SIZE, PIECE_SIZE);
+    this->setGeometry(column * OFFSET + MARGIN +column/2, row * OFFSET + MARGIN  + row/2, PIECE_SIZE, PIECE_SIZE);
 }
 
 
@@ -59,7 +59,7 @@ void Piece::possessBox(Box* box){
 }
 
 
-King::King(int row,  int column,  QWidget* parent) : Piece(column, row, parent)
+King::King(int row,  int column,  QWidget* parent) : Piece(row, column, parent)
 {
     this->setText("♔");
     this->setFont(PIECE_FONT);
@@ -73,7 +73,7 @@ void King::fillMovements(){
     movements.push_back(Point(coordinates_.getRow(), coordinates_.getColumn() - 1));
 }
 
-Knight::Knight(int row,  int column,  QWidget* parent) : Piece(column, row, parent)
+Knight::Knight(int row,  int column,  QWidget* parent) : Piece(row, column, parent)
 {
     this->setText("♘");
     this->setFont(PIECE_FONT);
