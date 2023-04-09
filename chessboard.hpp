@@ -16,6 +16,12 @@
 
 #include "box.hpp"
 
+enum class Color{
+    WHITE,
+    BLACK,
+};
+
+
 class ChessBoard : public QWidget
 {
     Q_OBJECT
@@ -30,8 +36,8 @@ public:
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(int row, int column){
-        T* piece = new T(row, column, this, parent_);
+    void addPiece(Color color, int row, int column){
+        T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
 
         // connect king to every box to detect valid positions
@@ -50,12 +56,7 @@ public:
     Piece* getPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
-    enum Player{
-        WHITE,
-        BLACK,
-    };
-
-    Player currentPlayer;
+    Color currentPlayer;
 
     void startGame();
 

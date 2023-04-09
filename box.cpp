@@ -4,7 +4,7 @@
 
 // Stylesheets for the box colors
 
-const QString WHITE = "QPushButton{"
+const QString WHITE_BOX = "QPushButton{"
                      "  background-color: rgb(238, 238, 212);"
                      "  border-style: inset;"
                      "  }"
@@ -12,7 +12,7 @@ const QString WHITE = "QPushButton{"
                      "   border-style: inset;"
                      "}";
 
-const QString BLACK = "QPushButton{"
+const QString BLACK_BOX = "QPushButton{"
                      "  background-color: rgb(126, 148, 90);"
                      "  border-style: inset;"
                      "  }"
@@ -42,19 +42,17 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
 
 void Box::setColorWhite(){
 
-    this->setStyleSheet(WHITE);
+    this->setStyleSheet(WHITE_BOX);
     color_ = true;
 }
 void Box::setColorBlack(){
 
 
-    this->setStyleSheet(BLACK);
+    this->setStyleSheet(BLACK_BOX);
     color_ = false;
 }
 
 void Box::highlightColor(){
-    handleClick();
-
     // which piece got clicked
     QObject* senderObject = QObject::sender();
     if (senderObject == nullptr)
@@ -62,15 +60,20 @@ void Box::highlightColor(){
 
     auto piece = qobject_cast<Piece*>(senderObject);
 
+    // if not your turn no touchy
+    if (piece->color_ != board_->currentPlayer)
+        return;
+
+    handleClick();
+
     board_->setPiecePressed(piece);
 
     // If box is in the possible moveset of the clicked piece, highlight
 
     for(auto && movement : piece->movements)
         if (movement == this->coordinates_){
-
             movableBox_ = true;
-                this->setStyleSheet(HIGHLIGHT);
+            this->setStyleSheet(HIGHLIGHT);
         }
 }
 
@@ -82,7 +85,6 @@ void Box::revertColor(){
 
 void Box::handleClick()
 {
-
     // if the next clicked box is not a highlighted one, cancel movement
     // else make the piece goto said box
 

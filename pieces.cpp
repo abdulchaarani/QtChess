@@ -20,7 +20,8 @@ QString PIECE_STYLE = "QPushButton{"
                           "   border-style: inset;"
                           "}";
 
-Piece::Piece(int row, int column, ChessBoard* board, QWidget* parent) : QPushButton(parent), coordinates_(row, column), chessboard_(board)
+Piece::Piece(Color color, int row, int column, ChessBoard* board, QWidget* parent)
+            : QPushButton(parent), color_(color), coordinates_(row, column), chessboard_(board)
 {
     connect(this, SIGNAL(movedPiece()), chessboard_, SLOT(validateMovements()));
     connect(chessboard_, SIGNAL(updateMovements()), this, SLOT(fillAllMovements()));
@@ -72,9 +73,11 @@ void Piece::fillAllMovements(){
     fillMovements();
 }
 
-King::King(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+King::King(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+          : Piece(color, row, column, board, parent)
 {
-    setText("♔");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♔") : setText("♚");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }
@@ -101,9 +104,11 @@ void King::fillMovements(){ // to beautify :(
             movements.push_back(Point(row, column - 1));
 }
 
-Knight::Knight(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+Knight::Knight(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+              : Piece(color, row, column, board, parent)
 {
-    setText("♘");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♘") : setText("♞");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }
@@ -141,9 +146,11 @@ void Knight::fillMovements(){// to beautify :(
             movements.push_back(Point(row - 2, column - 1));
 }
 
-Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+Pawn::Pawn(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+            : Piece(color, row, column, board, parent)
 {
-    setText("♙");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♙") : setText("♟︎");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }

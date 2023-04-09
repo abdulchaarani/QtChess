@@ -5,13 +5,15 @@
 
 #include <QObject>
 #include <QPushButton>
-#include "point.hpp"
+
 #include <list>
 #include <map>
 
+#include "point.hpp"
+
 class Box;
 class ChessBoard;
-
+enum class Color;
 
 // ABSTRACT piece class
 
@@ -20,7 +22,7 @@ class Piece : public QPushButton
     Q_OBJECT
 
 public:
-    Piece(int column, int row, ChessBoard* board, QWidget *parent = nullptr);
+    Piece(Color color, int column, int row, ChessBoard* board, QWidget *parent = nullptr);
     virtual ~Piece() = default;
 
     void changePosition(int column, int row);
@@ -37,6 +39,7 @@ public:
     // function that fills list of valid moves
     virtual void fillMovements() = 0;
 
+    Color color_;
 
 protected:
     Point coordinates_;
@@ -67,7 +70,7 @@ class King : public Piece
     Q_OBJECT
 
 public:
-    King(int column,  int row, ChessBoard* board, QWidget* parent);
+    King(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
     void fillMovements() override;
 
 };
@@ -77,7 +80,7 @@ class Knight : public Piece
     Q_OBJECT
 
 public:
-    Knight(int column,  int row, ChessBoard* board, QWidget* parent);
+    Knight(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
     void fillMovements() override;
 
 };
@@ -87,7 +90,7 @@ class Pawn : public Piece
     Q_OBJECT
 
 public:
-    Pawn(int column,  int row, ChessBoard* board, QWidget* parent);
+    Pawn(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
     void fillMovements() override;
 
 private:
