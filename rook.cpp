@@ -10,7 +10,7 @@ Rook::Rook(Color color, int row,  int column, ChessBoard* board, QWidget* parent
     changePosition(row, column);
 }
 
-void Rook::fillMovements(){
+void Rook::fillMovements(){ // to beautify :(
     movements.clear();
 
     int row{coordinates_.getRow()};
@@ -45,7 +45,7 @@ void Rook::fillMovements(){
                 break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
     }
 
-    // check above
+    // check below
     for (int nextRow{row + 1}; nextRow < 8; ++nextRow){
 
         if (chessboard_->board_[nextRow][column] == nullptr) // if no one, add
@@ -59,7 +59,7 @@ void Rook::fillMovements(){
             else if (chessboard_->board_[nextRow][column]->color_ == color_) // if friendly
                 break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
     }
-    // check below
+    // check above
     for (int nextRow{row - 1}; nextRow >= 0; --nextRow){
 
         if (chessboard_->board_[nextRow][column] == nullptr) // if no one, add

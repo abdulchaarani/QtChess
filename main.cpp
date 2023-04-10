@@ -7,6 +7,7 @@
 #include "king.hpp"
 #include "knight.hpp"
 #include "rook.hpp"
+#include "bishop.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -33,6 +34,8 @@ int main(int argc, char *argv[])
     chessboard->addPiece<Pawn>(Color::WHITE, 6,1);
 
     chessboard->addPiece<Rook>(Color::BLACK, 6,7);
+
+    chessboard->addPiece<Bishop>(Color::BLACK, 3,4);
 
     chessboard->startGame();
 

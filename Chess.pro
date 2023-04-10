@@ -7,6 +7,7 @@ CONFIG += c++20 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        bishop.cpp \
         box.cpp \
         chessboard.cpp \
         king.cpp \
@@ -14,6 +15,7 @@ SOURCES += \
         main.cpp \
         pieces.cpp \
         point.cpp \
+        queen.cpp \
         rook.cpp
 
 # Default rules for deployment.
@@ -22,12 +24,14 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    bishop.hpp \
     box.hpp \
     chessboard.hpp \
     king.hpp \
     knight.hpp \
     pieces.hpp \
     point.hpp \
+    queen.hpp \
     rook.hpp
 
 QT += widgets
