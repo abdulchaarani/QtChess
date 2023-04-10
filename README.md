@@ -19,3 +19,5 @@
 -Display whos turn is it
 
 -UNIT TESTS!! deplacement
+
+-Game over popup or someth
