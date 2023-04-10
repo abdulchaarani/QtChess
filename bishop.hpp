@@ -2,7 +2,7 @@
 #ifndef BISHOP_HPP
 #define BISHOP_HPP
 
-#include "pieces.hpp"
+#include "piece.hpp"
 
 class Bishop : virtual public Piece
 {

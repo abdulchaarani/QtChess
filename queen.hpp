@@ -2,7 +2,7 @@
 #ifndef QUEEN_HPP
 #define QUEEN_HPP
 
-#include "pieces.hpp"
+#include "piece.hpp"
 #include "rook.hpp"
 #include "bishop.hpp"
 

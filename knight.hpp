@@ -2,7 +2,7 @@
 #ifndef KNIGHT_HPP
 #define KNIGHT_HPP
 
-#include "pieces.hpp"
+#include "piece.hpp"
 
 class Knight : public Piece
 {

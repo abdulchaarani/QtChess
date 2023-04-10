@@ -2,7 +2,7 @@
 #ifndef KING_HPP
 #define KING_HPP
 
-#include "pieces.hpp"
+#include "piece.hpp"
 
 class King : public Piece
 {

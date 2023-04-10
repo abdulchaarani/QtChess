@@ -1,5 +1,5 @@
 #include <QDebug>
-#include "pieces.hpp"
+#include "piece.hpp"
 #include "box.hpp"
 #include "chessboard.hpp"
 //Styling constants
@@ -10,7 +10,7 @@ const int OFFSET{148};
 const int MARGIN{34};
 const int PIECE_SIZE{100};
 
-QFont PIECE_FONT("Freeserif", 100);
+QFont PIECE_FONT("Freeserif", PIECE_SIZE);
 
 QString PIECE_STYLE = "QPushButton{"
                           "  background-color: none;"
@@ -69,14 +69,10 @@ void Piece::updatePosition(){
     int newRow{box->getCoordinates().getRow()};
     int newColumn {box->getCoordinates().getColumn()};
 
-    // if I am a king and I moved, do something before moving
-//    if (dynamic_cast<King*>(this))
-//        if (chessboard_->getPiecePressed() == this)
-//            isChecked();
-
     // if there are no friendlies on this position, go to box
     if (box->getParent()->getLastPiecePressed() == this && chessboard_->board_[newRow][newColumn] == nullptr){
         changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
+        emit playedFirstMove();
     }
 }
 
@@ -91,33 +87,4 @@ void Piece::killPiece(Piece* victim){
     int column{victim->getCoordinates().getColumn()};
     changePosition(row, column);
     delete victim;
-}
-
-
-Pawn::Pawn(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
-            : Piece(color, row, column, board, parent)
-{
-    // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::WHITE ? setText("♙") : setText("♟︎");
-    setFont(PIECE_FONT);
-    changePosition(row, column);
-}
-
-// Error bound checking
-void Pawn::fillMovements(){ // to beautify :(
-    movements.clear();
-
-    int row{coordinates_.getRow()};
-    int column{coordinates_.getColumn()};
-
-    if ((row + 1) < 8)
-        if(chessboard_->board_[row + 1][column] == nullptr) // or enemy
-            movements.push_back(Point(row + 1, column));
-    if ((row - 1) >= 0)
-        if(chessboard_->board_[row - 1][column] == nullptr)
-            movements.push_back(Point(row - 1, column));
-    if (firstMove_)
-        if ((row + 2) < 8)
-            if(chessboard_->board_[row + 2][column] == nullptr) // or enemy
-                movements.push_back(Point(row + 2, column));
 }

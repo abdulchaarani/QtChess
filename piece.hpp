@@ -1,6 +1,6 @@
 
-#ifndef PIECES_HPP
-#define PIECES_HPP
+#ifndef PIECE_H
+#define PIECE_H
 
 
 #include <QObject>
@@ -57,8 +57,8 @@ private:
 signals:
     // fires everytime a piece is moved
     void movedPiece();
-    // fires everytime a piece is clicked
-    void eatMe();
+
+    void playedFirstMove();
 
 private slots:
     void updatePosition();
@@ -67,21 +67,4 @@ private slots:
     void fillAllMovements();
 
 };
-
-// Concrete pieces classes
-
-
-
-class Pawn : public Piece
-{
-    Q_OBJECT
-
-public:
-    Pawn(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    void fillMovements() override;
-
-private:
-    bool firstMove_{false};
-};
-
-#endif // PIECES_HPP
+#endif // PIECE_H

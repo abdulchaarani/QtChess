@@ -13,7 +13,8 @@ SOURCES += \
         king.cpp \
         knight.cpp \
         main.cpp \
-        pieces.cpp \
+        pawn.cpp \
+        piece.cpp \
         point.cpp \
         queen.cpp \
         rook.cpp
@@ -29,7 +30,8 @@ HEADERS += \
     chessboard.hpp \
     king.hpp \
     knight.hpp \
-    pieces.hpp \
+    pawn.hpp \
+    piece.hpp \
     point.hpp \
     queen.hpp \
     rook.hpp

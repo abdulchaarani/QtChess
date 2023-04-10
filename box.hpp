@@ -12,7 +12,7 @@
 #include <QApplication>
 #include <QPushButton>
 #include "point.hpp"
-#include "pieces.hpp"
+#include "piece.hpp"
 
 class ChessBoard;
 

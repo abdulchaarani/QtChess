@@ -2,7 +2,7 @@
 #ifndef ROOK_HPP
 #define ROOK_HPP
 
-#include "pieces.hpp"
+#include "piece.hpp"
 
 class Rook : virtual public Piece
 {
