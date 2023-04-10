@@ -8,6 +8,8 @@
 
 -Highlight danger position different color
 
+-Highlight piece who was pressed
+
 -Start menu (and modes)
 
 -Fix allignement
