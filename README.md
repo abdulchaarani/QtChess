@@ -6,6 +6,8 @@
 
 -Figure out how to check king
 
+-Highlight danger position different color
+
 -Start menu (and modes)
 
 -Fix allignement
