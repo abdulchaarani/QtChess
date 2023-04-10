@@ -11,7 +11,9 @@ Rook::Rook(Color color, int row,  int column, ChessBoard* board, QWidget* parent
 }
 
 void Rook::fillMovements(){ // to beautify :(
-    movements.clear();
+    // if not a queen, dont delete movements (helps with multiple inheritance :p)
+    if (text() != "♕" && text() != "♛")
+        movements.clear();
 
     int row{coordinates_.getRow()};
     int column{coordinates_.getColumn()};

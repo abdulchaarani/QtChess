@@ -23,9 +23,9 @@ const QString BLACK_BOX = "QPushButton{"
                      "}";
 
 const QString HIGHLIGHT = "QPushButton{"
-                     "  background-color: red;"
+                     "  background-color: #F90F33;"
                      "  border-style: solid;"
-                     "  border-width: 1px;"
+                     "  border-width: 2px;"
                      "  border-color: white;"
                      "  }"
                      "QPushButton:pressed {"

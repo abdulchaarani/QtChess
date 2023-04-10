@@ -4,7 +4,7 @@
 
 #include "pieces.hpp"
 
-class Rook : public Piece
+class Rook : virtual public Piece
 {
     Q_OBJECT
 

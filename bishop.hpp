@@ -4,7 +4,7 @@
 
 #include "pieces.hpp"
 
-class Bishop : public Piece
+class Bishop : virtual public Piece
 {
     Q_OBJECT
 
