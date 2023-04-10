@@ -4,7 +4,7 @@
 
 // Stylesheets for the box colors
 
-const QString WHITE = "QPushButton{"
+const QString WHITE_BOX = "QPushButton{"
                      "  background-color: rgb(238, 238, 212);"
                      "  border-style: inset;"
                      "  }"
@@ -12,7 +12,7 @@ const QString WHITE = "QPushButton{"
                      "   border-style: inset;"
                      "}";
 
-const QString BLACK = "QPushButton{"
+const QString BLACK_BOX = "QPushButton{"
                      "  background-color: rgb(126, 148, 90);"
                      "  border-style: inset;"
                      "  }"
@@ -36,24 +36,22 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
         counter_ = !counter_;
 
     // save chessboard as an attribute
-    board_ = parent;
+    chessboard_ = parent;
 }
-
 
 void Box::setColorWhite(){
 
-    this->setStyleSheet(WHITE);
+    this->setStyleSheet(WHITE_BOX);
     color_ = true;
 }
 void Box::setColorBlack(){
 
 
-    this->setStyleSheet(BLACK);
+    this->setStyleSheet(BLACK_BOX);
     color_ = false;
 }
 
-void Box::highlightColor(){
-    handleClick();
+void Box::onPieceClick(){ // refactor maybe?
 
     // which piece got clicked
     QObject* senderObject = QObject::sender();
@@ -62,15 +60,36 @@ void Box::highlightColor(){
 
     auto piece = qobject_cast<Piece*>(senderObject);
 
-    board_->setPiecePressed(piece);
+    // if not your turn no touchy! Also Check for eat
+    if (piece->color_ != chessboard_->currentPlayer){
+        Piece* killer{chessboard_->getLastPiecePressed()};
+        // check if in killing position
+        if (movableBox_ == true)
+            for(auto&& movement : killer->movements)
+                if (movement == piece->getCoordinates()){
+                    killer->killPiece(piece);
+                    movableBox_ = false;
+                    chessboard_->finishingBlow();
+                    return;
+                }
+        return;
+    }
 
-    // If box is in the possible moveset of the clicked piece, highlight
+    // colors the boxes in the appropriate colors;
+    handleClick();
+    chessboard_->setPiecePressed(piece);
+    highlightColor();
 
-    for(auto && movement : piece->movements)
+}
+
+// If box is in the possible moveset of the clicked piece, highlight
+void Box::highlightColor(){
+
+    Piece* piece = chessboard_->getLastPiecePressed();
+    for(auto&& movement : piece->movements)
         if (movement == this->coordinates_){
-
             movableBox_ = true;
-                this->setStyleSheet(HIGHLIGHT);
+            this->setStyleSheet(HIGHLIGHT);
         }
 }
 
@@ -82,11 +101,10 @@ void Box::revertColor(){
 
 void Box::handleClick()
 {
-
     // if the next clicked box is not a highlighted one, cancel movement
     // else make the piece goto said box
 
-    auto currentBox = board_->getBoxPressed();
+    auto currentBox = chessboard_->getBoxPressed();
     if (currentBox == nullptr)
         return;
     else if (currentBox == this)

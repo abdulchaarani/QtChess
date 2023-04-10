@@ -21,15 +21,15 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 
  // to alternate playes every move
 void ChessBoard::changePlayer(){
-    if (currentPlayer == WHITE) {
-        currentPlayer = BLACK;
+    if (currentPlayer == Color::WHITE) {
+        currentPlayer = Color::BLACK;
         qDebug() << "BLACK";
     } else {
-        currentPlayer = WHITE;
+        currentPlayer = Color::WHITE;
         qDebug() << "WHITE";
     }
 }
 
 void ChessBoard::startGame(){
-    currentPlayer = WHITE;
+    currentPlayer = Color::WHITE;
 }

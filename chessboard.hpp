@@ -16,6 +16,12 @@
 
 #include "box.hpp"
 
+enum class Color{
+    WHITE,
+    BLACK,
+};
+
+
 class ChessBoard : public QWidget
 {
     Q_OBJECT
@@ -30,15 +36,15 @@ public:
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(int row, int column){
-        T* piece = new T(row, column, this, parent_);
+    void addPiece(Color color, int row, int column){
+        T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
 
         // connect king to every box to detect valid positions
         for (int i{0}; i < grid_->rowCount(); ++i) {
             for (int j{0}; j <  grid_->columnCount(); ++j) {
                 QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-                connect(piece, SIGNAL(released()), widget, SLOT(highlightColor()));
+                connect(piece, SIGNAL(released()), widget, SLOT(onPieceClick()));
                 connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
             }
         }
@@ -47,25 +53,24 @@ public:
 
     // Getters : to keep track of current pressed piece and box
     Box* getBoxPressed() { return boxPressed_; }
-    Piece* getPiecePressed() { return piecePressed_; }
+    Piece* getLastPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
-    enum Player{
-        WHITE,
-        BLACK,
-    };
-
-    Player currentPlayer;
+    Color currentPlayer;
 
     void startGame();
 
+    void finishingBlow(){
+        //getBoxPressed()->movableBox_ = false;
+        emit buttonTriggered();
+    }
 private:
 
     // Getters : to keep track of current pressed piece and box
 
     Box* boxPressed_;
     Piece* piecePressed_;
-
+    Piece* pieceToDelete_;
     // necessary or program crashes lol
     QWidget* parent_;
 
@@ -95,6 +100,7 @@ private slots:
         changePlayer();
         emit updateMovements();
     }
+
 };
 
 

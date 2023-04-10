@@ -30,7 +30,7 @@ public:
 
     // Old getters, might not be useful later
     Point& getCoordinates() { return coordinates_; }
-    ChessBoard* getParent() { return board_; }
+    ChessBoard* getParent() { return chessboard_; }
 
 private:
     Point coordinates_;
@@ -46,8 +46,9 @@ private:
     void setColorWhite();
     void setColorBlack();
 
-    ChessBoard* board_;
+    ChessBoard* chessboard_;
 
+    void highlightColor();
     // when you click outside of the highlighted are
     void revertColor();
 
@@ -56,7 +57,8 @@ signals:
     void goTo();
 
 public slots:
-    void highlightColor();
+    // when any piece is clicked
+    void onPieceClick();
 
     // when one box is clicked, all boxes recieve this signal and react accordingly
     void handleClick();

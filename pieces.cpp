@@ -20,7 +20,17 @@ QString PIECE_STYLE = "QPushButton{"
                           "   border-style: inset;"
                           "}";
 
-Piece::Piece(int row, int column, ChessBoard* board, QWidget* parent) : QPushButton(parent), coordinates_(row, column), chessboard_(board)
+QString CHECKED = "QPushButton{"
+                      "  color: yellow;"
+                      "  background-color: none;"
+                      "  border-style: inset;"
+                      "  }"
+                      "QPushButton:pressed {"
+                      "   border-style: inset;"
+                      "}";
+
+Piece::Piece(Color color, int row, int column, ChessBoard* board, QWidget* parent)
+            : QPushButton(parent), color_(color), coordinates_(row, column), chessboard_(board)
 {
     connect(this, SIGNAL(movedPiece()), chessboard_, SLOT(validateMovements()));
     connect(chessboard_, SIGNAL(updateMovements()), this, SLOT(fillAllMovements()));
@@ -59,10 +69,14 @@ void Piece::updatePosition(){
     int newRow{box->getCoordinates().getRow()};
     int newColumn {box->getCoordinates().getColumn()};
 
-    // if there are no friendlies on this position, go to box
-    if (box->getParent()->getPiecePressed() == this && chessboard_->board_[newRow][newColumn] == nullptr){
-        changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
+    // if I am a king and I moved, do something before moving
+//    if (dynamic_cast<King*>(this))
+//        if (chessboard_->getPiecePressed() == this)
+//            isChecked();
 
+    // if there are no friendlies on this position, go to box
+    if (box->getParent()->getLastPiecePressed() == this && chessboard_->board_[newRow][newColumn] == nullptr){
+        changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
     }
 }
 
@@ -72,9 +86,18 @@ void Piece::fillAllMovements(){
     fillMovements();
 }
 
-King::King(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+void Piece::killPiece(Piece* victim){
+    int row{victim->getCoordinates().getRow()};
+    int column{victim->getCoordinates().getColumn()};
+    changePosition(row, column);
+    delete victim;
+}
+
+King::King(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+          : Piece(color, row, column, board, parent)
 {
-    setText("♔");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♔") : setText("♚");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }
@@ -88,22 +111,24 @@ void King::fillMovements(){ // to beautify :(
     int column{coordinates_.getColumn()};
 
     if ((row + 1) < 8)
-        if(chessboard_->board_[row + 1][column] == nullptr) // or enemy
+        if(chessboard_->board_[row + 1][column] == nullptr || chessboard_->board_[row + 1][column]->color_ != color_) // or enemy
             movements.push_back(Point(row + 1, column));
     if ((row - 1) >= 0)
-        if(chessboard_->board_[row - 1][column] == nullptr)
+        if(chessboard_->board_[row - 1][column] == nullptr || chessboard_->board_[row - 1][column]->color_ != color_)
             movements.push_back(Point(row - 1, column));
     if ((column + 1) < 8)
-        if(chessboard_->board_[row][column + 1] == nullptr)
+        if(chessboard_->board_[row][column + 1] == nullptr || chessboard_->board_[row][column + 1]->color_ != color_)
             movements.push_back(Point(row, column + 1));
     if ((column - 1 ) >= 0)
-        if(chessboard_->board_[row][column - 1] == nullptr)
+        if(chessboard_->board_[row][column - 1] == nullptr || chessboard_->board_[row][column - 1]->color_ != color_)
             movements.push_back(Point(row, column - 1));
 }
 
-Knight::Knight(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+Knight::Knight(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+              : Piece(color, row, column, board, parent)
 {
-    setText("♘");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♘") : setText("♞");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }
@@ -141,9 +166,11 @@ void Knight::fillMovements(){// to beautify :(
             movements.push_back(Point(row - 2, column - 1));
 }
 
-Pawn::Pawn(int row,  int column, ChessBoard* board, QWidget* parent) : Piece(row, column, board, parent)
+Pawn::Pawn(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
+            : Piece(color, row, column, board, parent)
 {
-    setText("♙");
+    // WARNING: TWO DIFFERENT COLORS OF PIECE
+    color_ == Color::WHITE ? setText("♙") : setText("♟︎");
     setFont(PIECE_FONT);
     changePosition(row, column);
 }
