@@ -50,9 +50,10 @@ public:
         }
     }
 
-
+    // TODO CHANGE NAMES
     // Getters : to keep track of current pressed piece and box
     Box* getBoxPressed() { return boxPressed_; }
+    void setBoxPressed(Box* box) { boxPressed_ = box; }
     Piece* getLastPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 

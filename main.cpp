@@ -4,8 +4,12 @@
 
 #include "chessboard.hpp"
 #include "pieces.hpp"
+#include "king.hpp"
+#include "knight.hpp"
+#include "rook.hpp"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[])
+{
     // necessary or program wont run
     QApplication a(argc, argv);
 
@@ -15,24 +19,26 @@ int main(int argc, char *argv[]) {
     mainWindow.setLayout(mainLayout);
 
     // create chessboard
-    ChessBoard *chessboard = new ChessBoard(&mainWindow);
+    ChessBoard* chessboard = new ChessBoard(&mainWindow);
 
     // add pieces to chessboard
     // TODO: UNIT TEST: NO TWO PIECES ON SAME BOX
-    chessboard->addPiece<King>(Color::WHITE, 0, 2);
-    chessboard->addPiece<King>(Color::WHITE, 0, 3);
-    chessboard->addPiece<King>(Color::BLACK, 4, 4);
+    chessboard->addPiece<King>(Color::WHITE, 0,2);
+    chessboard->addPiece<King>(Color::WHITE,0,3);
+    chessboard->addPiece<King>(Color::BLACK,4,4);
 
     chessboard->addPiece<Knight>(Color::WHITE, 5, 3);
     chessboard->addPiece<Knight>(Color::BLACK, 3, 5);
 
-    chessboard->addPiece<Pawn>(Color::WHITE, 6, 1);
+    chessboard->addPiece<Pawn>(Color::WHITE, 6,1);
+
+    chessboard->addPiece<Rook>(Color::BLACK, 6,7);
 
     chessboard->startGame();
 
     // add chessboard to UI and caliibrate size
     mainLayout->addWidget(chessboard);
-    mainWindow.setFixedSize(1200, 1200);
+    mainWindow.setFixedSize(1200,1200);
     mainWindow.adjustSize();
     mainWindow.show();
     return a.exec();
