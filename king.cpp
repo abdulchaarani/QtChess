@@ -5,8 +5,17 @@
 King::King(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
     : Piece(color, row, column, board, parent)
 {
-    // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::WHITE ? setText("♔") : setText("♚");
+    // WARNING: TWO DIFFERENT COLORS OF PIEC
+
+    if (color_ == Color::WHITE){
+        setText("♔");
+        board->setWhiteKing(this);
+    }
+    else{
+        setText("♚");
+        board->setBlackKing(this);
+    }
+
     changePosition(row, column);
 }
 
@@ -30,4 +39,18 @@ void King::fillMovements(){ // to beautify :(
     if ((column - 1 ) >= 0)
         if(chessboard_->board_[row][column - 1] == nullptr || chessboard_->board_[row][column - 1]->color_ != color_)
             movements.push_back(Point(row, column - 1));
+
+    if ((row + 1) < 8 && (column - 1) >= 0)
+        if(chessboard_->board_[row + 1][column - 1] == nullptr || chessboard_->board_[row + 1][column - 1]->color_ != color_) // or enemy
+            movements.push_back(Point(row + 1, column - 1));
+    if ((row + 1) < 8 && (column + 1) < 8)
+        if(chessboard_->board_[row + 1][column + 1] == nullptr || chessboard_->board_[row + 1][column + 1]->color_ != color_) // or enemy
+            movements.push_back(Point(row + 1, column + 1));
+    if ((row - 1) >= 0 && (column - 1) >= 0)
+        if(chessboard_->board_[row - 1][column - 1] == nullptr || chessboard_->board_[row - 1][column - 1]->color_ != color_) // or enemy
+            movements.push_back(Point(row - 1, column - 1));
+    if ((row - 1) >= 0 && (column + 1) < 8)
+        if(chessboard_->board_[row - 1][column + 1] == nullptr || chessboard_->board_[row - 1][column + 1]->color_ != color_) // or enemy
+            movements.push_back(Point(row - 1, column + 1));
 }
+

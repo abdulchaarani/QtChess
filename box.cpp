@@ -106,16 +106,20 @@ void Box::revertColor(){
 }
 
 
-
 void Box::handleClick()
 {
     // if the next clicked box is not a highlighted one, cancel movement
     // else make the piece goto said box
+    Piece* potentialVictim{chessboard_->board_[coordinates_.getRow()][coordinates_.getColumn()]};
 
     auto currentBox = chessboard_->getBoxPressed();
     if (currentBox == this)
         if (currentBox->movableBox_)
-            emit goTo();
+            if (chessboard_->isValidMove(coordinates_))
+                if (potentialVictim != nullptr)
+                    chessboard_->getLastPiecePressed()->killPiece(potentialVictim);
+                else
+                    emit goTo();
 
     revertColor();
     movableBox_ = false;

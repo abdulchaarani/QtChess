@@ -3,10 +3,8 @@
 #define QUEEN_HPP
 
 #include "piece.hpp"
-#include "rook.hpp"
-#include "bishop.hpp"
 
-class Queen : public Rook, public Bishop
+class Queen : public Piece
 {
     Q_OBJECT
 

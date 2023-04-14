@@ -65,6 +65,15 @@ public:
         //getBoxPressed()->movableBox_ = false;
         emit buttonTriggered();
     }
+
+    void setWhiteKing(Piece* king) {whiteKing = king;}
+    void setBlackKing(Piece* king) {blackKing = king;}
+
+    bool isInCheckmate(Color color);
+
+    bool moveKing(Piece* king, const Point& newPosition);
+
+    bool isValidMove(Point position);
 private:
 
     // Getters : to keep track of current pressed piece and box
@@ -77,7 +86,17 @@ private:
 
     //to alternate playes every move
     void changePlayer();
+    void verifyCheck();
+    bool isCheck(Color color);
 
+    Piece* whiteKing{};
+    Piece* blackKing{};
+
+    std::list<Piece*> getAttackingPieces(Color color, Point position);
+
+    bool isGameStarted{false};
+
+    void blinkKing(Piece* king);
 
 signals:
     void buttonTriggered();
@@ -98,8 +117,9 @@ private slots:
     // at everymove, signal the pieces to recalculate their next possible move
     // and change player
     void validateMovements(){
-        changePlayer();
         emit updateMovements();
+        verifyCheck();
+        changePlayer();
     }
 
 };

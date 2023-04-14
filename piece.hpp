@@ -43,6 +43,10 @@ public:
 
     void killPiece(Piece* victim);
 
+    void check();
+
+    bool isChecked{false};
+
 protected:
     Point coordinates_;
     ChessBoard* chessboard_;
@@ -51,7 +55,7 @@ private:
     // UNUSED
     int id_;
     inline static int idCount;
-
+    void revertCheck();
 
 
 signals:

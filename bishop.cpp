@@ -11,9 +11,7 @@ Bishop::Bishop(Color color, int row,  int column, ChessBoard* board, QWidget* pa
 }
 
 void Bishop::fillMovements(){ // to beautify :(
-    // if not a queen, dont delete movements (helps with multiple inheritance :p)
-    if (text() != "♕" && text() != "♛")
-        movements.clear();
+    movements.clear();
 
     int row{coordinates_.getRow()};
     int column{coordinates_.getColumn()};

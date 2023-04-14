@@ -6,7 +6,7 @@
 
 class Point {
 public:
-    Point(int row, int column);
+    Point(int row = 0, int column = 0);
     ~Point() = default;
     int getRow() const;
     int getColumn() const;
@@ -15,6 +15,11 @@ public:
     void setColumn(int column);
 
     friend bool operator== (const Point& p1, const Point& p2);
+
+    Point(const Point& p){
+        row_ = p.row_;
+        column_ = p.column_;
+    }
 
 private:
     int row_;

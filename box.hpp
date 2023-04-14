@@ -32,6 +32,8 @@ public:
     Point& getCoordinates() { return coordinates_; }
     ChessBoard* getParent() { return chessboard_; }
 
+    ChessBoard* chessboard_;
+
 private:
     Point coordinates_;
 
@@ -46,7 +48,7 @@ private:
     void setColorWhite();
     void setColorBlack();
 
-    ChessBoard* chessboard_;
+
 
     void highlightColor();
     // when you click outside of the highlighted are

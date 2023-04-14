@@ -13,7 +13,9 @@ const int PIECE_SIZE{100};
 QFont PIECE_FONT("Freeserif", PIECE_SIZE);
 
 QString PIECE_STYLE = "QPushButton{"
+                          "  color: black;"
                           "  background-color: none;"
+                          "  opacity: 1;"
                           "  border-style: inset;"
                           "  }"
                           "QPushButton:pressed {"
@@ -21,7 +23,7 @@ QString PIECE_STYLE = "QPushButton{"
                           "}";
 
 QString CHECKED = "QPushButton{"
-                      "  color: yellow;"
+                      "  color: #F4CB16;"
                       "  background-color: none;"
                       "  border-style: inset;"
                       "  }"
@@ -74,6 +76,8 @@ void Piece::updatePosition(){
         changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
         emit playedFirstMove();
     }
+
+    revertCheck();
 }
 
 // recieve the signal that a piece has moved
@@ -87,4 +91,17 @@ void Piece::killPiece(Piece* victim){
     int column{victim->getCoordinates().getColumn()};
     changePosition(row, column);
     delete victim;
+    revertCheck();
+}
+
+void Piece::check(){
+    isChecked = true;
+    setStyleSheet(CHECKED);
+}
+
+void Piece::revertCheck(){
+    if (isChecked){
+        isChecked = false;
+        setStyleSheet(PIECE_STYLE);
+    }
 }

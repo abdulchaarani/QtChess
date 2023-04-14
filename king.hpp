@@ -4,6 +4,7 @@
 
 #include "piece.hpp"
 
+
 class King : public Piece
 {
     Q_OBJECT
@@ -11,6 +12,7 @@ class King : public Piece
 public:
     King(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
     void fillMovements() override;
+
 
 };
 
