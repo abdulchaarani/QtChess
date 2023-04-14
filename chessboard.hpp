@@ -118,9 +118,9 @@ private slots:
     // at everymove, signal the pieces to recalculate their next possible move
     // and change player
     void validateMovements(){
+        check();
         changePlayer();
         emit updateMovements();
-        check();
     }
 
     void onKingChecked(bool checked);
