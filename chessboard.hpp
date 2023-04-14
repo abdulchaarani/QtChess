@@ -11,10 +11,19 @@
 #include <QPushButton>
 #include <list>
 #include <array>
+#include <functional>
 
 #include <QDebug>
+#include <typeinfo>
 
 #include "box.hpp"
+#include "king.hpp"
+
+enum class Color{
+    WHITE,
+    BLACK,
+};
+
 
 class ChessBoard : public QWidget
 {
@@ -27,62 +36,68 @@ public:
     // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
 
-    //list of white pieces
     std::vector<Piece*> whitePieces;
-
-    //list of black pieces
     std::vector<Piece*> blackPieces;
 
-    enum Player{
-        WHITE,
-        BLACK,
-    };
+    // Might make them private later
+    King* whiteKing;
+    King* blackKing;
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(int row, int column, Piece::Colour colour){
-        T* piece = new T(row, column, this, parent_, colour);
+    void addPiece(Color color, int row, int column){
+        T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
 
         // connect king to every box to detect valid positions
         for (int i{0}; i < grid_->rowCount(); ++i) {
             for (int j{0}; j <  grid_->columnCount(); ++j) {
                 QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-                connect(piece, SIGNAL(released()), widget, SLOT(highlightColor()));
+                connect(piece, SIGNAL(released()), widget, SLOT(onPieceClick()));
                 connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
             }
         }
-        if(colour == Piece::WHITE)
+
+        if(color == Color::WHITE)
             whitePieces.push_back(piece);
-        else if(colour == Piece::BLACK)
+        else
             blackPieces.push_back(piece);
+
     }
 
+    void check();
 
+    bool whiteTest();
+    bool blackTest();
+
+
+    // TODO CHANGE NAMES
     // Getters : to keep track of current pressed piece and box
     Box* getBoxPressed() { return boxPressed_; }
-    Piece* getPiecePressed() { return piecePressed_; }
+    void setBoxPressed(Box* box) { boxPressed_ = box; }
+    Piece* getLastPiecePressed() { return piecePressed_; }
     void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
-
-
-    Player currentPlayer;
+    Color currentPlayer;
 
     void startGame();
 
+    void finishingBlow(){
+        //getBoxPressed()->movableBox_ = false;
+        emit buttonTriggered();
+    }
 private:
 
     // Getters : to keep track of current pressed piece and box
 
     Box* boxPressed_;
     Piece* piecePressed_;
-
+    Piece* pieceToDelete_;
     // necessary or program crashes lol
     QWidget* parent_;
 
     //to alternate playes every move
     void changePlayer();
-
 
 signals:
     void buttonTriggered();
@@ -105,7 +120,12 @@ private slots:
     void validateMovements(){
         changePlayer();
         emit updateMovements();
+        check();
     }
+
+    void onKingChecked(bool checked);
+
+
 };
 
 
