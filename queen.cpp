@@ -2,6 +2,11 @@
 #include "queen.hpp"
 #include "chessboard.hpp"
 
+/*
+Qt doesnt seem to support multiple heritage very well,
+Will try in the future to derive Queen from Rook and Bishop correctly
+*/
+
 Queen::Queen(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
      : Piece(color, column, row, board, parent)
 
@@ -14,6 +19,8 @@ Queen::Queen(Color color, int row,  int column, ChessBoard* board, QWidget* pare
 void Queen::fillMovements(){
     movements.clear();
 
+    // Bishop::fillMovements();
+    // Rook:: fillMovements();
 
     int row{coordinates_.getRow()};
     int column{coordinates_.getColumn()};

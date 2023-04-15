@@ -25,15 +25,17 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 void ChessBoard::changePlayer(){
     if (currentPlayer == Color::WHITE) {
         currentPlayer = Color::BLACK;
-        qDebug() << "BLACK";
+        if (isGameStarted)
+            qDebug() << "BLACK";
     } else {
         currentPlayer = Color::WHITE;
-        qDebug() << "WHITE";
+        if (isGameStarted)
+            qDebug() << "WHITE";
     }
 }
 
 void ChessBoard::startGame(){
-    gameStart = true;
+    isGameStarted = true;
     currentPlayer = Color::WHITE;
 }
 
@@ -48,7 +50,7 @@ bool ChessBoard::isCheck(Color color){
                 if (board_[i][j]->color_ != color)
                     for (auto&& move : board_[i][j]->movements)
                         if (move == king->getCoordinates()){
-                            qDebug() << "CHECK";
+                            qDebug() << "YOU CANT PUT YOURSELF INTO CHECK ";
                             return true;
                         }
 
@@ -66,12 +68,11 @@ void ChessBoard::verifyCheck(){
     Piece* king;
 
     piece->color_ == Color::WHITE ? king = blackKing : king = whiteKing;
-    if (gameStart)
+    if (isGameStarted)
         for (auto&& move : piece->movements){
             if (move == king->getCoordinates()){
                 king->check();
-                qDebug() << "CHECK KING";
-                isInCheckmate(king->color_);
+                qDebug() << "CHECK";
             }
 
         }
@@ -93,56 +94,6 @@ std::list<Piece*> ChessBoard::getAttackingPieces(Color color, Point position){
 
 }
 
-bool ChessBoard::isInCheckmate(Color color) {
-    // Get the current position of the king of the given color
-    Piece* king{};
-    color == Color::WHITE ? king = whiteKing : king = blackKing;
-
-    Point kingPos = king->getCoordinates();
-
-    // Get the list of attacking pieces
-    std::list<Piece*> attackers = getAttackingPieces(color, kingPos);
-
-    // Check if any attacking piece can be captured or blocked
-    for (Piece* attacker : attackers) {
-        std::list<Point> attackerMoves = attacker->movements;
-        for (Point& move : attackerMoves) {
-            // Temporarily move the king to the new position and check if it's still in check
-            bool isKingSafe = moveKing(king, move);
-            if (isKingSafe) {
-                // The king is no longer in checkmate
-                //undoLastMove();
-                qDebug() << "NO CHECKMATE!";
-                return false;
-            }
-            //undoLastMove();
-        }
-    }
-
-    // The king is in checkmate
-    qDebug() << "CHECKMATE!";
-    return true;
-}
-
-
-bool ChessBoard::moveKing(Piece* king, const Point& newPosition) {
-    // Remember the original position of the king
-    Point oldPosition = king->getCoordinates();
-
-    // Temporarily move the king to the new position
-    king->getCoordinates().setRow(newPosition.getRow());
-    king->getCoordinates().setColumn(newPosition.getColumn());
-    // Check if the king is still in check
-    bool inCheck = isCheck(king->color_);
-
-    // Move the king back to the original position
-    king->getCoordinates().setRow(oldPosition.getRow());
-    king->getCoordinates().setColumn(oldPosition.getColumn());
-
-    return !inCheck;
-}
-
-
 bool ChessBoard::isValidMove(Point position){
 
     Point oldPosition = piecePressed_->getCoordinates();
@@ -155,7 +106,7 @@ bool ChessBoard::isValidMove(Point position){
 
     emit updateMovements();
 
-    bool result = isCheck(piecePressed_->color_);
+    bool isValid = !isCheck(piecePressed_->color_);
 
     piecePressed_->getCoordinates().setRow(oldPosition.getRow());
     piecePressed_->getCoordinates().setColumn(oldPosition.getColumn());
@@ -165,12 +116,6 @@ bool ChessBoard::isValidMove(Point position){
 
     emit updateMovements();
 
-    return !result;
-
-}
-
-
-void ChessBoard::blinkKing(Piece* king)
-{
+    return isValid;
 
 }

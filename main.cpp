@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     // add pieces to chessboard
     // TODO: UNIT TEST: NO TWO PIECES ON SAME BOX
     chessboard->addPiece<King>(Color::WHITE,0,3);
-    chessboard->addPiece<King>(Color::BLACK,7,4);
+    chessboard->addPiece<King>(Color::BLACK,7,5);
 
     chessboard->addPiece<Knight>(Color::WHITE, 5, 3);
     chessboard->addPiece<Knight>(Color::BLACK, 3, 5);

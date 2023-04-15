@@ -96,8 +96,6 @@ private:
 
     bool isGameStarted{false};
 
-    void blinkKing(Piece* king);
-
 signals:
     void buttonTriggered();
     void updateMovements();
