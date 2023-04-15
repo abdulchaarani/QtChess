@@ -6,10 +6,10 @@
 
 //SHOULD BE PUT IN A NAMESPACE!! :D
 
-const int OFFSET{148};
+const int OFFSET{96};
 const int MARGIN{20};
-const int PIECE_SIZE{90};
-const int BUTTON_SIZE{130};
+const int PIECE_SIZE{60};
+const int BUTTON_SIZE{95};
 
 QFont PIECE_FONT("Segoe UI Symbol", PIECE_SIZE);
 
