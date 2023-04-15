@@ -82,7 +82,7 @@ void Box::onPieceClick(){ // refactor maybe?
     if (piece->color_ != chessboard_->currentPlayer){
         Piece* killer{chessboard_->getLastPiecePressed()};
         // check if in killing position
-        if (movableBox_ == true)
+        if (movableBox_ == true && chessboard_->isValidMove(piece->getCoordinates()))
             for(auto&& movement : killer->movements)
                 if (movement == piece->getCoordinates()){
                     killer->killPiece(piece);
