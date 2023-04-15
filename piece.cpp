@@ -7,15 +7,15 @@
 //SHOULD BE PUT IN A NAMESPACE!! :D
 
 const int OFFSET{148};
-const int MARGIN{34};
-const int PIECE_SIZE{100};
+const int MARGIN{20};
+const int PIECE_SIZE{90};
+const int BUTTON_SIZE{130};
 
-QFont PIECE_FONT("Freeserif", PIECE_SIZE);
+QFont PIECE_FONT("Segoe UI Symbol", PIECE_SIZE);
 
 QString PIECE_STYLE = "QPushButton{"
                           "  color: black;"
                           "  background-color: none;"
-                          "  opacity: 1;"
                           "  border-style: inset;"
                           "  }"
                           "QPushButton:pressed {"
@@ -36,10 +36,11 @@ Piece::Piece(Color color, int row, int column, ChessBoard* board, QWidget* paren
 {
     connect(this, SIGNAL(movedPiece()), chessboard_, SLOT(validateMovements()));
     connect(chessboard_, SIGNAL(updateMovements()), this, SLOT(fillAllMovements()));
+    connect(&blinkTimer_, &QTimer::timeout, this, &Piece::toggleBlink);
     setStyleSheet(PIECE_STYLE);
+    setFixedWidth(BUTTON_SIZE);
+    setFixedHeight(BUTTON_SIZE);
     setFont(PIECE_FONT);
-    // UNUSED
-    id_ = ++idCount;
 
 }
 
@@ -52,7 +53,7 @@ void Piece::changePosition(int row, int column)
     coordinates_.setColumn(column);
     // add new location to board
     chessboard_->board_[row][column] = this;
-    setGeometry(column * OFFSET + MARGIN +column/2, row * OFFSET + MARGIN  + row/2, PIECE_SIZE, PIECE_SIZE);
+    setGeometry(column * OFFSET + MARGIN, row * OFFSET + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
     emit movedPiece();
 }
 
@@ -104,4 +105,20 @@ void Piece::revertCheck(){
         isChecked = false;
         setStyleSheet(PIECE_STYLE);
     }
+}
+
+void Piece::toggleBlink(){
+    static int counter{0};
+    if (palette().color(QPalette::ButtonText) == Qt::black) {
+        setStyleSheet(CHECKED);
+        ++counter;
+    } else {
+        setStyleSheet(PIECE_STYLE);
+    }
+    if (counter == 4){
+        counter = 0;
+        blinkTimer_.stop();
+        setStyleSheet(PIECE_STYLE);
+    }
+
 }

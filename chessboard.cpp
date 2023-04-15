@@ -51,6 +51,7 @@ bool ChessBoard::isCheck(Color color){
                     for (auto&& move : board_[i][j]->movements)
                         if (move == king->getCoordinates()){
                             qDebug() << "YOU CANT PUT YOURSELF INTO CHECK ";
+                            king->blinkTimer_.start(150);
                             return true;
                         }
 
@@ -72,9 +73,9 @@ void ChessBoard::verifyCheck(){
         for (auto&& move : piece->movements){
             if (move == king->getCoordinates()){
                 king->check();
+                king->blinkTimer_.start(500);
                 qDebug() << "CHECK";
             }
-
         }
 }
 

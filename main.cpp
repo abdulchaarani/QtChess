@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
     chessboard->addPiece<Knight>(Color::WHITE, 5, 3);
     chessboard->addPiece<Knight>(Color::BLACK, 3, 5);
 
-    chessboard->addPiece<Pawn>(Color::WHITE, 6,1);
+    chessboard->addPiece<Pawn>(Color::WHITE, 6,2);
     chessboard->addPiece<Pawn>(Color::BLACK, 1,1);
 
     chessboard->addPiece<Rook>(Color::BLACK, 6,7);

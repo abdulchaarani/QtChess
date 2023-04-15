@@ -22,7 +22,7 @@ const QString BLACK_BOX = "QPushButton{"
                      "   border-style: inset;"
                      "}";
 
-const QString HIGHLIGHT = "QPushButton{"
+const QString HIGHLIGHT_KILL = "QPushButton{"
                      "  background-color: #F90F33;"
                      "  border-style: solid;"
                      "  border-width: 2px;"
@@ -31,6 +31,16 @@ const QString HIGHLIGHT = "QPushButton{"
                      "QPushButton:pressed {"
                      "   border-style: inset;"
                      "}";
+
+const QString HIGHLIGHT_MOVE = "QPushButton{"
+                              "  background-color: #0B76D4;"
+                              "  border-style: solid;"
+                              "  border-width: 2px;"
+                              "  border-color: white;"
+                              "  }"
+                              "QPushButton:pressed {"
+                              "   border-style: inset;"
+                              "}";
 
 Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordinates_(row, column)
 {
@@ -97,7 +107,10 @@ void Box::highlightColor(){
     for(auto&& movement : piece->movements)
         if (movement == this->coordinates_){
             movableBox_ = true;
-            this->setStyleSheet(HIGHLIGHT);
+            if (chessboard_->board_[coordinates_.getRow()][coordinates_.getColumn()] != nullptr)
+                setStyleSheet(HIGHLIGHT_KILL);
+            else
+                setStyleSheet(HIGHLIGHT_MOVE);
         }
 }
 

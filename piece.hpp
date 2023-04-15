@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QPushButton>
+#include <QTimer>
 
 #include <list>
 #include <map>
@@ -47,14 +48,13 @@ public:
 
     bool isChecked{false};
 
+     QTimer blinkTimer_;
+
 protected:
     Point coordinates_;
     ChessBoard* chessboard_;
 
 private:
-    // UNUSED
-    int id_;
-    inline static int idCount;
     void revertCheck();
 
 
@@ -69,6 +69,9 @@ private slots:
 
     // to call correct overloaded function (#operator<<)
     void fillAllMovements();
+
+public slots:
+    void toggleBlink();
 
 };
 #endif // PIECE_H
