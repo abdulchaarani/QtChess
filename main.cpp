@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QObject>
 #include <QWidget>
-#include <QGuiApplication>
+
 #include "chessboard.hpp"
 #include "piece.hpp"
 #include "king.hpp"
@@ -18,11 +18,8 @@ int main(int argc, char *argv[])
 
     // create main UI window
     QWidget mainWindow;
-    QVBoxLayout* mainLayout = new QVBoxLayout(&mainWindow);
-
+    QVBoxLayout *mainLayout = new QVBoxLayout(&mainWindow);
     mainWindow.setLayout(mainLayout);
-
-    auto screens = QGuiApplication::screens;
 
     // create chessboard
     ChessBoard* chessboard = new ChessBoard(&mainWindow);
@@ -51,7 +48,7 @@ int main(int argc, char *argv[])
 
     // add chessboard to UI and caliibrate size
     mainLayout->addWidget(chessboard);
-    mainWindow.setFixedSize(800,800);
+    mainWindow.setFixedSize(1200,1200);
     mainWindow.adjustSize();
     mainWindow.show();
     return a.exec();
