@@ -15,6 +15,13 @@
 #include <QDebug>
 
 #include "box.hpp"
+#include "piece.hpp"
+#include "king.hpp"
+#include "knight.hpp"
+#include "rook.hpp"
+#include "bishop.hpp"
+#include "queen.hpp"
+#include "pawn.hpp"
 
 enum class Color{
     WHITE,
@@ -33,6 +40,7 @@ public:
     // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
 
+    friend class MainMenu;
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
@@ -59,7 +67,7 @@ public:
 
     Color currentPlayer;
 
-    void startGame();
+
 
     void finishingBlow(){
         //getBoxPressed()->movableBox_ = false;
@@ -99,6 +107,7 @@ private:
 signals:
     void buttonTriggered();
     void updateMovements();
+    void gameStarted();
 
 private slots:
 
@@ -120,6 +129,7 @@ private slots:
         changePlayer();
     }
 
+    void startGame();
 };
 
 
