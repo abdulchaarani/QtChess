@@ -5,39 +5,42 @@
 // this class acts as the controller-ish model to keep track of the events
 // and positions of stuff on the board
 
-#include <QObject>
-#include <QWidget>
+#include <QDebug>
 #include <QGridLayout>
 #include <QMainWindow>
+#include <QObject>
 #include <QPushButton>
-#include <list>
+#include <QWidget>
 #include <array>
+#include <list>
 
-#include <QDebug>
-
+#include "bishop.hpp"
 #include "box.hpp"
+#include "king.hpp"
+#include "knight.hpp"
+#include "pawn.hpp"
+#include "piece.hpp"
+#include "queen.hpp"
+#include "rook.hpp"
 
-enum class Color{
+enum class Color {
     WHITE,
     BLACK,
 };
 
-
-class ChessBoard : public QWidget
-{
+class ChessBoard : public QWidget {
     Q_OBJECT
 
-public:
-
+   public:
     static ChessBoard* instance;
     static QWidget* parentWindow_;
 
-    static void getInstance(){
+    static void getInstance() {
         instance = new ChessBoard(parentWindow_);
-        //parentWindow_->setCentralWidget(ChessBoard::instance);
+        // parentWindow_->setCentralWidget(ChessBoard::instance);
     }
 
-    static void setParent(QWidget* mainWindow){
+    static void setParent(QWidget* mainWindow) {
         parentWindow_ = mainWindow;
     }
 
@@ -46,20 +49,21 @@ public:
     QVBoxLayout* test_;
 
     // keeps track of ALL the pieces on the board
-    std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
+    std::array<std::array<Piece*, 8>, 8> board_{};  // TODO overload[]
 
+    friend class MainMenu;
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(Color color, int row, int column){
+    void addPiece(Color color, int row, int column) {
         T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
         piece->show();
-        //test_->addWidget(piece);
-        // connect king to every box to detect valid positions
+        // test_->addWidget(piece);
+        //  connect king to every box to detect valid positions
         for (int i{0}; i < grid_->rowCount(); ++i) {
-            for (int j{0}; j <  grid_->columnCount(); ++j) {
-                QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
+            for (int j{0}; j < grid_->columnCount(); ++j) {
+                QWidget* widget = grid_->itemAtPosition(i, j)->widget();
                 connect(piece, SIGNAL(released()), widget, SLOT(onPieceClick()));
                 connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
             }
@@ -78,21 +82,21 @@ public:
     void startGame();
     void testGame();
 
-    void finishingBlow(){
-        //getBoxPressed()->movableBox_ = false;
+    void finishingBlow() {
+        // getBoxPressed()->movableBox_ = false;
         emit buttonTriggered();
     }
 
-    void setWhiteKing(Piece* king) {whiteKing = king;}
-    void setBlackKing(Piece* king) {blackKing = king;}
+    void setWhiteKing(Piece* king) { whiteKing = king; }
+    void setBlackKing(Piece* king) { blackKing = king; }
 
     bool isInCheckmate(Color color);
 
     bool moveKing(Piece* king, const Point& newPosition);
 
     bool isValidMove(Point position);
-private:
 
+   private:
     // Getters : to keep track of current pressed piece and box
 
     Box* boxPressed_;
@@ -101,7 +105,7 @@ private:
     // necessary or program crashes lol
     QWidget* parent_;
 
-    //to alternate playes every move
+    // to alternate playes every move
     void changePlayer();
     void verifyCheck();
     bool isCheck(Color color);
@@ -113,15 +117,15 @@ private:
 
     bool isGameStarted{false};
 
-signals:
+   signals:
     void buttonTriggered();
     void updateMovements();
+    void gameStarted();
 
-private slots:
+   private slots:
 
     // acts as the controller of who pressed what
-    void onButtonTrigger()
-    {
+    void onButtonTrigger() {
         QObject* senderObject = QObject::sender();
         if (senderObject == nullptr)
             return;
@@ -131,18 +135,15 @@ private slots:
 
     // at everymove, signal the pieces to recalculate their next possible move
     // and change player
-    void validateMovements(){
+    void validateMovements() {
         emit updateMovements();
         verifyCheck();
         changePlayer();
     }
 
-    void onTestGameButtonPressed(){
+    void onTestGameButtonPressed() {
         testGame();
     }
-
 };
-
-
 
 #endif

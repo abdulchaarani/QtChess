@@ -10,14 +10,17 @@ SOURCES += \
         bishop.cpp \
         box.cpp \
         chessboard.cpp \
+        creditsscreen.cpp \
         king.cpp \
         knight.cpp \
         main.cpp \
+        mainmenu.cpp \
         pawn.cpp \
         piece.cpp \
         point.cpp \
         queen.cpp \
-        rook.cpp
+        rook.cpp \
+        titlescreen.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -28,12 +31,15 @@ HEADERS += \
     bishop.hpp \
     box.hpp \
     chessboard.hpp \
+    creditsscreen.h \
     king.hpp \
     knight.hpp \
+    mainmenu.h \
     pawn.hpp \
     piece.hpp \
     point.hpp \
     queen.hpp \
-    rook.hpp
+    rook.hpp \
+    titlescreen.h
 
 QT += widgets

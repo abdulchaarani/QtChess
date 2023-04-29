@@ -1,11 +1,11 @@
 #include <QApplication>
-#include <QObject>
-#include <QWidget>
 #include <QMainWindow>
 #include <QMenu>
 #include <QMenuBar>
-#include "chessboard.hpp"
+#include <QObject>
+#include <QWidget>
 
+#include "chessboard.hpp"
 
 int main(int argc, char *argv[]) {
     // necessary or program wont run
@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
     QWidget *mainLayout = new QWidget(&mainWindow);
     mainWindow.setCentralWidget(mainLayout);
 
-    //ChessBoard* chessboard = new ChessBoard(mainLayout);
+    // ChessBoard* chessboard = new ChessBoard(mainLayout);
 
     QMenuBar *menuBar = new QMenuBar(&mainWindow);
     mainWindow.setMenuBar(menuBar);
@@ -33,11 +33,11 @@ int main(int argc, char *argv[]) {
     QObject::connect(newGameAction, &QAction::triggered, &ChessBoard::getInstance);
 
     ChessBoard::setParent(mainLayout);
-    //ChessBoard::getInstance();
-    // create chessboard
-    //chessboard->testGame();
-    //QVBoxLayout* mainLayout = new QVBoxLayout(&mainWindow);
-    //mainLayout.addLayout(chessboard);
+    // ChessBoard::getInstance();
+    //  create chessboard
+    // chessboard->testGame();
+    // QVBoxLayout* mainLayout = new QVBoxLayout(&mainWindow);
+    // mainLayout.addLayout(chessboard);
 
     // add pieces to chessboard
 

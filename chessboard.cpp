@@ -50,8 +50,34 @@ void ChessBoard::changePlayer(){
 }
 
 void ChessBoard::startGame(){
+
+    qDebug() << "no.";
+
+    emit gameStarted();
+
+    // TODO : make pieces appear fr fr
+
+    addPiece<King>(Color::WHITE,0,3);
+    addPiece<King>(Color::BLACK,7,5);
+
+    addPiece<Knight>(Color::WHITE, 5, 3);
+    addPiece<Knight>(Color::BLACK, 3, 5);
+
+    addPiece<Pawn>(Color::WHITE, 6,2);
+    addPiece<Pawn>(Color::BLACK, 1,1);
+
+    addPiece<Rook>(Color::BLACK, 6,7);
+    addPiece<Rook>(Color::WHITE, 0,0);
+
+    addPiece<Bishop>(Color::BLACK, 3,4);
+    addPiece<Bishop>(Color::WHITE, 2,5);
+
+    addPiece<Queen>(Color::WHITE, 2,2);
+    addPiece<Queen>(Color::BLACK, 1,6);
+
     isGameStarted = true;
     currentPlayer = Color::WHITE;
+
 }
 
 bool ChessBoard::isCheck(Color color){
@@ -109,6 +135,7 @@ std::list<Piece*> ChessBoard::getAttackingPieces(Color color, Point position){
     return attackingPieces;
 
 }
+
 
 bool ChessBoard::isValidMove(Point position){
 
