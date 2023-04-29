@@ -39,7 +39,7 @@ void Pawn::fillMovements(){ // to beautify :(
 
         // check diagonal left if ennemy
         if ((row - 1) >= 0 && (column - 1) >= 0)
-            if(chessboard_->board_[row + 1][column - 1] != nullptr && chessboard_->board_[row + 1][column - 1]->color_ != color_)
+            if(chessboard_->board_[row - 1][column - 1] != nullptr && chessboard_->board_[row - 1][column - 1]->color_ != color_)
                 movements.push_back(Point(row - 1, column - 1));
     }
 

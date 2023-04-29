@@ -159,22 +159,43 @@ std::list<Piece*> ChessBoard::getAttackingPieces(Color color, Point position){
 bool ChessBoard::isValidMove(Point position){
 
     Point oldPosition = piecePressed_->getCoordinates();
+    Piece* potentialVictim{nullptr};
 
+    int newRow = position.getRow();
+    int newColumn = position.getColumn();
+
+
+    // validate if enemy's death would cause a self-check
+    if (board_[newRow][newColumn] != nullptr){
+        potentialVictim = board_[newRow][newColumn];
+    }
+
+    // move clicked piece into future position to validate if king is checked
     board_[oldPosition.getRow()][oldPosition.getColumn()] = nullptr;
-
-    piecePressed_->getCoordinates().setRow(position.getRow());
-    piecePressed_->getCoordinates().setColumn(position.getColumn());
-    board_[position.getRow()][position.getColumn()] = piecePressed_;
+    piecePressed_->getCoordinates().setRow(newRow);
+    piecePressed_->getCoordinates().setColumn(newColumn);
+    board_[newRow][newColumn] = piecePressed_;
 
     emit updateMovements();
 
+    if (potentialVictim != nullptr)
+        potentialVictim->movements.clear();
+
     bool isValid = !isCheck(piecePressed_->color_);
 
+    // replace all the moved pieces back to original positions
     piecePressed_->getCoordinates().setRow(oldPosition.getRow());
     piecePressed_->getCoordinates().setColumn(oldPosition.getColumn());
-
     board_[oldPosition.getRow()][oldPosition.getColumn()] = piecePressed_;
-    board_[position.getRow()][position.getColumn()] = nullptr;
+
+    if (potentialVictim != nullptr){
+        board_[newRow][newColumn] = potentialVictim;
+        potentialVictim->getCoordinates().setRow(newRow);
+        potentialVictim->getCoordinates().setColumn(newColumn);
+    }
+    else{
+        board_[newRow][newColumn] = nullptr;
+    }
 
     emit updateMovements();
 
