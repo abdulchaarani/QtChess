@@ -2,12 +2,13 @@
 #include "mainmenu.h"
 #include <QDebug>
 
-MainMenu::MainMenu(QMainWindow *parent)
-    : QMainWindow(parent),
-    mainMenuLayout(new QStackedLayout(this)),
-    chessBoard(new ChessBoard(this)),
-    titleScreen(new TitleScreen(this)),
-    creditsScreen(new CreditsScreen(tr("Abdoodoo and Hibooboo"), this))
+MainMenu::MainMenu(QMainWindow* parent)
+    :
+    mainMenuLayout{new QStackedLayout()},
+    chessBoard{new ChessBoard(this)},
+    titleScreen{new TitleScreen(this)},
+    creditsScreen{new CreditsScreen(tr("Abdoodoo and Hibooboo"), this)},
+    parent_{parent}
 
 {
     // Defining a custom layout for MainMenu. This is the reason for the message in output
@@ -39,20 +40,16 @@ MainMenu::MainMenu(QMainWindow *parent)
 void MainMenu::onBackPress()
 {
     mainMenuLayout->setCurrentWidget(titleScreen);
-    setLayout(mainMenuLayout);
 }
 
 // Slot that switches the current screen to credits screen
 void MainMenu::onCreditsPress()
 {
     mainMenuLayout->setCurrentWidget(creditsScreen);
-    setLayout(mainMenuLayout);
 }
 
 // Slot that switches to chessBoard screen.Sensitive to the gameStarted() signal defined in chessBoard
 void MainMenu::onGameStarted()
 {
-    chessBoard->setFixedSize(800,800);
     mainMenuLayout->setCurrentWidget(chessBoard);
-    setLayout(mainMenuLayout);
 }

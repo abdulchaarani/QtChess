@@ -27,11 +27,11 @@ public slots:
     void onGameStarted();
 
 private:
-    QStackedLayout* const mainMenuLayout;
+    QStackedLayout* mainMenuLayout;
     ChessBoard*    chessBoard;
     TitleScreen*   titleScreen;
     CreditsScreen* creditsScreen;
-
+    QMainWindow *parent_;
 };
 
 #endif // MAINMENU_H

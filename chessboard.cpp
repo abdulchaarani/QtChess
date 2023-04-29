@@ -2,18 +2,48 @@
 #include "chessboard.hpp"
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QMessageBox>
+#include "king.hpp"
+#include "knight.hpp"
+#include "rook.hpp"
+#include "bishop.hpp"
+#include "queen.hpp"
+#include "pawn.hpp"
+
+const QString WHITE_TURN = "QLabel{"
+                          "  background-color: white;"
+                          "  color: black; "
+                          " font-size: 20px;"
+                          "  border-style: inset;"
+                           "  }";
+
+const QString BLACK_TURN = "QLabel{"
+                           "  background-color: black;"
+                           "  color: white; "
+                           " font-size: 20px;"
+                           "  border-style: inset;"
+                           "  }";
 
 ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 {
 
     // creates a 8x8 grid of boxes and connects correct signals
+    lay_ = new QVBoxLayout(this);
+    grid_ = new QGridLayout();
 
-    grid_ = new QGridLayout(this);
+    label_ = new QLabel("White's turn");
+    label_->setFixedHeight(30);
+    label_->setStyleSheet(WHITE_TURN);
+    label_->setAlignment(Qt::AlignCenter);
 
+    lay_->addWidget(label_);
+    lay_->addLayout(grid_);
+
+    //lay_ = new QVBoxLayout(this);
     for (int row = 0; row < 8; ++row) {
         for (int column = 0; column < 8; ++column) {
             Box* box = new Box(row, column, this); // !!
-            box->setFixedSize(150, 150);
+            box->setFixedSize(100, 100);
             grid_->addWidget(box, row, column);
             connect(box, SIGNAL(released()), this, SLOT(onButtonTrigger()));
             connect(this, SIGNAL(buttonTriggered()), box, SLOT(handleClick()));
@@ -25,12 +55,16 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 void ChessBoard::changePlayer(){
     if (currentPlayer == Color::WHITE) {
         currentPlayer = Color::BLACK;
-        if (isGameStarted)
-            qDebug() << "BLACK";
+        if (isGameStarted){
+            label_->setStyleSheet(BLACK_TURN);
+            label_->setText("Black's Turn");
+        }
     } else {
         currentPlayer = Color::WHITE;
-        if (isGameStarted)
-            qDebug() << "WHITE";
+            if (isGameStarted){
+            label_->setStyleSheet(WHITE_TURN);
+            label_->setText("White's Turn");
+        }
     }
 }
 

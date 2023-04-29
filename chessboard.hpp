@@ -9,6 +9,7 @@
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
+#include <QLabel>
 #include <list>
 #include <array>
 
@@ -16,12 +17,6 @@
 
 #include "box.hpp"
 #include "piece.hpp"
-#include "king.hpp"
-#include "knight.hpp"
-#include "rook.hpp"
-#include "bishop.hpp"
-#include "queen.hpp"
-#include "pawn.hpp"
 
 enum class Color{
     WHITE,
@@ -36,7 +31,8 @@ class ChessBoard : public QWidget
 public:
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* grid_;
-
+    QVBoxLayout* lay_;
+    QLabel* label_;
     // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
 
@@ -47,7 +43,7 @@ public:
     void addPiece(Color color, int row, int column){
         T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
-
+        piece->show();
         // connect king to every box to detect valid positions
         for (int i{0}; i < grid_->rowCount(); ++i) {
             for (int j{0}; j <  grid_->columnCount(); ++j) {

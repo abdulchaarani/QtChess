@@ -6,10 +6,11 @@
 
 //SHOULD BE PUT IN A NAMESPACE!! :D
 
-const int OFFSET{96};
-const int MARGIN{20};
+const double OFFSET{100.7};
+const int MARGIN_X{10};
+const int MARGIN_Y{45};
 const int PIECE_SIZE{60};
-const int BUTTON_SIZE{95};
+const int BUTTON_SIZE{100};
 
 QFont PIECE_FONT("Segoe UI Symbol", PIECE_SIZE);
 
@@ -53,7 +54,7 @@ void Piece::changePosition(int row, int column)
     coordinates_.setColumn(column);
     // add new location to board
     chessboard_->board_[row][column] = this;
-    setGeometry(column * OFFSET + MARGIN, row * OFFSET + MARGIN, BUTTON_SIZE, BUTTON_SIZE);
+    setGeometry(column * OFFSET + MARGIN_X, row * OFFSET + MARGIN_Y, BUTTON_SIZE, BUTTON_SIZE);
     emit movedPiece();
 }
 
