@@ -8,6 +8,7 @@
 #include <QObject>
 #include <QWidget>
 #include <QGridLayout>
+#include <QMainWindow>
 #include <QPushButton>
 #include <list>
 #include <array>
@@ -27,8 +28,22 @@ class ChessBoard : public QWidget
     Q_OBJECT
 
 public:
+
+    static ChessBoard* instance;
+    static QWidget* parentWindow_;
+
+    static void getInstance(){
+        instance = new ChessBoard(parentWindow_);
+        //parentWindow_->setCentralWidget(ChessBoard::instance);
+    }
+
+    static void setParent(QWidget* mainWindow){
+        parentWindow_ = mainWindow;
+    }
+
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* grid_;
+    QVBoxLayout* test_;
 
     // keeps track of ALL the pieces on the board
     std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
@@ -39,7 +54,8 @@ public:
     void addPiece(Color color, int row, int column){
         T* piece = new T(color, row, column, this, parent_);
         piece->fillMovements();
-
+        piece->show();
+        //test_->addWidget(piece);
         // connect king to every box to detect valid positions
         for (int i{0}; i < grid_->rowCount(); ++i) {
             for (int j{0}; j <  grid_->columnCount(); ++j) {
@@ -60,6 +76,7 @@ public:
     Color currentPlayer;
 
     void startGame();
+    void testGame();
 
     void finishingBlow(){
         //getBoxPressed()->movableBox_ = false;
@@ -118,6 +135,10 @@ private slots:
         emit updateMovements();
         verifyCheck();
         changePlayer();
+    }
+
+    void onTestGameButtonPressed(){
+        testGame();
     }
 
 };

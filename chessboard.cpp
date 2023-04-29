@@ -2,23 +2,38 @@
 #include "chessboard.hpp"
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QVBoxLayout>
+#include "bishop.hpp"
+#include "king.hpp"
+#include "knight.hpp"
+#include "pawn.hpp"
+#include "piece.hpp"
+#include "queen.hpp"
+#include "rook.hpp"
+
+ChessBoard* ChessBoard::instance = nullptr;
+QWidget* ChessBoard::parentWindow_ = nullptr;
+
 
 ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
 {
 
     // creates a 8x8 grid of boxes and connects correct signals
+    //test_ = new QVBoxLayout(parent);
+    grid_ = new QGridLayout(parent);
 
-    grid_ = new QGridLayout(this);
+    //test_->addLayout(grid_);
 
     for (int row = 0; row < 8; ++row) {
         for (int column = 0; column < 8; ++column) {
             Box* box = new Box(row, column, this); // !!
-            box->setFixedSize(150, 150);
             grid_->addWidget(box, row, column);
             connect(box, SIGNAL(released()), this, SLOT(onButtonTrigger()));
             connect(this, SIGNAL(buttonTriggered()), box, SLOT(handleClick()));
         }
     }
+
+    testGame();
 }
 
  // to alternate playes every move
@@ -118,5 +133,27 @@ bool ChessBoard::isValidMove(Point position){
     emit updateMovements();
 
     return isValid;
+}
 
+void ChessBoard::testGame(){
+    qDebug() << "WOWO;";
+    addPiece<King>(Color::WHITE, 0, 3);
+    addPiece<King>(Color::BLACK, 7, 5);
+
+    addPiece<Knight>(Color::WHITE, 5, 3);
+    addPiece<Knight>(Color::BLACK, 3, 5);
+
+    addPiece<Pawn>(Color::WHITE, 6, 2);
+    addPiece<Pawn>(Color::BLACK, 1, 1);
+
+    addPiece<Rook>(Color::BLACK, 6, 7);
+    addPiece<Rook>(Color::WHITE, 0, 0);
+
+    addPiece<Bishop>(Color::BLACK, 3, 4);
+    addPiece<Bishop>(Color::WHITE, 2, 5);
+
+    addPiece<Queen>(Color::WHITE, 2, 2);
+    addPiece<Queen>(Color::BLACK, 1, 6);
+    //parent_->show();
+    startGame();
 }

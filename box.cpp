@@ -51,6 +51,8 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
 
     // save chessboard as an attribute
     chessboard_ = parent;
+    setFixedSize(BOX_SIZE, BOX_SIZE);
+    setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 }
 
 void Box::setColorWhite(){

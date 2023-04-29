@@ -37,7 +37,7 @@ public:
 private:
     Point coordinates_;
 
-    int BOX_SIZE{150};
+    int BOX_SIZE{100};
 
     // to help alternate colors when generating chessboard
     inline static bool counter_{false};
