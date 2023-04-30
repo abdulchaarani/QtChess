@@ -206,23 +206,35 @@ void ChessBoard::validateMovements()
 
 void ChessBoard::startGame()
 {
-    addPiece<King>(Color::WHITE, 0, 3);
-    addPiece<King>(Color::BLACK, 7, 5);
+    addPiece<King>(Color::WHITE, 7, 4);
+    addPiece<King>(Color::BLACK, 0, 4);
 
-    addPiece<Knight>(Color::WHITE, 5, 3);
-    addPiece<Knight>(Color::BLACK, 3, 5);
+    addPiece<Knight>(Color::WHITE, 7, 1);
+    addPiece<Knight>(Color::WHITE, 7, 6);
+    addPiece<Knight>(Color::BLACK, 0, 1);
+    addPiece<Knight>(Color::BLACK, 0, 6);
 
     addPiece<Pawn>(Color::WHITE, 6, 2);
     addPiece<Pawn>(Color::BLACK, 1, 1);
 
-    addPiece<Rook>(Color::BLACK, 6, 7);
-    addPiece<Rook>(Color::WHITE, 0, 0);
 
-    addPiece<Bishop>(Color::BLACK, 3, 4);
-    addPiece<Bishop>(Color::WHITE, 2, 5);
+    addPiece<Rook>(Color::WHITE, 7, 0);
+    addPiece<Rook>(Color::WHITE, 7, 7);
+    addPiece<Rook>(Color::BLACK, 0, 0);
+    addPiece<Rook>(Color::BLACK, 0, 7);
 
-    addPiece<Queen>(Color::WHITE, 2, 2);
-    addPiece<Queen>(Color::BLACK, 1, 6);
+    addPiece<Bishop>(Color::WHITE, 7, 2);
+    addPiece<Bishop>(Color::WHITE, 7, 5);
+    addPiece<Bishop>(Color::BLACK, 0, 2);
+    addPiece<Bishop>(Color::BLACK, 0, 5);
+
+    addPiece<Queen>(Color::WHITE, 7, 3);
+    addPiece<Queen>(Color::BLACK, 0, 3);
+
+    for (int i{0}; i < 8; ++i){
+        addPiece<Pawn>(Color::WHITE, 6, i);
+        addPiece<Pawn>(Color::BLACK, 1, i);
+    }
 
     isGameStarted = true;
     currentPlayer = Color::WHITE;
@@ -282,6 +294,32 @@ void ChessBoard::startEndGame4()
     addPiece<King>(Color::BLACK, 4, 1);
     addPiece<Bishop>(Color::BLACK, 5, 0);
     addPiece<Knight>(Color::BLACK, 5, 2);
+
+    isGameStarted = true;
+    currentPlayer = Color::WHITE;
+
+    emit gameStarted();
+}
+
+void ChessBoard::startTestGame()
+{
+    addPiece<King>(Color::WHITE, 0, 3);
+    addPiece<King>(Color::BLACK, 7, 5);
+
+    addPiece<Knight>(Color::WHITE, 5, 3);
+    addPiece<Knight>(Color::BLACK, 3, 5);
+
+    addPiece<Pawn>(Color::WHITE, 6, 2);
+    addPiece<Pawn>(Color::BLACK, 1, 1);
+
+    addPiece<Rook>(Color::BLACK, 6, 7);
+    addPiece<Rook>(Color::WHITE, 0, 0);
+
+    addPiece<Bishop>(Color::BLACK, 3, 4);
+    addPiece<Bishop>(Color::WHITE, 2, 5);
+
+    addPiece<Queen>(Color::WHITE, 2, 2);
+    addPiece<Queen>(Color::BLACK, 1, 6);
 
     isGameStarted = true;
     currentPlayer = Color::WHITE;

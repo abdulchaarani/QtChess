@@ -94,9 +94,8 @@ void Box::handleClick()
             if (chessboard_->isValidMove(coordinates_))
                 if (potentialVictim != nullptr)
                     chessboard_->getLastPiecePressed()->killPiece(potentialVictim);
-                else{
+                else
                     emit goTo();
-                }
 
     revertColor();
     movableBox_ = false;

@@ -37,7 +37,7 @@ MainMenu::MainMenu(QMainWindow* parent)
     connect(endGamesScreen->endGameButton2_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame2()));
     connect(endGamesScreen->endGameButton3_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame3()));
     connect(endGamesScreen->endGameButton4_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame4()));
-
+    connect(endGamesScreen->endGameButton5_, SIGNAL(clicked()), chessBoard, SLOT(startTestGame()));
 }
 
 // Slot that switches the current screen to the titlescreen

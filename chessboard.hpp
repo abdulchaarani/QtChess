@@ -100,6 +100,7 @@ private slots:
     void startEndGame2();
     void startEndGame3();
     void startEndGame4();
+    void startTestGame();
 };
 
 

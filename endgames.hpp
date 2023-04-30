@@ -24,6 +24,7 @@ private:
     QPushButton* endGameButton2_;
     QPushButton* endGameButton3_;
     QPushButton* endGameButton4_;
+    QPushButton* endGameButton5_;
 
     inline static const int buttonSize_{100};
 
