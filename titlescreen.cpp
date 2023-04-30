@@ -1,5 +1,5 @@
 
-#include "titlescreen.h"
+#include "titlescreen.hpp"
 
 TitleScreen::TitleScreen(QWidget* parent)
     : QWidget(parent),
@@ -26,9 +26,9 @@ TitleScreen::TitleScreen(QWidget* parent)
 
     // Alignment of our buttons. Will be beautified later
     topButtonLayout->addWidget   (m_newGameButton,  0, Qt::AlignLeft);
-    topButtonLayout->addWidget   (m_exitGameButton, 0, Qt::AlignRight);
+    topButtonLayout->addWidget   (m_endGameButton, 0, Qt::AlignRight);
     bottomButtonLayout->addWidget(m_creditsButton,  1, Qt::AlignLeft);
-    bottomButtonLayout->addWidget(m_endGameButton,  1, Qt::AlignRight);
+    bottomButtonLayout->addWidget(m_exitGameButton,  1, Qt::AlignRight);
 
     // Needed two layouts to have a nice 2x2 grid without the hassle
     titleScreenLayout->addLayout(topButtonLayout,    0, 0);

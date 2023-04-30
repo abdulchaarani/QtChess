@@ -21,7 +21,8 @@ King::King(Color color, int row,  int column, ChessBoard* board, QWidget* parent
 
 
 // Error bound checking
-void King::fillMovements(){ // to beautify :(
+void King::fillMovements()
+{
     movements.clear();
 
     int row{coordinates_.getRow()};

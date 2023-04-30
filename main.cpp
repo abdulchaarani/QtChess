@@ -3,10 +3,10 @@
 #include <QWidget>
 #include <QGuiApplication>
 #include "chessboard.hpp"
-#include "creditsscreen.h"
-#include "mainmenu.h"
+#include "creditsscreen.hpp"
+#include "mainmenu.hpp"
 
-#include "titlescreen.h"
+#include "titlescreen.hpp"
 
 int main(int argc, char *argv[])
 {

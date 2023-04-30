@@ -40,20 +40,7 @@ public:
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
-    void addPiece(Color color, int row, int column){
-        T* piece = new T(color, row, column, this, parent_);
-        piece->fillMovements();
-        piece->show();
-        // connect king to every box to detect valid positions
-        for (int i{0}; i < grid_->rowCount(); ++i) {
-            for (int j{0}; j <  grid_->columnCount(); ++j) {
-                QWidget* widget =  grid_->itemAtPosition(i, j)->widget();
-                connect(piece, SIGNAL(released()), widget, SLOT(onPieceClick()));
-                connect(widget, SIGNAL(goTo()), piece, SLOT(updatePosition()));
-            }
-        }
-    }
-
+    void addPiece(Color color, int row, int column);
     // TODO CHANGE NAMES
     // Getters : to keep track of current pressed piece and box
     Box* getBoxPressed() { return boxPressed_; }
@@ -63,12 +50,7 @@ public:
 
     Color currentPlayer;
 
-
-
-    void finishingBlow(){
-        //getBoxPressed()->movableBox_ = false;
-        emit buttonTriggered();
-    }
+    void finishingBlow();
 
     void setWhiteKing(Piece* king) {whiteKing = king;}
     void setBlackKing(Piece* king) {blackKing = king;}
@@ -108,24 +90,16 @@ signals:
 private slots:
 
     // acts as the controller of who pressed what
-    void onButtonTrigger()
-    {
-        QObject* senderObject = QObject::sender();
-        if (senderObject == nullptr)
-            return;
-        boxPressed_ = qobject_cast<Box*>(senderObject);
-        emit buttonTriggered();
-    }
-
+    void onButtonTrigger();
     // at everymove, signal the pieces to recalculate their next possible move
     // and change player
-    void validateMovements(){
-        emit updateMovements();
-        verifyCheck();
-        changePlayer();
-    }
+    void validateMovements();
 
     void startGame();
+    void startEndGame1();
+    void startEndGame2();
+    void startEndGame3();
+    void startEndGame4();
 };
 
 

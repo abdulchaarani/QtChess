@@ -10,7 +10,11 @@ class Rook : public Piece
 
 public:
     Rook(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
+    Rook(Piece* queen);
     void fillMovements() override;
 
+private:
+    bool isQueen_{false};
+    Piece* queen_;
 };
 #endif // ROOK_HPP

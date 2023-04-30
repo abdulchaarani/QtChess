@@ -24,15 +24,13 @@ class Piece : public QPushButton
 
 public:
     Piece(Color color, int column, int row, ChessBoard* board, QWidget *parent = nullptr);
+    Piece() = default;
     virtual ~Piece() = default;
 
     void changePosition(int column, int row);
 
     // List of valid moves
     std::list<Point> movements; // TODO change to Point* eventually
-
-    // UNUSED
-    static std::unordered_map<int, Piece*> friendlies;
 
     // old getter
     Point& getCoordinates();
@@ -50,7 +48,7 @@ public:
 
      QTimer blinkTimer_;
 
-protected:
+//protected:
     Point coordinates_;
     ChessBoard* chessboard_;
 

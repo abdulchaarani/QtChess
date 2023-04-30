@@ -1,5 +1,5 @@
 
-#include "mainmenu.h"
+#include "mainmenu.hpp"
 #include <QDebug>
 
 MainMenu::MainMenu(QMainWindow* parent)
@@ -8,6 +8,7 @@ MainMenu::MainMenu(QMainWindow* parent)
     chessBoard{new ChessBoard(this)},
     titleScreen{new TitleScreen(this)},
     creditsScreen{new CreditsScreen(tr("Abdoodoo and Hibooboo"), this)},
+    endGamesScreen{new EndGamesScreen(this)},
     parent_{parent}
 
 {
@@ -15,24 +16,27 @@ MainMenu::MainMenu(QMainWindow* parent)
     mainMenuLayout->addWidget(titleScreen);
     mainMenuLayout->addWidget(chessBoard);
     mainMenuLayout->addWidget(creditsScreen);
+    mainMenuLayout->addWidget(endGamesScreen);
     mainMenuLayout->setCurrentWidget(titleScreen);
+
 
     // The central widget is the widget u see when u run. I use it to switch screens
     QWidget* centralWidget = new QWidget();
     centralWidget->setLayout(mainMenuLayout);
     setCentralWidget(centralWidget);
 
-    // Connect the startGame button to the startGame function in chessboard
-    connect(titleScreen->m_newGameButton, &QPushButton::clicked, chessBoard, &ChessBoard::startGame);
+    // connect main menu buttons to their proper functions
+    connect(titleScreen->m_newGameButton, SIGNAL(clicked()), chessBoard, SLOT(startGame()));
+    connect(titleScreen->m_creditsButton, SIGNAL(clicked()), this, SLOT(onCreditsPress()));
+    connect(titleScreen->m_endGameButton, SIGNAL(clicked()), this, SLOT(onEndGamesPress()));
+    connect(creditsScreen->m_backButton, SIGNAL(clicked()), this, SLOT(onBackPress()));
+    connect(chessBoard, SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
 
-    // Connect the gameStarted signal emitted in startGame() to the onGameStarted slot in MainMenu
-    connect(chessBoard, &ChessBoard::gameStarted, this, &MainMenu::onGameStarted);
-
-    // Connect the credits button to the onCreditsPress slot. Switches current screen to credits screen
-    connect(titleScreen->m_creditsButton, &QPushButton::clicked, this, &MainMenu::onCreditsPress);
-
-    // Connect the backButton to the onBackPress slot. Returns to title screen from credits screen
-    connect(creditsScreen->m_backButton, &QPushButton::clicked, this, &MainMenu::onBackPress);
+    //connect end games buttons
+    connect(endGamesScreen->endGameButton1_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame1()));
+    connect(endGamesScreen->endGameButton2_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame2()));
+    connect(endGamesScreen->endGameButton3_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame3()));
+    connect(endGamesScreen->endGameButton4_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame4()));
 
 }
 
@@ -48,8 +52,15 @@ void MainMenu::onCreditsPress()
     mainMenuLayout->setCurrentWidget(creditsScreen);
 }
 
+void MainMenu::onEndGamesPress()
+{
+    mainMenuLayout->setCurrentWidget(endGamesScreen);
+}
+
 // Slot that switches to chessBoard screen.Sensitive to the gameStarted() signal defined in chessBoard
 void MainMenu::onGameStarted()
 {
     mainMenuLayout->setCurrentWidget(chessBoard);
 }
+
+

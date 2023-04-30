@@ -1,5 +1,5 @@
 
-#include "creditsscreen.h"
+#include "creditsscreen.hpp"
 
 CreditsScreen::CreditsScreen(const QString& creditsText, QWidget* parent) :
     QWidget(parent),

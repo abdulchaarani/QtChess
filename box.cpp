@@ -1,46 +1,9 @@
 
 #include "box.hpp"
 #include "chessboard.hpp"
+#include "layouts.hpp"
 
-// Stylesheets for the box colors
-
-// NAMESPACE :D :D
-
-const QString WHITE_BOX = "QPushButton{"
-                     "  background-color: rgb(238, 238, 212);"
-                     "  border-style: inset;"
-                     "  }"
-                     "QPushButton:pressed {"
-                     "   border-style: inset;"
-                     "}";
-
-const QString BLACK_BOX = "QPushButton{"
-                     "  background-color: rgb(126, 148, 90);"
-                     "  border-style: inset;"
-                     "  }"
-                     "QPushButton:pressed {"
-                     "   border-style: inset;"
-                     "}";
-
-const QString HIGHLIGHT_KILL = "QPushButton{"
-                     "  background-color: #F90F33;"
-                     "  border-style: solid;"
-                     "  border-width: 2px;"
-                     "  border-color: white;"
-                     "  }"
-                     "QPushButton:pressed {"
-                     "   border-style: inset;"
-                     "}";
-
-const QString HIGHLIGHT_MOVE = "QPushButton{"
-                              "  background-color: #0B76D4;"
-                              "  border-style: solid;"
-                              "  border-width: 2px;"
-                              "  border-color: white;"
-                              "  }"
-                              "QPushButton:pressed {"
-                              "   border-style: inset;"
-                              "}";
+using namespace layouts;
 
 Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordinates_(row, column)
 {
@@ -53,20 +16,19 @@ Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordin
     chessboard_ = parent;
 }
 
-void Box::setColorWhite(){
-
-    this->setStyleSheet(WHITE_BOX);
+void Box::setColorWhite()
+{
+    this->setStyleSheet(whiteBoxFont);
     color_ = true;
 }
-void Box::setColorBlack(){
-
-
-    this->setStyleSheet(BLACK_BOX);
+void Box::setColorBlack()
+{
+    this->setStyleSheet(blackBoxFont);
     color_ = false;
 }
 
-void Box::onPieceClick(){ // refactor maybe?
-
+void Box::onPieceClick()
+{
     // reset clicked box
     chessboard_->setBoxPressed(nullptr);
 
@@ -101,20 +63,21 @@ void Box::onPieceClick(){ // refactor maybe?
 }
 
 // If box is in the possible moveset of the clicked piece, highlight
-void Box::highlightColor(){
-
+void Box::highlightColor()
+{
     Piece* piece = chessboard_->getLastPiecePressed();
     for(auto&& movement : piece->movements)
         if (movement == this->coordinates_){
             movableBox_ = true;
             if (chessboard_->board_[coordinates_.getRow()][coordinates_.getColumn()] != nullptr)
-                setStyleSheet(HIGHLIGHT_KILL);
+                setStyleSheet(highlightKillFont);
             else
-                setStyleSheet(HIGHLIGHT_MOVE);
+                setStyleSheet(highlightMoveFont);
         }
 }
 
-void Box::revertColor(){
+void Box::revertColor()
+{
     color_ ? setColorWhite() : setColorBlack();
 }
 

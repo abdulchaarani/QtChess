@@ -10,7 +10,12 @@ class Bishop : public Piece
 
 public:
     Bishop(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
+    Bishop(Piece* queen);
     void fillMovements() override;
+
+private:
+    bool isQueen_{false};
+    Piece* queen_;
 
 };
 

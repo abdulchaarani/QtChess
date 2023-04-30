@@ -3,8 +3,9 @@
 #define MAINMENU_H
 
 #include "chessboard.hpp"
-#include "creditsscreen.h"
-#include "titlescreen.h"
+#include "creditsscreen.hpp"
+#include "titlescreen.hpp"
+#include "endgames.hpp"
 
 #include <QWidget>
 #include <QStackedLayout>
@@ -24,6 +25,7 @@ public:
 public slots:
     void onBackPress();
     void onCreditsPress();
+    void onEndGamesPress();
     void onGameStarted();
 
 private:
@@ -31,6 +33,7 @@ private:
     ChessBoard*    chessBoard;
     TitleScreen*   titleScreen;
     CreditsScreen* creditsScreen;
+    EndGamesScreen* endGamesScreen;
     QMainWindow *parent_;
 };
 

@@ -11,7 +11,8 @@ Knight::Knight(Color color, int row,  int column, ChessBoard* board, QWidget* pa
 }
 
 // Error bound checking
-void Knight::fillMovements(){// to beautify :(
+void Knight::fillMovements()
+{
     movements.clear();
 
     int row{coordinates_.getRow()};

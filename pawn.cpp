@@ -12,7 +12,8 @@ Pawn::Pawn(Color color, int row,  int column, ChessBoard* board, QWidget* parent
 }
 
 // Error bound checking
-void Pawn::fillMovements(){ // to beautify :(
+void Pawn::fillMovements()
+{
     movements.clear();
 
     int row{coordinates_.getRow()};

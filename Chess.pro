@@ -11,8 +11,10 @@ SOURCES += \
         box.cpp \
         chessboard.cpp \
         creditsscreen.cpp \
+        endgames.cpp \
         king.cpp \
         knight.cpp \
+        layouts.cpp \
         main.cpp \
         mainmenu.cpp \
         pawn.cpp \
@@ -31,15 +33,17 @@ HEADERS += \
     bishop.hpp \
     box.hpp \
     chessboard.hpp \
-    creditsscreen.h \
+    creditsscreen.hpp \
+    endgames.hpp \
     king.hpp \
     knight.hpp \
-    mainmenu.h \
+    layouts.hpp \
+    mainmenu.hpp \
     pawn.hpp \
     piece.hpp \
     point.hpp \
     queen.hpp \
     rook.hpp \
-    titlescreen.h
+    titlescreen.hpp
 
 QT += widgets
