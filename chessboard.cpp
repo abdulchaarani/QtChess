@@ -214,10 +214,6 @@ void ChessBoard::startGame()
     addPiece<Knight>(Color::BLACK, 0, 1);
     addPiece<Knight>(Color::BLACK, 0, 6);
 
-    addPiece<Pawn>(Color::WHITE, 6, 2);
-    addPiece<Pawn>(Color::BLACK, 1, 1);
-
-
     addPiece<Rook>(Color::WHITE, 7, 0);
     addPiece<Rook>(Color::WHITE, 7, 7);
     addPiece<Rook>(Color::BLACK, 0, 0);
