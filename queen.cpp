@@ -3,8 +3,7 @@
 #include "chessboard.hpp"
 
 // Qt doesnt seem to support multiple heritage very well,
-// Will try in the future to derive Queen from Rook and Bishop correctly
-// In the meantime, Queen will have a member bishop and rook
+// Queen will have a member bishop and rook
 
 Queen::Queen(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
      : Piece(color, column, row, board, parent)

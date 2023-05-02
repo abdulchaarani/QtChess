@@ -13,10 +13,10 @@ Piece::Piece(Color color, int row, int column, ChessBoard* board, QWidget* paren
     connect(this, SIGNAL(movedPiece()), chessboard_, SLOT(validateMovements()));
     connect(chessboard_, SIGNAL(updateMovements()), this, SLOT(fillAllMovements()));
     connect(&blinkTimer_, &QTimer::timeout, this, &Piece::toggleBlink);
-    setStyleSheet(pieceStyle);
-    setFixedWidth(buttonSize);
+    setStyleSheet (pieceStyle);
+    setFixedWidth (buttonSize);
     setFixedHeight(buttonSize);
-    setFont(pieceFont);
+    setFont       (pieceFont);
 
 }
 
@@ -54,7 +54,7 @@ void Piece::updatePosition()
 
     // if there are no friendlies on this position, go to box
     if (box->getParent()->getLastPiecePressed() == this && chessboard_->board_[newRow][newColumn] == nullptr){
-        changePosition(newRow, newColumn); // copie Point instead of individual coordinate?
+        changePosition(newRow, newColumn);
         emit playedFirstMove();
     }
 

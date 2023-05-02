@@ -10,12 +10,12 @@ namespace layouts{
 extern const QString menuButtonFont;
 
 // piece layouts
-extern const double offset;
-extern const int marginX;
-extern const int marginY;
-extern const int pieceSize;
-extern const int buttonSize;
-extern const QFont pieceFont;
+extern const double  offset;
+extern const int     marginX;
+extern const int     marginY;
+extern const int     pieceSize;
+extern const int     buttonSize;
+extern const QFont   pieceFont;
 extern const QString pieceStyle;
 extern const QString checkedFont;
 

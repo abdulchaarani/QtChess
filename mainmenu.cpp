@@ -7,7 +7,7 @@ MainMenu::MainMenu(QMainWindow* parent)
     mainMenuLayout{new QStackedLayout()},
     chessBoard{new ChessBoard(this)},
     titleScreen{new TitleScreen(this)},
-    creditsScreen{new CreditsScreen(tr("Abdoodoo and Hibooboo"), this)},
+    creditsScreen{new CreditsScreen(tr("Abdul-Wahab Chaarani & Hiba Chaarani, 2023"), this)},
     endGamesScreen{new EndGamesScreen(this)},
     parent_{parent}
 
@@ -19,8 +19,6 @@ MainMenu::MainMenu(QMainWindow* parent)
     mainMenuLayout->addWidget(endGamesScreen);
     mainMenuLayout->setCurrentWidget(titleScreen);
 
-
-    // The central widget is the widget u see when u run. I use it to switch screens
     QWidget* centralWidget = new QWidget();
     centralWidget->setLayout(mainMenuLayout);
     setCentralWidget(centralWidget);
@@ -29,15 +27,14 @@ MainMenu::MainMenu(QMainWindow* parent)
     connect(titleScreen->m_newGameButton, SIGNAL(clicked()), chessBoard, SLOT(startGame()));
     connect(titleScreen->m_creditsButton, SIGNAL(clicked()), this, SLOT(onCreditsPress()));
     connect(titleScreen->m_endGameButton, SIGNAL(clicked()), this, SLOT(onEndGamesPress()));
-    connect(creditsScreen->m_backButton, SIGNAL(clicked()), this, SLOT(onBackPress()));
+    connect(creditsScreen->m_backButton,  SIGNAL(clicked()), this, SLOT(onBackPress()));
     connect(chessBoard, SIGNAL(gameStarted()), this, SLOT(onGameStarted()));
 
     //connect end games buttons
-    connect(endGamesScreen->endGameButton1_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame1()));
-    connect(endGamesScreen->endGameButton2_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame2()));
-    connect(endGamesScreen->endGameButton3_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame3()));
-    connect(endGamesScreen->endGameButton4_, SIGNAL(clicked()), chessBoard, SLOT(startEndGame4()));
-    connect(endGamesScreen->endGameButton5_, SIGNAL(clicked()), chessBoard, SLOT(startTestGame()));
+    connect(endGamesScreen->queenRookButton_, SIGNAL(clicked()), chessBoard, SLOT(startQueenVRook()));
+    connect(endGamesScreen->philidorButton_,  SIGNAL(clicked()), chessBoard, SLOT(startPhilidor()));
+    connect(endGamesScreen->gelfandButton_,   SIGNAL(clicked()), chessBoard, SLOT(startGelfandVSvidler()));
+    connect(endGamesScreen->ponzianiButton_,  SIGNAL(clicked()), chessBoard, SLOT(startPonziani()));
 }
 
 // Slot that switches the current screen to the titlescreen

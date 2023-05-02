@@ -18,8 +18,7 @@ public:
 private:
 /*
     Qt doesnt seem to support multiple heritage very well,
-    Will try in the future to derive Queen from Rook and Bishop correctly
-    Until then composition will be used to avoid duplication of methods
+    composition will be used to avoid duplication of methods
 */
 
     Bishop* bishop_;

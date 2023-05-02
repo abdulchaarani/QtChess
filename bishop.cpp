@@ -47,10 +47,10 @@ void Bishop::fillMovements()
         else // if somone
             if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break; // stop adding
     }
 
     // check south-west
@@ -62,10 +62,10 @@ void Bishop::fillMovements()
         else // if somone
             if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break; // stop adding
     }
 
     // check north-west
@@ -77,10 +77,10 @@ void Bishop::fillMovements()
         else // if somone
             if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break; // stop adding
     }
 
     // check north-east
@@ -92,10 +92,10 @@ void Bishop::fillMovements()
         else // if somone
             if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break; // stop adding
     }
 
 }

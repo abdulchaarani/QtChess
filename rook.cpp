@@ -44,13 +44,13 @@ void Rook::fillMovements()
         if ((*boardPtr)[row][nextColumn] == nullptr) // if no one, add
             movesPtr->push_back(Point(row, nextColumn));
 
-        else // if somone
+        else
             if ((*boardPtr)[row][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(row, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break;
             }
             else if ((*boardPtr)[row][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break;
     }
     // check to the left
     for (int nextColumn{column - 1}; nextColumn >= 0; --nextColumn){
@@ -61,10 +61,10 @@ void Rook::fillMovements()
         else // if somone
             if ((*boardPtr)[row][nextColumn]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(row, nextColumn)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[row][nextColumn]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break;
     }
 
     // check below
@@ -76,10 +76,10 @@ void Rook::fillMovements()
         else // if someone there
             if ((*boardPtr)[nextRow][column]->color_ != color){ // if enemy in sight
                 movesPtr->push_back(Point(nextRow, column)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][column]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break;
     }
     // check above
     for (int nextRow{row - 1}; nextRow >= 0; --nextRow){
@@ -90,10 +90,10 @@ void Rook::fillMovements()
         else // if somone
             if ((*boardPtr)[nextRow][column]->color_ != color){ // enemy in sight?
                 movesPtr->push_back(Point(nextRow, column)); // add enemy to list
-                break; // stop adding (u aint a ghost)
+                break; // stop adding
             }
             else if ((*boardPtr)[nextRow][column]->color_ == color) // if friendly
-                break; // dont add em, no friendly fire plz, stop adding (u aint a ghost)
+                break;
     }
 
 }

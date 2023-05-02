@@ -3,7 +3,7 @@
 #define CHESSBOARD_HPP
 
 // this class acts as the controller-ish model to keep track of the events
-// and positions of stuff on the board
+// and positions of pieces on the board
 
 #include <QObject>
 #include <QWidget>
@@ -32,21 +32,21 @@ public:
     ChessBoard(QWidget* parent = nullptr);
     QGridLayout* grid_;
     QVBoxLayout* lay_;
-    QLabel* label_;
+    QLabel*      label_;
+
     // keeps track of ALL the pieces on the board
-    std::array<std::array<Piece*, 8>, 8> board_{}; // TODO overload[]
+    std::array<std::array<Piece*, 8>, 8> board_{};
 
     friend class MainMenu;
 
     // to add a piece to the board and to connect the right signals
     template <typename T>
     void addPiece(Color color, int row, int column);
-    // TODO CHANGE NAMES
-    // Getters : to keep track of current pressed piece and box
-    Box* getBoxPressed() { return boxPressed_; }
-    void setBoxPressed(Box* box) { boxPressed_ = box; }
-    Piece* getLastPiecePressed() { return piecePressed_; }
-    void setPiecePressed(Piece* piece) { piecePressed_ = piece; }
+
+    Box*   getBoxPressed()               { return boxPressed_; }
+    void   setBoxPressed(Box* box)       { boxPressed_ = box; }
+    Piece* getLastPiecePressed()         { return piecePressed_; }
+    void   setPiecePressed(Piece* piece) { piecePressed_ = piece; }
 
     Color currentPlayer;
 
@@ -60,15 +60,12 @@ public:
     bool moveKing(Piece* king, const Point& newPosition);
 
     bool isValidMove(Point position);
-    bool test(Point position, Piece* piece);
+    bool isValidPosition(Point position, Piece* piece);
 private:
 
-    // Getters : to keep track of current pressed piece and box
-
-    Box* boxPressed_;
+    Box*   boxPressed_;
     Piece* piecePressed_;
     Piece* pieceToDelete_;
-    // necessary or program crashes lol
     QWidget* parent_;
 
     //to alternate playes every move
@@ -77,7 +74,7 @@ private:
     void verifyCheckmate(Color color);
     bool isCheck(Color color);
 
-    void gameover();
+    void gameOver();
 
     Piece* whiteKing{};
     Piece* blackKing{};
@@ -92,7 +89,6 @@ signals:
     void gameStarted();
 
 private slots:
-
     // acts as the controller of who pressed what
     void onButtonTrigger();
     // at everymove, signal the pieces to recalculate their next possible move
@@ -100,13 +96,10 @@ private slots:
     void validateMovements();
 
     void startGame();
-    void startEndGame1();
-    void startEndGame2();
-    void startEndGame3();
-    void startEndGame4();
-    void startTestGame();
+    void startQueenVRook();
+    void startPhilidor();
+    void startGelfandVSvidler();
+    void startPonziani();
 };
-
-
 
 #endif

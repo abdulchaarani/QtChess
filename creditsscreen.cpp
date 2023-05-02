@@ -8,6 +8,6 @@ CreditsScreen::CreditsScreen(const QString& creditsText, QWidget* parent) :
     creditsScreenLayout(new QVBoxLayout(this))
 {
     // Setup credits page UI
-    creditsScreenLayout->addWidget(credits);
+    creditsScreenLayout->addWidget(credits, 0, Qt::AlignHCenter);
     creditsScreenLayout->addWidget(m_backButton);
 }

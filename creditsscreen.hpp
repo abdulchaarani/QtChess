@@ -7,7 +7,6 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
-/*CreditsScreen is the pop-up u get when u press the credits button. It will eventually contain better text*/
 
 class CreditsScreen : public QWidget
 {
@@ -20,7 +19,7 @@ public:
 private:
     QLabel*      const credits;
     QPushButton* const m_backButton;
-    QVBoxLayout* const creditsScreenLayout; // Used because it can be resized, but i was lied to and its fixed size now...
+    QVBoxLayout* const creditsScreenLayout;
 };
 
 #endif // CREDITSSCREEN_H

@@ -43,7 +43,7 @@ private:
     inline static bool counter_{false};
 
     // true for white, false for black
-    bool color_; //TODO !!! might change since enum color exists
+    bool color_;
 
     void setColorWhite();
     void setColorBlack();
@@ -51,7 +51,6 @@ private:
 
 
     void highlightColor();
-    // when you click outside of the highlighted are
     void revertColor();
 
 signals:

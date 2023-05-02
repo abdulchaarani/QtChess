@@ -30,10 +30,11 @@ public slots:
 
 private:
     QStackedLayout* mainMenuLayout;
-    ChessBoard*    chessBoard;
-    TitleScreen*   titleScreen;
-    CreditsScreen* creditsScreen;
+    ChessBoard*     chessBoard;
+    TitleScreen*    titleScreen;
+    CreditsScreen*  creditsScreen;
     EndGamesScreen* endGamesScreen;
+
     QMainWindow *parent_;
 };
 

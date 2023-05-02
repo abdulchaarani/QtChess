@@ -19,12 +19,10 @@ public:
 private:
     QVBoxLayout* verticalButtonLayout_;
 
-    // Im gonna draw an image when i have time
-    QPushButton* endGameButton1_;
-    QPushButton* endGameButton2_;
-    QPushButton* endGameButton3_;
-    QPushButton* endGameButton4_;
-    QPushButton* endGameButton5_;
+    QPushButton* queenRookButton_;
+    QPushButton* philidorButton_;
+    QPushButton* gelfandButton_;
+    QPushButton* ponzianiButton_;
 
     inline static const int buttonSize_{100};
 

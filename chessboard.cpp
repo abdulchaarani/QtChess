@@ -28,7 +28,6 @@ ChessBoard::ChessBoard(QWidget* parent) : QWidget(parent), parent_(parent)
     lay_->addWidget(label_);
     lay_->addLayout(grid_);
 
-    //lay_ = new QVBoxLayout(this);
     for (int row = 0; row < 8; ++row) {
         for (int column = 0; column < 8; ++column) {
             Box* box = new Box(row, column, this); // !!
@@ -46,6 +45,7 @@ void ChessBoard::addPiece(Color color, int row, int column)
     T* piece = new T(color, row, column, this, parent_);
     piece->fillMovements();
     piece->show();
+
     // connect king to every box to detect valid positions
     for (int i{0}; i < grid_->rowCount(); ++i) {
         for (int j{0}; j < grid_->columnCount(); ++j) {
@@ -133,11 +133,11 @@ void ChessBoard::verifyCheckmate(Color color){
                     }
                 }
     qDebug() << "CHECKMATE";
-    gameover();
+    gameOver();
     return;
 }
 
-void ChessBoard::gameover(){
+void ChessBoard::gameOver(){
     isGameStarted = false;
     for (int i{0}; i < 8; ++i)
         for (int j{0}; j < 8; ++j)
@@ -208,7 +208,7 @@ bool ChessBoard::isValidMove(Point position)
     return isValid;
 }
 
-bool ChessBoard::test(Point position, Piece* piece)
+bool ChessBoard::isValidPosition(Point position, Piece* piece)
 {
 
     Point oldPosition = piece->getCoordinates();
@@ -275,13 +275,10 @@ void ChessBoard::validateMovements()
     verifyCheck();
     if (whiteKing->isChecked)
         verifyCheckmate(Color::white);
-//    if (blackKing->isChecked)
-//        verifyCheckmate(Color::black);
     changePlayer();
 
 }
-// the "magic" numbers below represent the position will occupy the piece
-// (row and column respectively)
+// position = row and column respectively
 
 void ChessBoard::startGame()
 {
@@ -317,8 +314,7 @@ void ChessBoard::startGame()
     emit gameStarted();
 }
 
-
-void ChessBoard::startEndGame1()
+void ChessBoard::startQueenVRook()
 {
     addPiece<King>(Color::white,3,3);
     addPiece<Queen>(Color::white, 1,5);
@@ -333,7 +329,7 @@ void ChessBoard::startEndGame1()
 }
 
 
-void ChessBoard::startEndGame2()
+void ChessBoard::startPhilidor()
 {
     addPiece<King>(Color::white, 2, 2);
     addPiece<Queen>(Color::white, 3, 0);
@@ -347,7 +343,7 @@ void ChessBoard::startEndGame2()
 }
 
 
-void ChessBoard::startEndGame3()
+void ChessBoard::startGelfandVSvidler()
 {
     addPiece<King>(Color::white, 1 ,6);
     addPiece<Rook>(Color::white, 1, 7);
@@ -361,7 +357,7 @@ void ChessBoard::startEndGame3()
     emit gameStarted();
 }
 
-void ChessBoard::startEndGame4()
+void ChessBoard::startPonziani()
 {
     addPiece<King>(Color::white, 7 ,0);
     addPiece<Queen>(Color::white, 1, 5);
@@ -376,28 +372,3 @@ void ChessBoard::startEndGame4()
     emit gameStarted();
 }
 
-void ChessBoard::startTestGame()
-{
-    addPiece<King>(Color::white, 0, 3);
-    addPiece<King>(Color::black, 7, 5);
-
-    addPiece<Knight>(Color::white, 5, 3);
-    addPiece<Knight>(Color::black, 3, 5);
-
-    addPiece<Pawn>(Color::white, 6, 2);
-    addPiece<Pawn>(Color::black, 1, 1);
-
-    addPiece<Rook>(Color::black, 6, 7);
-    addPiece<Rook>(Color::white, 0, 0);
-
-    addPiece<Bishop>(Color::black, 3, 4);
-    addPiece<Bishop>(Color::white, 2, 5);
-
-    addPiece<Queen>(Color::white, 2, 2);
-    addPiece<Queen>(Color::black, 1, 6);
-
-    isGameStarted = true;
-    currentPlayer = Color::white;
-
-    emit gameStarted();
-}

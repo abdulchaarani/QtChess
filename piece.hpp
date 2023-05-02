@@ -16,8 +16,6 @@ class Box;
 class ChessBoard;
 enum class Color;
 
-// ABSTRACT piece class
-
 class Piece : public QPushButton
 {
     Q_OBJECT
@@ -30,9 +28,8 @@ public:
     void changePosition(int column, int row);
 
     // List of valid moves
-    std::list<Point> movements; // TODO change to Point* eventually
+    std::list<Point> movements;
 
-    // old getter
     Point& getCoordinates();
 
     // function that fills list of valid moves
