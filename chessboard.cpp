@@ -61,14 +61,14 @@ void ChessBoard::addPiece(Color color, int row, int column)
  // to alternate playes every move
 void ChessBoard::changePlayer()
 {
-    if (currentPlayer == Color::WHITE) {
-        currentPlayer = Color::BLACK;
+    if (currentPlayer == Color::white) {
+        currentPlayer = Color::black;
         if (isGameStarted){
             label_->setStyleSheet(blackTurnFont);
             label_->setText("Black's Turn");
         }
     } else {
-        currentPlayer = Color::WHITE;
+        currentPlayer = Color::white;
             if (isGameStarted){
             label_->setStyleSheet(whiteTurnFont);
             label_->setText("White's Turn");
@@ -80,13 +80,13 @@ bool ChessBoard::isCheck(Color color)
 {
     Piece* king;
 
-    color == Color::WHITE ? king = whiteKing : king = blackKing;
+    color == Color::white ? king = whiteKing : king = blackKing;
 
     for (int i{0}; i < 8; ++i)
         for (int j{0}; j < 8; ++j)
             if (board_[i][j] != nullptr)
                 if (board_[i][j]->color_ != color)
-                    for (auto&& move : board_[i][j]->movements)
+                    for (Point& move : board_[i][j]->movements)
                         if (move == king->getCoordinates()){
                             qDebug() << "YOU CANT PUT YOURSELF INTO CHECK ";
                             king->blinkTimer_.start(150);
@@ -107,15 +107,42 @@ void ChessBoard::verifyCheck()
 
     Piece* king;
 
-    piece->color_ == Color::WHITE ? king = blackKing : king = whiteKing;
+    piece->color_ == Color::white ? king = blackKing : king = whiteKing;
     if (isGameStarted)
-        for (auto&& move : piece->movements){
+        for (Point& move : piece->movements){
             if (move == king->getCoordinates()){
                 king->check();
                 king->blinkTimer_.start(500);
                 qDebug() << "CHECK";
+                return;
             }
         }
+}
+
+void ChessBoard::verifyCheckmate(Color color){
+
+    for (int i{0}; i < 8; ++i)
+        for (int j{0}; j < 8; ++j)
+            if (board_[i][j] != nullptr)
+                if (board_[i][j]->color_ == color){
+                    std::list<Point> pieceMovements{board_[i][j]->movements};
+                    for (Point& move : pieceMovements){
+                        piecePressed_ = board_[i][j];
+                        if (isValidMove(move))
+                            return;
+                    }
+                }
+    qDebug() << "CHECKMATE";
+    gameover();
+    return;
+}
+
+void ChessBoard::gameover(){
+    isGameStarted = false;
+    for (int i{0}; i < 8; ++i)
+        for (int j{0}; j < 8; ++j)
+            if (board_[i][j] != nullptr)
+                board_[i][j]->movements.clear();
 }
 
 std::list<Piece*> ChessBoard::getAttackingPieces(Color color, Point position)
@@ -181,6 +208,53 @@ bool ChessBoard::isValidMove(Point position)
     return isValid;
 }
 
+bool ChessBoard::test(Point position, Piece* piece)
+{
+
+    Point oldPosition = piece->getCoordinates();
+    Piece* potentialVictim{nullptr};
+
+    int newRow = position.getRow();
+    int newColumn = position.getColumn();
+
+
+    // validate if enemy's death would cause a self-check
+    if (board_[newRow][newColumn] != nullptr){
+        potentialVictim = board_[newRow][newColumn];
+    }
+
+    // move clicked piece into future position to validate if king is checked
+    board_[oldPosition.getRow()][oldPosition.getColumn()] = nullptr;
+    piece->getCoordinates().setRow(newRow);
+    piece->getCoordinates().setColumn(newColumn);
+    board_[newRow][newColumn] = piece;
+
+    emit updateMovements();
+
+    if (potentialVictim != nullptr)
+        potentialVictim->movements.clear();
+
+    bool isValid = !isCheck(piece->color_);
+
+    // replace all the moved pieces back to original positions
+    piece->getCoordinates().setRow(oldPosition.getRow());
+    piece->getCoordinates().setColumn(oldPosition.getColumn());
+    board_[oldPosition.getRow()][oldPosition.getColumn()] = piece;
+
+    if (potentialVictim != nullptr){
+        board_[newRow][newColumn] = potentialVictim;
+        potentialVictim->getCoordinates().setRow(newRow);
+        potentialVictim->getCoordinates().setColumn(newColumn);
+    }
+    else{
+        board_[newRow][newColumn] = nullptr;
+    }
+
+    emit updateMovements();
+
+    return isValid;
+}
+
 void ChessBoard::finishingBlow()
 {
     emit buttonTriggered();
@@ -199,41 +273,46 @@ void ChessBoard::validateMovements()
 {
     emit updateMovements();
     verifyCheck();
+    if (whiteKing->isChecked)
+        verifyCheckmate(Color::white);
+//    if (blackKing->isChecked)
+//        verifyCheckmate(Color::black);
     changePlayer();
+
 }
 // the "magic" numbers below represent the position will occupy the piece
 // (row and column respectively)
 
 void ChessBoard::startGame()
 {
-    addPiece<King>(Color::WHITE, 7, 4);
-    addPiece<King>(Color::BLACK, 0, 4);
+    addPiece<King>(Color::white, 7, 4);
+    addPiece<King>(Color::black, 0, 4);
 
-    addPiece<Knight>(Color::WHITE, 7, 1);
-    addPiece<Knight>(Color::WHITE, 7, 6);
-    addPiece<Knight>(Color::BLACK, 0, 1);
-    addPiece<Knight>(Color::BLACK, 0, 6);
+    addPiece<Knight>(Color::white, 7, 1);
+    addPiece<Knight>(Color::white, 7, 6);
+    addPiece<Knight>(Color::black, 0, 1);
+    addPiece<Knight>(Color::black, 0, 6);
 
-    addPiece<Rook>(Color::WHITE, 7, 0);
-    addPiece<Rook>(Color::WHITE, 7, 7);
-    addPiece<Rook>(Color::BLACK, 0, 0);
-    addPiece<Rook>(Color::BLACK, 0, 7);
+    addPiece<Rook>(Color::white, 7, 0);
+    addPiece<Rook>(Color::white, 7, 7);
+    addPiece<Rook>(Color::black, 0, 0);
+    addPiece<Rook>(Color::black, 0, 7);
 
-    addPiece<Bishop>(Color::WHITE, 7, 2);
-    addPiece<Bishop>(Color::WHITE, 7, 5);
-    addPiece<Bishop>(Color::BLACK, 0, 2);
-    addPiece<Bishop>(Color::BLACK, 0, 5);
+    addPiece<Bishop>(Color::white, 7, 2);
+    addPiece<Bishop>(Color::white, 7, 5);
+    addPiece<Bishop>(Color::black, 0, 2);
+    addPiece<Bishop>(Color::black, 0, 5);
 
-    addPiece<Queen>(Color::WHITE, 7, 3);
-    addPiece<Queen>(Color::BLACK, 0, 3);
+    addPiece<Queen>(Color::white, 7, 3);
+    addPiece<Queen>(Color::black, 0, 3);
 
     for (int i{0}; i < 8; ++i){
-        addPiece<Pawn>(Color::WHITE, 6, i);
-        addPiece<Pawn>(Color::BLACK, 1, i);
+        addPiece<Pawn>(Color::white, 6, i);
+        addPiece<Pawn>(Color::black, 1, i);
     }
 
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }
@@ -241,14 +320,14 @@ void ChessBoard::startGame()
 
 void ChessBoard::startEndGame1()
 {
-    addPiece<King>(Color::WHITE,3,3);
-    addPiece<Queen>(Color::WHITE, 1,5);
+    addPiece<King>(Color::white,3,3);
+    addPiece<Queen>(Color::white, 1,5);
 
-    addPiece<King>(Color::BLACK,0,3);
-    addPiece<Rook>(Color::BLACK, 2,1);
+    addPiece<King>(Color::black,0,3);
+    addPiece<Rook>(Color::black, 2,1);
 
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }
@@ -256,13 +335,13 @@ void ChessBoard::startEndGame1()
 
 void ChessBoard::startEndGame2()
 {
-    addPiece<King>(Color::WHITE, 2, 2);
-    addPiece<Queen>(Color::WHITE, 3, 0);
+    addPiece<King>(Color::white, 2, 2);
+    addPiece<Queen>(Color::white, 3, 0);
 
-    addPiece<King>(Color::BLACK, 0, 1);
-    addPiece<Rook>(Color::BLACK, 1, 1);
+    addPiece<King>(Color::black, 0, 1);
+    addPiece<Rook>(Color::black, 1, 1);
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }
@@ -270,55 +349,55 @@ void ChessBoard::startEndGame2()
 
 void ChessBoard::startEndGame3()
 {
-    addPiece<King>(Color::WHITE, 1 ,6);
-    addPiece<Rook>(Color::WHITE, 1, 7);
+    addPiece<King>(Color::white, 1 ,6);
+    addPiece<Rook>(Color::white, 1, 7);
 
-    addPiece<King>(Color::BLACK, 3, 6);
-    addPiece<Queen>(Color::BLACK, 0, 4);
+    addPiece<King>(Color::black, 3, 6);
+    addPiece<Queen>(Color::black, 0, 4);
 
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }
 
 void ChessBoard::startEndGame4()
 {
-    addPiece<King>(Color::WHITE, 7 ,0);
-    addPiece<Queen>(Color::WHITE, 1, 5);
+    addPiece<King>(Color::white, 7 ,0);
+    addPiece<Queen>(Color::white, 1, 5);
 
-    addPiece<King>(Color::BLACK, 4, 1);
-    addPiece<Bishop>(Color::BLACK, 5, 0);
-    addPiece<Knight>(Color::BLACK, 5, 2);
+    addPiece<King>(Color::black, 4, 1);
+    addPiece<Bishop>(Color::black, 5, 0);
+    addPiece<Knight>(Color::black, 5, 2);
 
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }
 
 void ChessBoard::startTestGame()
 {
-    addPiece<King>(Color::WHITE, 0, 3);
-    addPiece<King>(Color::BLACK, 7, 5);
+    addPiece<King>(Color::white, 0, 3);
+    addPiece<King>(Color::black, 7, 5);
 
-    addPiece<Knight>(Color::WHITE, 5, 3);
-    addPiece<Knight>(Color::BLACK, 3, 5);
+    addPiece<Knight>(Color::white, 5, 3);
+    addPiece<Knight>(Color::black, 3, 5);
 
-    addPiece<Pawn>(Color::WHITE, 6, 2);
-    addPiece<Pawn>(Color::BLACK, 1, 1);
+    addPiece<Pawn>(Color::white, 6, 2);
+    addPiece<Pawn>(Color::black, 1, 1);
 
-    addPiece<Rook>(Color::BLACK, 6, 7);
-    addPiece<Rook>(Color::WHITE, 0, 0);
+    addPiece<Rook>(Color::black, 6, 7);
+    addPiece<Rook>(Color::white, 0, 0);
 
-    addPiece<Bishop>(Color::BLACK, 3, 4);
-    addPiece<Bishop>(Color::WHITE, 2, 5);
+    addPiece<Bishop>(Color::black, 3, 4);
+    addPiece<Bishop>(Color::white, 2, 5);
 
-    addPiece<Queen>(Color::WHITE, 2, 2);
-    addPiece<Queen>(Color::BLACK, 1, 6);
+    addPiece<Queen>(Color::white, 2, 2);
+    addPiece<Queen>(Color::black, 1, 6);
 
     isGameStarted = true;
-    currentPlayer = Color::WHITE;
+    currentPlayer = Color::white;
 
     emit gameStarted();
 }

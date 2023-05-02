@@ -19,8 +19,8 @@
 #include "piece.hpp"
 
 enum class Color{
-    WHITE,
-    BLACK,
+    white,
+    black,
 };
 
 
@@ -60,6 +60,7 @@ public:
     bool moveKing(Piece* king, const Point& newPosition);
 
     bool isValidMove(Point position);
+    bool test(Point position, Piece* piece);
 private:
 
     // Getters : to keep track of current pressed piece and box
@@ -73,7 +74,10 @@ private:
     //to alternate playes every move
     void changePlayer();
     void verifyCheck();
+    void verifyCheckmate(Color color);
     bool isCheck(Color color);
+
+    void gameover();
 
     Piece* whiteKing{};
     Piece* blackKing{};

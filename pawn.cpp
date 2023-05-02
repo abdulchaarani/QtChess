@@ -6,7 +6,7 @@ Pawn::Pawn(Color color, int row,  int column, ChessBoard* board, QWidget* parent
     : Piece(color, row, column, board, parent)
 {
     // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::WHITE ? setText("♙") : setText("♟");
+    color_ == Color::white ? setText("♙") : setText("♟");
     changePosition(row, column);
     connect(this, SIGNAL(playedFirstMove()), this, SLOT(playFirstMove()));
 }
@@ -20,8 +20,8 @@ void Pawn::fillMovements()
     int column{coordinates_.getColumn()};
 
     // check above
-
-    if (color_ == Color::WHITE){
+    
+    if (color_ == Color::white){
 
         // check above
         if ((row - 1) >= 0)
@@ -43,9 +43,9 @@ void Pawn::fillMovements()
             if(chessboard_->board_[row - 1][column - 1] != nullptr && chessboard_->board_[row - 1][column - 1]->color_ != color_)
                 movements.push_back(Point(row - 1, column - 1));
     }
-
-
-    if (color_ == Color::BLACK){
+    
+    
+    if (color_ == Color::black){
 
         if ((row + 1) < 8)
             if(chessboard_->board_[row + 1][column] == nullptr)

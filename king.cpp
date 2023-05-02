@@ -6,8 +6,8 @@ King::King(Color color, int row,  int column, ChessBoard* board, QWidget* parent
     : Piece(color, row, column, board, parent)
 {
     // WARNING: TWO DIFFERENT COLORS OF PIEC
-
-    if (color_ == Color::WHITE){
+    
+    if (color_ == Color::white){
         setText("♔");
         board->setWhiteKing(this);
     }

@@ -12,7 +12,7 @@ Queen::Queen(Color color, int row,  int column, ChessBoard* board, QWidget* pare
      , rook_{new Rook(this)}
 {
     // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::WHITE ? setText("♕") : setText("♛");
+    color_ == Color::white ? setText("♕") : setText("♛");
     changePosition(row, column);
 }
 

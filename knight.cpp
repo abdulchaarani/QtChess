@@ -6,7 +6,7 @@ Knight::Knight(Color color, int row,  int column, ChessBoard* board, QWidget* pa
     : Piece(color, row, column, board, parent)
 {
     // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::WHITE ? setText("♘") : setText("♞");
+    color_ == Color::white ? setText("♘") : setText("♞");
     changePosition(row, column);
 }
 
