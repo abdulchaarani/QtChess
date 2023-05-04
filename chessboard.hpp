@@ -10,7 +10,7 @@
 #include <QTimer>
 
 #include "layouts.hpp"
-#include"box.hpp"
+#include "box.hpp"
 
 class Chessboard : public QWidget
 {

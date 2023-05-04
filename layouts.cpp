@@ -25,44 +25,44 @@ const int labelSize{30};
 
 const QFont pieceFont("Segoe UI Symbol", pieceSize);
 
-const QString pieceStyle = "QPushButton{"
-                      "  color: black;"
-                      "background-color: rgba(0,0,0,0);"
-                      "  border-style: inset;"
-                      "  }"
-                      "QPushButton:pressed {"
-                      "   border-style: inset;"
-                      "}";
+const QString pieceStyle =       "QPushButton{"
+                                 "  color: black;"
+                                 "background-color: rgba(0,0,0,0);"
+                                 "  border-style: inset;"
+                                 "  }"
+                                 "QPushButton:pressed {"
+                                 "   border-style: inset;"
+                                 "}";
 
-const QString whiteTurnFont = "QLabel{"
-                           "  background-color: white;"
-                           "  color: black; "
-                           " font-size: 20px;"
-                           "  border-style: inset;"
-                           "  }";
+const QString whiteTurnFont =    "QLabel{"
+                                 "  background-color: white;"
+                                 "  color: black; "
+                                 " font-size: 20px;"
+                                 "  border-style: inset;"
+                                 "  }";
 
-const QString blackTurnFont = "QLabel{"
-                           "  background-color: black;"
-                           "  color: white; "
-                           " font-size: 20px;"
-                           "  border-style: inset;"
-                           "  }";
+const QString blackTurnFont =    "QLabel{"
+                                 "  background-color: black;"
+                                 "  color: white; "
+                                 " font-size: 20px;"
+                                 "  border-style: inset;"
+                                 "  }";
 
-const QString whiteBoxFont = "QPushButton{"
-                          "  background-color: rgb(238, 238, 212);"
-                          "  border-style: inset;"
-                          "  }"
-                          "QPushButton:pressed {"
-                          "   border-style: inset;"
-                          "}";
+const QString whiteBoxFont =     "QPushButton{"
+                                 "  background-color: rgb(238, 238, 212);"
+                                 "  border-style: inset;"
+                                 "  }"
+                                 "QPushButton:pressed {"
+                                 "   border-style: inset;"
+                                 "}";
 
-const QString blackBoxFont = "QPushButton{"
-                          "  background-color: rgb(126, 148, 90);"
-                          "  border-style: inset;"
-                          "  }"
-                          "QPushButton:pressed {"
-                          "   border-style: inset;"
-                          "}";
+const QString blackBoxFont =     "QPushButton{"
+                                 "  background-color: rgb(126, 148, 90);"
+                                 "  border-style: inset;"
+                                 "  }"
+                                 "QPushButton:pressed {"
+                                 "   border-style: inset;"
+                                 "}";
 
 
 const QString whiteCheckedFont = "QPushButton{"

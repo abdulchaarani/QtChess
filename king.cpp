@@ -3,12 +3,7 @@
 
 King::King(Color color, int row, int column) : Piece(color, row, column)
 {
-    if (color_ == Color::white){
-        display_ = "♔";
-    }
-    else{
-        display_ = "♚";
-    }
+    color_ == Color::white ? display_ = "♔" : display_ = "♚";
 }
 
 void King::fillMovements(BoardView board)

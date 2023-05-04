@@ -14,17 +14,17 @@ TitleScreen::TitleScreen(QWidget* parent)
     exitGameButton_ = new QPushButton("Exit",    this);
     endGameButton_  = new QPushButton("Practice end games", this);
     
-    newGameButton_->setStyleSheet(layouts::menuButtonFont);
-    creditsButton_->setStyleSheet(layouts::menuButtonFont);
-    exitGameButton_->setStyleSheet(layouts::menuButtonFont);
-    endGameButton_->setStyleSheet(layouts::menuButtonFont);
+    newGameButton_ -> setStyleSheet (layouts::menuButtonFont);
+    creditsButton_ -> setStyleSheet (layouts::menuButtonFont);
+    exitGameButton_-> setStyleSheet (layouts::menuButtonFont);
+    endGameButton_ -> setStyleSheet (layouts::menuButtonFont);
 
 
 
-    newGameButton_-> setFixedWidth(200);
-    endGameButton_-> setFixedWidth(200);
-    creditsButton_-> setFixedWidth(200);
-    exitGameButton_->setFixedWidth(200);
+    newGameButton_ -> setFixedWidth(200);
+    endGameButton_ -> setFixedWidth(200);
+    creditsButton_ -> setFixedWidth(200);
+    exitGameButton_-> setFixedWidth(200);
 
     // Connect the exit button to the exit function. It closes the app
     connect(exitGameButton_, &QPushButton::clicked, this, &TitleScreen::exit);

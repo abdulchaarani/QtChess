@@ -12,11 +12,6 @@
 #include <QStackedLayout>
 #include <qdebug.h>
 
-/* MainMenu is a class that inherits from QMainWindow bc i wanted a container to all our widget classes
- * (TitleScreen, CreditsScreen and ChessBoard). It basically replaces the mainWindow you originally
- * defined in main. It contains all the widgets we need so no need to pollute main anymore. Its
- * a StackedLayout bc its a pile of widgets on top of eachother.*/
-
 class ChessCore : public QMainWindow
 {
     Q_OBJECT

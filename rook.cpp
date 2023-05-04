@@ -8,8 +8,6 @@ Rook::Rook(Color color, int row, int column) : Piece(color, row, column)
 
 void Rook::fillMovements(BoardView board)
 {
-    // if not a queen, since queens inherit from rook
-    // and shares same instance of movements
     if (display_ != "♕" && display_ != "♛")
         movements.clear();
 

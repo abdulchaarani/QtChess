@@ -11,8 +11,6 @@ ChessCore::ChessCore()
          , endGamesScreen_{new EndGamesScreen(this)}
 
 {
-    // Defining a custom layout for MainMenu. This is the reason for the message in output
-
     mainGame_->connectBoard(chessboard_);
 
     mainMenuLayout_->addWidget(titleScreen_);
@@ -37,7 +35,7 @@ ChessCore::ChessCore()
     connect(endGamesScreen_->philidorButton_,  SIGNAL(clicked()), mainGame_, SLOT(startPhilidor()));
     connect(endGamesScreen_->gelfandButton_,   SIGNAL(clicked()), mainGame_, SLOT(startGelfandVSvidler()));
     connect(endGamesScreen_->ponzianiButton_,  SIGNAL(clicked()), mainGame_, SLOT(startPonziani()));
-    connect(endGamesScreen_->endGameButton5_, SIGNAL(clicked()), mainGame_, SLOT(startTestGame()));
+    connect(endGamesScreen_->endGameButton5_,  SIGNAL(clicked()), mainGame_, SLOT(startTestGame()));
 }
 
 // Slot that switches the current screen to the titlescreen

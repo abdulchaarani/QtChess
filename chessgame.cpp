@@ -11,17 +11,17 @@ void ChessGame::connectBoard(Chessboard* chessboard)
 {
     connect(chessboard, SIGNAL(sendClick(Coordinates)), this, SLOT(validateClick(Coordinates)));
 
-    connect(this, SIGNAL(initialiseColor(Coordinates,Color)), chessboard, SLOT(setPieceColor(Coordinates,Color)));
+    connect(this, SIGNAL(initialiseColor(Coordinates,Color)),     chessboard, SLOT(setPieceColor(Coordinates,Color)));
     connect(this, SIGNAL(initialiseDisplay(Coordinates,QString)), chessboard, SLOT(setBoxText(Coordinates,QString)));
 
-    connect(this, SIGNAL(highlight(Coordinates,Highlight)), chessboard, SLOT(processHighlight(Coordinates,Highlight)));
+    connect(this, SIGNAL(highlight(Coordinates,Highlight)),           chessboard, SLOT(processHighlight(Coordinates,Highlight)));
     connect(this, SIGNAL(updateCoordinates(Coordinates,Coordinates)), chessboard, SLOT(moveViewPiece(Coordinates,Coordinates)));
 
-    connect(this, SIGNAL(turnChanged(Color)), chessboard, SLOT(toggleTurnLabel(Color)));
+    connect(this, SIGNAL(turnChanged(Color)),                chessboard, SLOT(toggleTurnLabel(Color)));
     connect(this, SIGNAL(blinkCheckedKing(Coordinates,int)), chessboard, SLOT(startTimer(Coordinates,int)));
 
     connect(this, SIGNAL(killKing(Coordinates)), chessboard, SLOT(rotateKing(Coordinates)));
-    connect(this, SIGNAL(crownWinner(Color)), chessboard, SLOT(displayWinner(Color)));
+    connect(this, SIGNAL(crownWinner(Color)),    chessboard, SLOT(displayWinner(Color)));
 
 
 }
@@ -158,7 +158,6 @@ bool ChessGame::isChecked()
                 if (boardPieces_[i][j]->color_ != currentPlayer_)
                     for (auto&& move : boardPieces_[i][j]->movements)
                         if (move == king->coordinates_){
-                            // qDebug() << "YOU CANT PUT YOURSELF INTO CHECK ";
                             return true;
                         }
 
@@ -304,10 +303,7 @@ void ChessGame::startQueenVRook()
     addPiece<King>(Color::black,0,3);
     addPiece<Rook>(Color::black, 2,1);
 
-    isGameStarted_ = true;
-    currentPlayer_ = Color::white;
-
-    emit gameStarted();
+    startGame();
 }
 
 
@@ -318,10 +314,8 @@ void ChessGame::startPhilidor()
 
     addPiece<King>(Color::black, 0, 1);
     addPiece<Rook>(Color::black, 1, 1);
-    isGameStarted_ = true;
-    currentPlayer_ = Color::white;
 
-    emit gameStarted();
+    startGame();
 }
 
 
@@ -333,10 +327,7 @@ void ChessGame::startGelfandVSvidler()
     addPiece<King>(Color::black, 3, 6);
     addPiece<Queen>(Color::black, 0, 4);
 
-    isGameStarted_ = true;
-    currentPlayer_ = Color::white;
-
-    emit gameStarted();
+    startGame();
 }
 
 void ChessGame::startPonziani()
@@ -348,10 +339,7 @@ void ChessGame::startPonziani()
     addPiece<Bishop>(Color::black, 5, 0);
     addPiece<Knight>(Color::black, 5, 2);
 
-    isGameStarted_ = true;
-    currentPlayer_ = Color::white;
-
-    emit gameStarted();
+    startGame();
 }
 
 void ChessGame::startTestGame()
@@ -374,8 +362,5 @@ void ChessGame::startTestGame()
     addPiece<Queen>(Color::white, 2, 2);
     addPiece<Queen>(Color::black, 1, 6);
 
-    isGameStarted_ = true;
-    currentPlayer_ = Color::white;
-
-    emit gameStarted();
+    startGame();
 }
