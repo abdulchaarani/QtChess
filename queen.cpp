@@ -1,23 +1,15 @@
 
 #include "queen.hpp"
-#include "chessboard.hpp"
 
-// Qt doesnt seem to support multiple heritage very well,
-// Queen will have a member bishop and rook
+Queen::Queen(Color color, int row, int column)
+    :Piece(color, row, column)
 
-Queen::Queen(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
-     : Piece(color, column, row, board, parent)
-     , bishop_{new Bishop(this)}
-     , rook_{new Rook(this)}
 {
-    // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::white ? setText("♕") : setText("♛");
-    changePosition(row, column);
+    color_ == Color::white ? display_ = "♕" : display_ = "♛";
 }
 
-void Queen::fillMovements()
-{
+void Queen::fillMovements(BoardView board){
     movements.clear();
-    bishop_->fillMovements();
-    rook_->fillMovements();
+    Bishop::fillMovements(board);
+    Rook::fillMovements(board);
 }

@@ -2,69 +2,42 @@
 #ifndef BOX_HPP
 #define BOX_HPP
 
-// The chessboard is made of an 8x8 grid of boxes (this class)
-// the boxes are pushbuttons (which makes it easier to track when they are clicked
-// they have individual coordinates
-// Every box is interconnected, when one box is clicked, all of them react
-// They boxes themselves decide if they are to be highlighted or not
-// When a highlighted box is clicked, the piece copies the clicked boxes' coordinates
-
-#include <QApplication>
 #include <QPushButton>
-#include "point.hpp"
-#include "piece.hpp"
-
-class ChessBoard;
+#include "layouts.hpp"
 
 class Box : public QPushButton
-
 {
+    using Coordinates = std::pair<int, int>;
     Q_OBJECT
 
 public:
-    Box(int row, int column, ChessBoard* parent = nullptr);
-    ~Box() = default;
+    Box(int row, int column,QWidget* parent);
+    Coordinates coordinates_;
+    Color boxColor_;
+    QString heldPiece_;
+    Color heldColor_;
 
-     // when a piece is clicked, the correct highlighted boxes are "movable"
-    bool movableBox_{false};
+    void setDisplay(const QString& display);
 
-    // Old getters, might not be useful later
-    Point& getCoordinates() { return coordinates_; }
-    ChessBoard* getParent() { return chessboard_; }
+    void highlightMove();
+    void highlightKill();
+    void highlightOff();
 
-    ChessBoard* chessboard_;
+    void purgeBox();
+    void occupyBox();
 
 private:
-    Point coordinates_;
+    QWidget* parent_;
 
-    int BOX_SIZE{100};
-
-    // to help alternate colors when generating chessboard
-    inline static bool counter_{false};
-
-    // true for white, false for black
-    bool color_;
+    inline static bool alternator_{false};
 
     void setColorWhite();
     void setColorBlack();
 
+    static Color tempHeldColor_;
+    static QString tempHeldPiece_;
 
-
-    void highlightColor();
-    void revertColor();
-
-signals:
-    // piece goes to clicked box (if move is valid)
-    void goTo();
-
-public slots:
-    // when any piece is clicked
-    void onPieceClick();
-
-    // when one box is clicked, all boxes recieve this signal and react accordingly
-    void handleClick();
 
 };
-
 
 #endif // BOX_HPP

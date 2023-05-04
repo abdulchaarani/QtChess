@@ -4,16 +4,12 @@
 
 #include "piece.hpp"
 
-
 class King : public Piece
 {
-    Q_OBJECT
-
 public:
-    King(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    void fillMovements() override;
-
-
+    King(Color color, int row, int column);
+    void fillMovements(BoardView board) override;
+    bool isChecked_{false};
 };
 
 #endif // KING_HPP

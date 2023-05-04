@@ -4,19 +4,12 @@
 
 #include "piece.hpp"
 
-class Bishop : public Piece
+class Bishop : virtual public Piece
 {
-    Q_OBJECT
-
 public:
-    Bishop(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    Bishop(Piece* queen);
-    void fillMovements() override;
-
-private:
-    bool isQueen_{false};
-    Piece* queen_;
-
+    Bishop(Color color, int row, int column);
+    Bishop() = default;
+    void fillMovements(BoardView board) override;
 };
 
 #endif // BISHOP_HPP

@@ -1,13 +1,15 @@
 
 #include "creditsscreen.hpp"
+#include "layouts.hpp"
 
 CreditsScreen::CreditsScreen(const QString& creditsText, QWidget* parent) :
     QWidget(parent),
-    credits(new QLabel(creditsText, this)),
-    m_backButton(new QPushButton(tr("take me back to main menu"), this )),
-    creditsScreenLayout(new QVBoxLayout(this))
+    credits_(new QLabel(creditsText, this)),
+    backButton_(new QPushButton(tr("take me back to main menu"), this )),
+    creditsScreenLayout_(new QVBoxLayout(this))
 {
     // Setup credits page UI
-    creditsScreenLayout->addWidget(credits, 0, Qt::AlignHCenter);
-    creditsScreenLayout->addWidget(m_backButton);
+    creditsScreenLayout_->addWidget(credits_, 0, Qt::AlignHCenter);
+    creditsScreenLayout_->addWidget(backButton_);
+    backButton_->setStyleSheet(layouts::menuButtonFont);
 }

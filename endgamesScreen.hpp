@@ -14,7 +14,7 @@ class EndGamesScreen : public QWidget
 public:
     explicit EndGamesScreen(QWidget* parent = nullptr);
 
-    friend class MainMenu;
+    friend class ChessCore;
 
 private:
     QVBoxLayout* verticalButtonLayout_;
@@ -23,6 +23,7 @@ private:
     QPushButton* philidorButton_;
     QPushButton* gelfandButton_;
     QPushButton* ponzianiButton_;
+    QPushButton* endGameButton5_;
 
     inline static const int buttonSize_{100};
 

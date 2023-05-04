@@ -2,104 +2,51 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 
-// this class acts as the controller-ish model to keep track of the events
-// and positions of pieces on the board
 
-#include <QObject>
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
 #include <QLabel>
-#include <list>
-#include <array>
+#include <QTimer>
 
-#include <QDebug>
+#include "layouts.hpp"
+#include"box.hpp"
 
-#include "box.hpp"
-#include "piece.hpp"
-
-enum class Color{
-    white,
-    black,
-};
-
-
-class ChessBoard : public QWidget
+class Chessboard : public QWidget
 {
+    using Coordinates = std::pair<int, int>;
     Q_OBJECT
 
 public:
-    ChessBoard(QWidget* parent = nullptr);
+    Chessboard(QWidget* parent = nullptr);
     QGridLayout* grid_;
     QVBoxLayout* lay_;
     QLabel*      label_;
 
-    // keeps track of ALL the pieces on the board
-    std::array<std::array<Piece*, 8>, 8> board_{};
-
-    friend class MainMenu;
-
-    // to add a piece to the board and to connect the right signals
-    template <typename T>
-    void addPiece(Color color, int row, int column);
-
-    Box*   getBoxPressed()               { return boxPressed_; }
-    void   setBoxPressed(Box* box)       { boxPressed_ = box; }
-    Piece* getLastPiecePressed()         { return piecePressed_; }
-    void   setPiecePressed(Piece* piece) { piecePressed_ = piece; }
-
-    Color currentPlayer;
-
-    void finishingBlow();
-
-    void setWhiteKing(Piece* king) {whiteKing = king;}
-    void setBlackKing(Piece* king) {blackKing = king;}
-
-    bool isInCheckmate(Color color);
-
-    bool moveKing(Piece* king, const Point& newPosition);
-
-    bool isValidMove(Point position);
-    bool isValidPosition(Point position, Piece* piece);
 private:
-
-    Box*   boxPressed_;
-    Piece* piecePressed_;
-    Piece* pieceToDelete_;
     QWidget* parent_;
 
-    //to alternate playes every move
-    void changePlayer();
-    void verifyCheck();
-    void verifyCheckmate(Color color);
-    bool isCheck(Color color);
+    std::array<std::array<Box*, 8>, 8> boardBoxes_{};
 
-    void gameOver();
-
-    Piece* whiteKing{};
-    Piece* blackKing{};
-
-    std::list<Piece*> getAttackingPieces(Color color, Point position);
-
-    bool isGameStarted{false};
-
-signals:
-    void buttonTriggered();
-    void updateMovements();
-    void gameStarted();
+    QTimer blinkTimer_;
+    Box* blinkingPiece;
+    const QString* originalFont;
+    const QString* checkedFont;
 
 private slots:
-    // acts as the controller of who pressed what
-    void onButtonTrigger();
-    // at everymove, signal the pieces to recalculate their next possible move
-    // and change player
-    void validateMovements();
+    void onBoxClicked();
+    void setPieceColor(Coordinates coordinates, Color color);
+    void setBoxText(Coordinates coordinates, QString text);
+    void processHighlight(Coordinates coordinates, Highlight highlight);
+    void moveViewPiece(Coordinates oldCoordinates, Coordinates newCoordinates);
+    void toggleTurnLabel(Color nextTurn);
+    void startTimer(Coordinates coordinates, int time);
+    void toggleBlink();
+    void rotateKing(Coordinates kingPosition);
+    void displayWinner(Color winner);
 
-    void startGame();
-    void startQueenVRook();
-    void startPhilidor();
-    void startGelfandVSvidler();
-    void startPonziani();
+signals:
+    void sendClick(Coordinates coordinates);
 };
 
-#endif
+#endif // CHESSBOARD_HPP

@@ -1,100 +1,77 @@
 
 #include "bishop.hpp"
-#include "chessboard.hpp"
 
-Bishop::Bishop(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
-    : Piece(color, row, column, board, parent)
+Bishop::Bishop(Color color, int row, int column) : Piece(color, row, column)
 {
-    // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::white ? setText("♗") : setText("♝");
-    changePosition(row, column);
+    color_ == Color::white ? display_ = "♗" : display_ = "♝";
 }
 
-Bishop::Bishop(Piece* queen) : queen_{queen}
+
+void Bishop::fillMovements(BoardView board)
 {
-    isQueen_ = true;
-}
-
-void Bishop::fillMovements()
-{
-    // these variables help with queen inheritance/composition
-    // to avoid duplication of mouvement filling sequence
-
-    std::list<Point>* movesPtr = &movements;
-    std::array<std::array<Piece*, 8>, 8>* boardPtr = &chessboard_->board_;
-    Point* coordinatesPtr = &coordinates_;
-    Color color = color_;
-
-    if (isQueen_){
-        movesPtr = &queen_->movements;
-        boardPtr = &queen_->chessboard_->board_;
-        coordinatesPtr = &queen_->coordinates_;
-        color = queen_->color_;
-    }
-    else{
+    // if not a queen, since queens inherit from bishop
+    // and shares same instance of movements
+    if (display_ != "♕" && display_ != "♛")
         movements.clear();
-    }
 
-    int row{coordinatesPtr->getRow()};
-    int column{coordinatesPtr->getColumn()};
-
+    auto [row, column] = coordinates_;
     // check south-east
     for (int nextRow{row + 1}, nextColumn{column + 1}; nextRow < 8 && nextColumn < 8; ++nextRow, ++nextColumn){
 
-        if ((*boardPtr)[nextRow][nextColumn] == nullptr) // if no one, add
-            movesPtr->push_back(Point(nextRow, nextColumn));
+        if (board[nextRow][nextColumn] == nullptr) // if no one, add
+            movements.push_front({nextRow, nextColumn});
 
         else // if somone
-            if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
-                movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
+            if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
+                movements.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
-            else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
+            else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
                 break; // stop adding
     }
 
     // check south-west
     for (int nextRow{row + 1}, nextColumn{column - 1}; nextRow < 8 && nextColumn >= 0; ++nextRow, --nextColumn){
 
-        if ((*boardPtr)[nextRow][nextColumn] == nullptr) // if no one, add
-            movesPtr->push_back(Point(nextRow, nextColumn));
+        if (board[nextRow][nextColumn] == nullptr) // if no one, add
+            movements.push_front({nextRow, nextColumn});
 
         else // if somone
-            if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
-                movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
+            if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
+                movements.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
-            else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
+            else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
                 break; // stop adding
     }
 
     // check north-west
     for (int nextRow{row - 1}, nextColumn{column - 1}; nextRow >= 0 && nextColumn >= 0; --nextRow, --nextColumn){
 
-        if ((*boardPtr)[nextRow][nextColumn] == nullptr) // if no one, add
-            movesPtr->push_back(Point(nextRow, nextColumn));
+        if (board[nextRow][nextColumn] == nullptr) // if no one, add
+            movements.push_front({nextRow, nextColumn});
 
         else // if somone
-            if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
-                movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
+            if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
+                movements.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
-            else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
+            else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
                 break; // stop adding
     }
 
     // check north-east
     for (int nextRow{row - 1}, nextColumn{column + 1}; nextRow >= 0 && nextColumn < 8; --nextRow, ++nextColumn){
 
-        if ((*boardPtr)[nextRow][nextColumn] == nullptr) // if no one, add
-            movesPtr->push_back(Point(nextRow, nextColumn));
+        if (board[nextRow][nextColumn] == nullptr) // if no one, add
+            movements.push_front({nextRow, nextColumn});
 
         else // if somone
-            if ((*boardPtr)[nextRow][nextColumn]->color_ != color){ // enemy in sight?
-                movesPtr->push_back(Point(nextRow, nextColumn)); // add enemy to list
+            if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
+                movements.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
-            else if ((*boardPtr)[nextRow][nextColumn]->color_ == color) // if friendly
+            else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
                 break; // stop adding
     }
 

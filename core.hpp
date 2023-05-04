@@ -3,9 +3,10 @@
 #define MAINMENU_H
 
 #include "chessboard.hpp"
-#include "creditsscreen.hpp"
+#include "chessgame.hpp"
 #include "titlescreen.hpp"
-#include "endgames.hpp"
+#include "creditsscreen.hpp"
+#include "endgamesScreen.hpp"
 
 #include <QWidget>
 #include <QStackedLayout>
@@ -16,11 +17,11 @@
  * defined in main. It contains all the widgets we need so no need to pollute main anymore. Its
  * a StackedLayout bc its a pile of widgets on top of eachother.*/
 
-class MainMenu : public QMainWindow
+class ChessCore : public QMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainMenu(QMainWindow* parent = nullptr);
+    ChessCore();
 
 public slots:
     void onBackPress();
@@ -29,13 +30,12 @@ public slots:
     void onGameStarted();
 
 private:
-    QStackedLayout* mainMenuLayout;
-    ChessBoard*     chessBoard;
-    TitleScreen*    titleScreen;
-    CreditsScreen*  creditsScreen;
-    EndGamesScreen* endGamesScreen;
-
-    QMainWindow *parent_;
+    ChessGame*      mainGame_;
+    Chessboard*     chessboard_;
+    QStackedLayout* mainMenuLayout_;
+    TitleScreen*    titleScreen_;
+    CreditsScreen*  creditsScreen_;
+    EndGamesScreen* endGamesScreen_;
 };
 
 #endif // MAINMENU_H

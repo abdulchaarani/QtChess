@@ -1,72 +1,27 @@
 
-#ifndef PIECE_H
-#define PIECE_H
+#ifndef PIECE_HPP
+#define PIECE_HPP
 
+#include "layouts.hpp"
+#include <forward_list>
+#include <span>
 
-#include <QObject>
-#include <QPushButton>
-#include <QTimer>
-
-#include <list>
-#include <map>
-
-#include "point.hpp"
-
-class Box;
-class ChessBoard;
-enum class Color;
-
-class Piece : public QPushButton
+class Piece
 {
-    Q_OBJECT
-
 public:
-    Piece(Color color, int column, int row, ChessBoard* board, QWidget *parent = nullptr);
+    Piece(Color color, int row, int column);
     Piece() = default;
     virtual ~Piece() = default;
 
-    void changePosition(int column, int row);
-
-    // List of valid moves
-    std::list<Point> movements;
-
-    Point& getCoordinates();
-
-    // function that fills list of valid moves
-    virtual void fillMovements() = 0;
-
     Color color_;
+    QString display_;
+    std::pair<int, int> coordinates_;
 
-    void killPiece(Piece* victim);
+    using Coordinates = std::pair<int, int>;
+    std::forward_list<Coordinates> movements;
 
-    void check();
-
-    bool isChecked{false};
-
-     QTimer blinkTimer_;
-
-//protected:
-    Point coordinates_;
-    ChessBoard* chessboard_;
-
-private:
-    void revertCheck();
-
-
-signals:
-    // fires everytime a piece is moved
-    void movedPiece();
-
-    void playedFirstMove();
-
-private slots:
-    void updatePosition();
-
-    // to call correct overloaded function (#operator<<)
-    void fillAllMovements();
-
-public slots:
-    void toggleBlink();
-
+    using BoardView =std::array<std::array<std::shared_ptr<Piece>, 8>, 8>&;
+    virtual void fillMovements(BoardView board) = 0;
 };
-#endif // PIECE_H
+
+#endif // PIECE_HPP

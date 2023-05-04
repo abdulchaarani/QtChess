@@ -7,22 +7,22 @@ CONFIG += c++20 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-        bishop.cpp \
-        box.cpp \
-        chessboard.cpp \
-        creditsscreen.cpp \
-        endgames.cpp \
-        king.cpp \
-        knight.cpp \
-        layouts.cpp \
+    bishop.cpp \
+    chessboard.cpp \
+    chessgame.cpp \
+    core.cpp \
+    creditsscreen.cpp \
+    endgamesScreen.cpp \
+    king.cpp \
+    knight.cpp \
+    layouts.cpp \
         main.cpp \
-        mainmenu.cpp \
-        pawn.cpp \
-        piece.cpp \
-        point.cpp \
-        queen.cpp \
-        rook.cpp \
-        titlescreen.cpp
+        box.cpp \
+    pawn.cpp \
+    piece.cpp \
+    queen.cpp \
+    rook.cpp \
+    titlescreen.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -33,17 +33,18 @@ HEADERS += \
     bishop.hpp \
     box.hpp \
     chessboard.hpp \
+    chessgame.hpp \
+    core.hpp \
     creditsscreen.hpp \
-    endgames.hpp \
+    endgamesScreen.hpp \
     king.hpp \
     knight.hpp \
     layouts.hpp \
-    mainmenu.hpp \
     pawn.hpp \
     piece.hpp \
-    point.hpp \
     queen.hpp \
     rook.hpp \
     titlescreen.hpp
+
 
 QT += widgets

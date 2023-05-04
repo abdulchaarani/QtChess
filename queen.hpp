@@ -2,27 +2,14 @@
 #ifndef QUEEN_HPP
 #define QUEEN_HPP
 
-#include "piece.hpp"
 #include "bishop.hpp"
 #include "rook.hpp"
 
-class Queen : public Piece
+class Queen : public Bishop, public Rook
 {
-    Q_OBJECT
-
 public:
-    Queen(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    void fillMovements() override;
-
-    friend class Knight;
-private:
-/*
-    Qt doesnt seem to support multiple heritage very well,
-    composition will be used to avoid duplication of methods
-*/
-
-    Bishop* bishop_;
-    Rook* rook_;
+    Queen(Color color, int row, int column);
+    void fillMovements(BoardView board) override;
 };
 
 #endif // QUEEN_HPP

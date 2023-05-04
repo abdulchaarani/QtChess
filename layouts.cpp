@@ -27,21 +27,12 @@ const QFont pieceFont("Segoe UI Symbol", pieceSize);
 
 const QString pieceStyle = "QPushButton{"
                       "  color: black;"
-                      "  background-color: none;"
+                      "background-color: rgba(0,0,0,0);"
                       "  border-style: inset;"
                       "  }"
                       "QPushButton:pressed {"
                       "   border-style: inset;"
                       "}";
-
-const QString checkedFont = "QPushButton{"
-                  "  color: #F4CB16;"
-                  "  background-color: none;"
-                  "  border-style: inset;"
-                  "  }"
-                  "QPushButton:pressed {"
-                  "   border-style: inset;"
-                  "}";
 
 const QString whiteTurnFont = "QLabel{"
                            "  background-color: white;"
@@ -73,6 +64,26 @@ const QString blackBoxFont = "QPushButton{"
                           "   border-style: inset;"
                           "}";
 
+
+const QString whiteCheckedFont = "QPushButton{"
+                                 "  color: #F4CB16;"
+                                 "  background-color: rgb(238, 238, 212);"
+                                 "  border-style: inset;"
+                                 "  }"
+                                 "QPushButton:pressed {"
+                                 "   border-style: inset;"
+                                 "}";
+
+const QString blackCheckedFont = "QPushButton{"
+                                 "  color: #F4CB16;"
+                                 "  background-color: rgb(126, 148, 90);"
+                                 "  border-style: inset;"
+                                 "  }"
+                                 "QPushButton:pressed {"
+                                 "   border-style: inset;"
+                                 "}";
+
+
 const QString highlightKillFont = "QPushButton{"
                                "  background-color: #F90F33;"
                                "  border-style: solid;"
@@ -93,4 +104,21 @@ const QString highlightMoveFont = "QPushButton{"
                                "   border-style: inset;"
                                "}";
 
+const QString whiteLostFont =  "QPushButton{"
+                               "  background-color: rgb(238, 238, 212);"
+                               "  border-style: inset;"
+                               "  color: red;"
+                               "  }"
+                               "QPushButton:pressed {"
+                               "   border-style: inset;"
+                              "}";
+
+const QString blackLostFont =  "QPushButton{"
+                                "  background-color: rgb(126, 148, 90);"
+                                "  border-style: inset;"
+                                "  color: red;"
+                                "  }"
+                                "QPushButton:pressed {"
+                                "   border-style: inset;"
+                              "}";
 }

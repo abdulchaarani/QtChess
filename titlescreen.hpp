@@ -16,17 +16,17 @@ class TitleScreen : public QWidget
 public:
     explicit TitleScreen(QWidget* parent = nullptr);
 
-    friend class MainMenu;
+    friend class ChessCore;
 
 private:
     QHBoxLayout* const topButtonLayout;
     QHBoxLayout* const bottomButtonLayout;
     QGridLayout* const titleScreenLayout;
 
-    QPushButton* m_newGameButton;
-    QPushButton* m_endGameButton;
-    QPushButton* m_creditsButton;
-    QPushButton* m_exitGameButton;
+    QPushButton* newGameButton_;
+    QPushButton* endGameButton_;
+    QPushButton* creditsButton_;
+    QPushButton* exitGameButton_;
 
 private slots:
     void exit();

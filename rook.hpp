@@ -4,17 +4,13 @@
 
 #include "piece.hpp"
 
-class Rook : public Piece
+class Rook : virtual public Piece
 {
-    Q_OBJECT
-
 public:
-    Rook(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    Rook(Piece* queen);
-    void fillMovements() override;
-
-private:
-    bool isQueen_{false};
-    Piece* queen_;
+    Rook(Color color, int row, int column);
+    Rook() = default;
+    void fillMovements(BoardView board) override;
 };
+
+
 #endif // ROOK_HPP

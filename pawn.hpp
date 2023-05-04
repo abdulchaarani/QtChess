@@ -4,19 +4,13 @@
 
 #include "piece.hpp"
 
-class Pawn : public Piece
-{
-    Q_OBJECT
-
+class Pawn : public Piece{
 public:
-    Pawn(Color color, int column,  int row, ChessBoard* board, QWidget* parent);
-    void fillMovements() override;
-
+    Pawn(Color color, int row, int column);
+    void fillMovements(BoardView board) override;
+    Coordinates initialPosition_;
 private:
     bool firstMove_{true};
-
-private slots:
-    void playFirstMove() {firstMove_ = false; }
 };
 
 #endif // PAWN_HPP

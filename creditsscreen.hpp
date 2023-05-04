@@ -14,12 +14,12 @@ class CreditsScreen : public QWidget
 public:
     explicit CreditsScreen(const QString& creditsText, QWidget* parent);
 
-    friend class MainMenu;
+    friend class ChessCore;
 
 private:
-    QLabel*      const credits;
-    QPushButton* const m_backButton;
-    QVBoxLayout* const creditsScreenLayout;
+    QLabel*      const credits_;
+    QPushButton* const backButton_;
+    QVBoxLayout* const creditsScreenLayout_;
 };
 
 #endif // CREDITSSCREEN_H

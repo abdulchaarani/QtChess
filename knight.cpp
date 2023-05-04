@@ -1,46 +1,40 @@
 
 #include "knight.hpp"
-#include "chessboard.hpp"
 
-Knight::Knight(Color color, int row,  int column, ChessBoard* board, QWidget* parent)
-    : Piece(color, row, column, board, parent)
+Knight::Knight(Color color, int row, int column) : Piece(color, row, column)
 {
-    // WARNING: TWO DIFFERENT COLORS OF PIECE
-    color_ == Color::white ? setText("♘") : setText("♞");
-    changePosition(row, column);
+    color_ == Color::white ? display_ = "♘" : display_ = "♞";
 }
 
-// Error bound checking
-void Knight::fillMovements()
+void Knight::fillMovements(BoardView board)
 {
     movements.clear();
 
-    int row{coordinates_.getRow()};
-    int column{coordinates_.getColumn()};
+    auto [row, column] = coordinates_;
 
     if (((row + 1) < 8) && ((column + 2) < 8))
-        if(chessboard_->board_[row + 1][column + 2] == nullptr || chessboard_->board_[row + 1][column + 2]->color_ != color_)
-            movements.push_back(Point(row + 1, column + 2));
+        if(board[row + 1][column + 2] == nullptr || board[row + 1][column + 2]->color_ != color_)
+            movements.push_front({row + 1, column + 2});
     if (((row + 1) < 8) && ((column - 2) >= 0))
-        if(chessboard_->board_[row + 1][column - 2] == nullptr || chessboard_->board_[row + 1][column - 2]->color_ != color_)
-            movements.push_back(Point(row + 1, column - 2));
+        if(board[row + 1][column - 2] == nullptr || board[row + 1][column - 2]->color_ != color_)
+            movements.push_front({row + 1, column - 2});
     if (((row - 1) >= 0) && ((column + 2) < 8))
-        if(chessboard_->board_[row - 1][column + 2] == nullptr || chessboard_->board_[row - 1][column + 2]->color_ != color_)
-            movements.push_back(Point(row - 1, column + 2));
+        if(board[row - 1][column + 2] == nullptr || board[row - 1][column + 2]->color_ != color_)
+            movements.push_front({row - 1, column + 2});
     if (((row - 1) >= 0) && ((column - 2) >= 0))
-        if(chessboard_->board_[row - 1][column - 2] == nullptr || chessboard_->board_[row - 1][column - 2]->color_ != color_)
-            movements.push_back(Point(row - 1, column - 2));
+        if(board[row - 1][column - 2] == nullptr || board[row - 1][column - 2]->color_ != color_)
+            movements.push_front({row - 1, column - 2});
     if (((row + 2) < 8) && ((column + 1) < 8))
-        if(chessboard_->board_[row + 2][column + 1] == nullptr || chessboard_->board_[row + 2][column + 1]->color_ != color_)
-            movements.push_back(Point(row + 2, column + 1));
+        if(board[row + 2][column + 1] == nullptr || board[row + 2][column + 1]->color_ != color_)
+            movements.push_front({row + 2, column + 1});
     if (((row + 2) < 8) && ((column - 1) >= 0))
-        if(chessboard_->board_[row + 2][column - 1] == nullptr || chessboard_->board_[row + 2][column - 1]->color_ != color_)
-            movements.push_back(Point(row + 2, column - 1));
+        if(board[row + 2][column - 1] == nullptr || board[row + 2][column - 1]->color_ != color_)
+            movements.push_front({row + 2, column - 1});
     if (((row - 2) >= 0) && ((column + 1) < 8))
-        if(chessboard_->board_[row - 2][column + 1] == nullptr || chessboard_->board_[row - 2][column + 1]->color_ != color_)
-            movements.push_back(Point(row - 2, column + 1));
+        if(board[row - 2][column + 1] == nullptr || board[row - 2][column + 1]->color_ != color_)
+            movements.push_front({row - 2, column + 1});
     if (((row - 2) >= 0) && ((column - 1) >= 0))
-        if(chessboard_->board_[row - 2][column - 1] == nullptr || chessboard_->board_[row - 2][column - 1]->color_ != color_)
-            movements.push_back(Point(row - 2, column - 1));
-}
+        if(board[row - 2][column - 1] == nullptr || board[row - 2][column - 1]->color_ != color_)
+            movements.push_front({row - 2, column - 1});
 
+}

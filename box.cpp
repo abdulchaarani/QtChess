@@ -1,108 +1,66 @@
 
 #include "box.hpp"
-#include "chessboard.hpp"
-#include "layouts.hpp"
 
 using namespace layouts;
 
-Box::Box(int row, int column, ChessBoard *parent) : QPushButton(parent), coordinates_(row, column)
-{
-    // to alternate black and white colors on the chessboard
-    counter_ ? setColorBlack() : setColorWhite();
-    if (coordinates_.getColumn() != 7)
-        counter_ = !counter_;
+QString Box::tempHeldPiece_{};
+Color Box::tempHeldColor_{};
 
-    // save chessboard as an attribute
-    chessboard_ = parent;
+Box::Box(int row, int column, QWidget* parent) : parent_{parent}
+{
+    coordinates_ = {row, column};
+    alternator_ ? setColorBlack() : setColorWhite();
+    if (column != 7)
+        alternator_ = !alternator_;
+    setFont(pieceFont);
 }
 
 void Box::setColorWhite()
 {
-    this->setStyleSheet(whiteBoxFont);
-    color_ = true;
+    setStyleSheet(whiteBoxFont);
+    boxColor_ = Color::white;
 }
 void Box::setColorBlack()
 {
-    this->setStyleSheet(blackBoxFont);
-    color_ = false;
+    setStyleSheet(blackBoxFont);
+    boxColor_ = Color::black;
 }
 
-void Box::onPieceClick()
+void Box::setDisplay(const QString& display)
 {
-    // reset clicked box
-    chessboard_->setBoxPressed(nullptr);
-
-
-    // which piece got clicked
-    QObject* senderObject = QObject::sender();
-    if (senderObject == nullptr)
-        return;
-
-    auto piece = qobject_cast<Piece*>(senderObject);
-
-    // if not your turn no touchy! Also Check for kill
-    if (piece->color_ != chessboard_->currentPlayer){
-        Piece* killer{chessboard_->getLastPiecePressed()};
-        // check if in killing position
-
-        Point pieceCoordinates = piece->coordinates_;
-
-        if (coordinates_ == pieceCoordinates)
-            if (movableBox_ == true && chessboard_->isValidMove(piece->getCoordinates())){
-                for(auto&& movement : killer->movements)
-                    if (movement == piece->getCoordinates()){
-                        killer->killPiece(piece);
-                        movableBox_ = false;
-                        chessboard_->finishingBlow();
-                        return;
-                    }
-            }
-        return;
-    }
-
-    // colors the boxes in the appropriate colors;
-    handleClick();
-    chessboard_->setPiecePressed(piece);
-    highlightColor();
-
+    heldPiece_ = display;
+    setText(display);
 }
 
-// If box is in the possible moveset of the clicked piece, highlight
-void Box::highlightColor()
+void Box::highlightMove()
 {
-    Piece* piece = chessboard_->getLastPiecePressed();
-    for(auto&& movement : piece->movements)
-        if (movement == this->coordinates_){
-            movableBox_ = true;
-            if (chessboard_->board_[coordinates_.getRow()][coordinates_.getColumn()] != nullptr)
-                setStyleSheet(highlightKillFont);
-            else
-                setStyleSheet(highlightMoveFont);
-        }
+    setStyleSheet(highlightMoveFont);
 }
 
-void Box::revertColor()
+void Box::highlightKill()
 {
-    color_ ? setColorWhite() : setColorBlack();
+    setStyleSheet(highlightKillFont);
 }
 
-
-void Box::handleClick()
+void Box::highlightOff()
 {
-    // if the next clicked box is not a highlighted one, cancel movement
-    // else make the piece goto said box
-    Piece* potentialVictim{chessboard_->board_[coordinates_.getRow()][coordinates_.getColumn()]};
+    if (boxColor_ == Color::white)
+        setColorWhite();
+    else
+        setColorBlack();
+}
 
-    auto currentBox = chessboard_->getBoxPressed();
-    if (currentBox == this)
-        if (currentBox->movableBox_)
-            if (chessboard_->isValidMove(coordinates_))
-                if (potentialVictim != nullptr)
-                    chessboard_->getLastPiecePressed()->killPiece(potentialVictim);
-                else
-                    emit goTo();
+void Box::purgeBox()
+{
+    Box::tempHeldPiece_ = heldPiece_;
+    Box::tempHeldColor_ = heldColor_;
 
-    revertColor();
-    movableBox_ = false;
-    currentBox = nullptr;
+    heldPiece_ = "";
+    setDisplay(heldPiece_);
+}
+
+void Box::occupyBox()
+{
+    setDisplay(Box::tempHeldPiece_);
+    heldColor_ = Box::tempHeldColor_;
 }

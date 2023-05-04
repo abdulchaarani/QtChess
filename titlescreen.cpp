@@ -1,5 +1,6 @@
 
 #include "titlescreen.hpp"
+#include "layouts.hpp"
 
 TitleScreen::TitleScreen(QWidget* parent)
     : QWidget(parent),
@@ -8,24 +9,31 @@ TitleScreen::TitleScreen(QWidget* parent)
     titleScreenLayout(new QGridLayout)
 {
     // Title screen buttons
-    m_newGameButton  = new QPushButton("Start",   this);
-    m_creditsButton  = new QPushButton("Credits", this);
-    m_exitGameButton = new QPushButton("Exit",    this);
-    m_endGameButton  = new QPushButton("Practice end games", this);
+    newGameButton_  = new QPushButton("Start",   this);
+    creditsButton_  = new QPushButton("Credits", this);
+    exitGameButton_ = new QPushButton("Exit",    this);
+    endGameButton_  = new QPushButton("Practice end games", this);
+    
+    newGameButton_->setStyleSheet(layouts::menuButtonFont);
+    creditsButton_->setStyleSheet(layouts::menuButtonFont);
+    exitGameButton_->setStyleSheet(layouts::menuButtonFont);
+    endGameButton_->setStyleSheet(layouts::menuButtonFont);
 
-    m_newGameButton-> setFixedWidth(200);
-    m_endGameButton-> setFixedWidth(200);
-    m_creditsButton-> setFixedWidth(200);
-    m_exitGameButton->setFixedWidth(200);
+
+
+    newGameButton_-> setFixedWidth(200);
+    endGameButton_-> setFixedWidth(200);
+    creditsButton_-> setFixedWidth(200);
+    exitGameButton_->setFixedWidth(200);
 
     // Connect the exit button to the exit function. It closes the app
-    connect(m_exitGameButton, &QPushButton::clicked, this, &TitleScreen::exit);
+    connect(exitGameButton_, &QPushButton::clicked, this, &TitleScreen::exit);
 
     // Alignment of our buttons.
-    topButtonLayout->   addWidget(m_newGameButton,  0, Qt::AlignHCenter);
-    topButtonLayout->   addWidget(m_endGameButton,  0, Qt::AlignHCenter);
-    bottomButtonLayout->addWidget(m_creditsButton,  1, Qt::AlignHCenter);
-    bottomButtonLayout->addWidget(m_exitGameButton, 1, Qt::AlignHCenter);
+    topButtonLayout->   addWidget(newGameButton_,  0, Qt::AlignHCenter);
+    topButtonLayout->   addWidget(endGameButton_,  0, Qt::AlignHCenter);
+    bottomButtonLayout->addWidget(creditsButton_,  1, Qt::AlignHCenter);
+    bottomButtonLayout->addWidget(exitGameButton_, 1, Qt::AlignHCenter);
 
     titleScreenLayout->addLayout(topButtonLayout,    0, 0);
     titleScreenLayout->addLayout(bottomButtonLayout, 1, 0);
