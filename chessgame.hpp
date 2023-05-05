@@ -18,10 +18,10 @@ class ChessGame : public QObject
     Q_OBJECT
 public:
 
-    void connectBoard(Chessboard* chessboard);
+    static const int boardDim{8};
 
-    std::array<std::array<std::shared_ptr<Piece>, 8>, 8> boardPieces_{};
-    std::array<std::array<Box*, 8>, 8> boardBoxes_{};
+    std::array<std::array<std::shared_ptr<Piece>, boardDim>, boardDim> boardPieces_{};
+    std::array<std::array<Box*, boardDim>, boardDim> boardBoxes_{};
 
     template <typename T>
     void addPiece(Color color, int row, int column)

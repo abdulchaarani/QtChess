@@ -1,3 +1,4 @@
+#include "cppitertools/itertools.hpp"
 
 #include "chessgame.hpp"
 #include "QDebug"
@@ -7,31 +8,14 @@
 #include "bishop.hpp"
 #include "queen.hpp"
 
-void ChessGame::connectBoard(Chessboard* chessboard)
-{
-    connect(chessboard, SIGNAL(sendClick(Coordinates)), this, SLOT(validateClick(Coordinates)));
-
-    connect(this, SIGNAL(initialiseColor(Coordinates,Color)),     chessboard, SLOT(setPieceColor(Coordinates,Color)));
-    connect(this, SIGNAL(initialiseDisplay(Coordinates,QString)), chessboard, SLOT(setBoxText(Coordinates,QString)));
-
-    connect(this, SIGNAL(highlight(Coordinates,Highlight)),           chessboard, SLOT(processHighlight(Coordinates,Highlight)));
-    connect(this, SIGNAL(updateCoordinates(Coordinates,Coordinates)), chessboard, SLOT(moveViewPiece(Coordinates,Coordinates)));
-
-    connect(this, SIGNAL(turnChanged(Color)),                chessboard, SLOT(toggleTurnLabel(Color)));
-    connect(this, SIGNAL(blinkCheckedKing(Coordinates,int)), chessboard, SLOT(startTimer(Coordinates,int)));
-
-    connect(this, SIGNAL(killKing(Coordinates)), chessboard, SLOT(rotateKing(Coordinates)));
-    connect(this, SIGNAL(crownWinner(Color)),    chessboard, SLOT(displayWinner(Color)));
-
-
-}
+using namespace iter;
 
 void ChessGame::generateMovements()
 {
-    for (int i{0}; i < 8; ++i)
-        for (int j{0}; j < 8; ++j)
-            if (boardPieces_[i][j] != nullptr)
-                boardPieces_[i][j]->fillMovements(boardPieces_);
+    for (int row : range(boardDim))
+        for (int column : range(boardDim))
+            if (boardPieces_[row][column] != nullptr)
+                boardPieces_[row][column]->fillMovements(boardPieces_);
 }
 
 void ChessGame::validateClick(Coordinates coordinates)
@@ -102,9 +86,9 @@ void ChessGame::movePiece(Coordinates newCoordinates)
 
 void ChessGame::revertHighlight()
 {
-    for (int i{0}; i < 8; ++i)
-        for (int j{0}; j < 8; ++j)
-            emit highlight({i, j}, Highlight::revert);
+    for (int row : range(boardDim))
+        for (int column : range(boardDim))
+            emit highlight({row, column}, Highlight::revert);
 }
 
 void ChessGame::highlightMoves(Piece* piece)
@@ -152,11 +136,11 @@ bool ChessGame::isChecked()
 {
     King* king{getFriendlyKing()};
     // verify if any enemy piece has the king in their sights
-    for (int i{0}; i < 8; ++i)
-        for (int j{0}; j < 8; ++j)
-            if (boardPieces_[i][j] != nullptr)
-                if (boardPieces_[i][j]->color_ != currentPlayer_)
-                    for (auto&& move : boardPieces_[i][j]->movements)
+    for (int row : range(boardDim))
+        for (int column : range(boardDim))
+            if (boardPieces_[row][column] != nullptr)
+                if (boardPieces_[row][column]->color_ != currentPlayer_)
+                    for (auto&& move : boardPieces_[row][column]->movements)
                         if (move == king->coordinates_){
                             return true;
                         }
@@ -229,13 +213,13 @@ bool ChessGame::isValidMove(Coordinates position)
 
 void ChessGame::verifyCheckmate(){
 
-    for (int i{0}; i < 8; ++i)
-        for (int j{0}; j < 8; ++j)
-            if (boardPieces_[i][j] != nullptr)
-                if (boardPieces_[i][j]->color_ == currentPlayer_){
-                    std::forward_list<Coordinates> pieceMovements{boardPieces_[i][j]->movements};
+    for (int row : range(boardDim))
+        for (int column : range(boardDim))
+            if (boardPieces_[row][column] != nullptr)
+                if (boardPieces_[row][column]->color_ == currentPlayer_){
+                    std::forward_list<Coordinates> pieceMovements{boardPieces_[row][column]->movements};
                     for (auto&& move : pieceMovements){
-                        lastPiecePressed_ = boardPieces_[i][j].get();
+                        lastPiecePressed_ = boardPieces_[row][column].get();
                         if (isValidMove(move))
                             return;
                     }
@@ -247,10 +231,10 @@ void ChessGame::verifyCheckmate(){
 
 void ChessGame::gameOver(){
     isGameStarted_ = false;
-    for (int i{0}; i < 8; ++i)
-        for (int j{0}; j < 8; ++j)
-            if (boardPieces_[i][j] != nullptr)
-                boardPieces_[i][j]->movements.clear();
+    for (int row : range(boardDim))
+        for (int column : range(boardDim))
+            if (boardPieces_[row][column] != nullptr)
+                boardPieces_[row][column]->movements.clear();
 
     emit killKing(getFriendlyKing()->coordinates_);
     emit crownWinner(getOpponentKing()->color_);
@@ -287,7 +271,7 @@ void ChessGame::startNewGame()
     addPiece<Queen>(Color::white, 7, 3);
     addPiece<Queen>(Color::black, 0, 3);
 
-    for (int i{0}; i < 8; ++i){
+    for (int i : range(boardDim)){
         addPiece<Pawn>(Color::white, 6, i);
         addPiece<Pawn>(Color::black, 1, i);
     }

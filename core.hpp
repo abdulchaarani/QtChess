@@ -31,6 +31,8 @@ private:
     TitleScreen*    titleScreen_;
     CreditsScreen*  creditsScreen_;
     EndGamesScreen* endGamesScreen_;
+
+    void connectSignals();
 };
 
 #endif // MAINMENU_H

@@ -11,7 +11,10 @@ enum class Highlight {move, kill, revert};
 namespace layouts{
 
 // main menu layouts
+extern const int screenWidth;
+extern const int screenHeight;
 extern const QString menuButtonFont;
+extern const QFont   creditsFont;
 
 // piece layouts
 extern const double  offset;

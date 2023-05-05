@@ -1,6 +1,12 @@
 #include "layouts.hpp"
 
 namespace layouts{
+
+const int screenWidth{820};
+const int screenHeight{850};
+
+const QFont creditsFont{"Segoe UI Symbol", 20};
+
 const QString menuButtonFont  = "QPushButton {"
                                         "  font-size: 20px;"
                                         "  font-family: Segoe UI Symbol;"
