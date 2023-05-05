@@ -1,16 +1,9 @@
-/**
-* Program that defines the methods of the ChessCore class. Manages core functions (signal connections and slot definitions).
-* \file   core.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 3 mai 2023
-*/
 
 #include "core.hpp"
 #include <QDebug>
 
 ChessCore::ChessCore()
-         : mainGame_{new model::ChessGame}
+         : chessGame_{ std::make_unique<model::ChessGame>() }
          , chessboard_{new view::Chessboard}
          , mainMenuLayout_{new QStackedLayout}
          , titleScreen_{new view::TitleScreen(this)}
@@ -33,7 +26,6 @@ ChessCore::ChessCore()
 
     setFixedSize(layouts::screenWidth, layouts::screenHeight);
 }
-
 // Slot that switches the current screen to the titlescreen
 void ChessCore::onBackPress()
 {
@@ -59,7 +51,7 @@ void ChessCore::onGameStarted()
 
 void ChessCore::connectSignals()
 {
-    // connect view to model
+    model::ChessGame* mainGame_{ chessGame_.get() };     // connect view to model
     connect(chessboard_, SIGNAL(sendClick(Coordinates)), mainGame_, SLOT(validateClick(Coordinates)));
     connect(mainGame_, SIGNAL(initialiseColor(Coordinates,Color)),     chessboard_, SLOT(setPieceColor(Coordinates,Color)));
     connect(mainGame_, SIGNAL(initialiseDisplay(Coordinates,QString)), chessboard_, SLOT(setBoxText(Coordinates,QString)));

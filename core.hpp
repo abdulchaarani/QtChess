@@ -7,6 +7,7 @@
 #include "titlescreen.hpp"
 #include "creditsscreen.hpp"
 #include "endgamesScreen.hpp"
+#include <memory>
 
 #include <QWidget>
 #include <QStackedLayout>
@@ -25,12 +26,12 @@ public slots:
     void onGameStarted();
 
 private:
-    model::ChessGame*      mainGame_;
-    view::Chessboard*     chessboard_;
-    QStackedLayout* mainMenuLayout_;
-    view::TitleScreen*    titleScreen_;
-    view::CreditsScreen*  creditsScreen_;
-    view::EndGamesScreen* endGamesScreen_;
+    std::unique_ptr<model::ChessGame>       chessGame_;
+    view::Chessboard*                       chessboard_;
+    QStackedLayout*                         mainMenuLayout_;
+    view::TitleScreen*                      titleScreen_;
+    view::CreditsScreen*                    creditsScreen_;
+    view::EndGamesScreen*                   endGamesScreen_;
 
     void connectSignals();
 };
