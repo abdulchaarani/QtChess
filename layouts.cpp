@@ -1,3 +1,11 @@
+/**
+* Program that defines the layouts used in the application. 
+* \file   layouts.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 9 avril 2023
+*/
+
 #include "layouts.hpp"
 
 namespace layouts{

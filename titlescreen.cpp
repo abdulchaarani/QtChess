@@ -1,3 +1,10 @@
+/**
+* Program that defines the UI configuration and methods of the TitleScreen class.
+* \file   titlescreen.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "titlescreen.hpp"
 #include "layouts.hpp"

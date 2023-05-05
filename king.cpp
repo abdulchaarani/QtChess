@@ -1,3 +1,10 @@
+/**
+* Program that defines the movement method and constructor of the King class.
+* \file   king.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 4 mai 2023
+*/
 
 #include "king.hpp"
 

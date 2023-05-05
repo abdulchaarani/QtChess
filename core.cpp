@@ -1,3 +1,10 @@
+/**
+* Program that defines the methods of the ChessCore class. Manages core functions (signal connections and slot definitions).
+* \file   core.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 3 mai 2023
+*/
 
 #include "core.hpp"
 #include <QDebug>
