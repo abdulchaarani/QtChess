@@ -1,3 +1,10 @@
+/**
+* Program that defines the movements method and constructor of the Pawn class.
+* \file   pawn.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "pawn.hpp"
 

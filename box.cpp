@@ -1,3 +1,10 @@
+/**
+* Program that defines the methods of the Box class. Manages the chessboard boxes (Position, colors, kill highlights, etc.)
+* \file   box.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "box.hpp"
 

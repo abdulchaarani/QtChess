@@ -1,3 +1,10 @@
+/**
+* Program that defines the movements method and constructor of the Rook class.
+* \file   rook.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "rook.hpp"
 

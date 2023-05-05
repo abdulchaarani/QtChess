@@ -1,3 +1,12 @@
+/**
+* Program that defines the methods of the Chessgame class. Manages game rules 
+* (Legal piece movements, checks and checkmates, start games, etc.)
+* \file   chessgame.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 3 mai 2023
+*/
+
 #include "cppitertools/itertools.hpp"
 
 #include "chessgame.hpp"

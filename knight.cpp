@@ -1,3 +1,10 @@
+/**
+* Program that defines the movement method and constructor of the Knight class.
+* \file   knight.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "knight.hpp"
 

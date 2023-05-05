@@ -1,3 +1,10 @@
+/**
+* Program that defines the methods of the EndGamesScreen class (UI configurations).
+* \file   endgamesScreen.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 3 mai 2023
+*/
 
 #include "endgamesScreen.hpp"
 #include "layouts.hpp"

@@ -1,5 +1,13 @@
+/**
+* Program that defines the movement methods and constructor of the Bishop class.
+* \file   chessboard.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "bishop.hpp"
+
 namespace model{
 
 Bishop::Bishop(Color color, int row, int column) : Piece(color, row, column)

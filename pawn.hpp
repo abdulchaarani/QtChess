@@ -1,4 +1,3 @@
-
 #ifndef PAWN_HPP
 #define PAWN_HPP
 

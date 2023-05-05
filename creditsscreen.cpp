@@ -1,3 +1,10 @@
+/**
+* Program that defines the methods of the CreditsScreen class (UI configurations).
+* \file   creditsscreen.cpp
+* \author Abdul-Wahab et Hiba
+* \date   4 mai 2023
+* Créé le 9 avril 2023
+*/
 
 #include "creditsscreen.hpp"
 #include "layouts.hpp"

@@ -1,3 +1,11 @@
+/**
+* Program that defines the methods of the Chessboard class. Manages pieces (Color, movement, move validation).
+* \file   chessboard.cpp
+* \author Abdul-Wahab et Hiba
+* \date   5 mai 2023
+* Créé le 9 avril 2023
+*/
+
 #include "chessboard.hpp"
 
 using namespace layouts;
