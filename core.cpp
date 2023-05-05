@@ -3,12 +3,12 @@
 #include <QDebug>
 
 ChessCore::ChessCore()
-         : mainGame_{new ChessGame}
-         , chessboard_{new Chessboard}
+         : mainGame_{new model::ChessGame}
+         , chessboard_{new view::Chessboard}
          , mainMenuLayout_{new QStackedLayout}
-         , titleScreen_{new TitleScreen(this)}
-         , creditsScreen_{new CreditsScreen(this)}
-         , endGamesScreen_{new EndGamesScreen(this)}
+         , titleScreen_{new view::TitleScreen(this)}
+         , creditsScreen_{new view::CreditsScreen(this)}
+         , endGamesScreen_{new view::EndGamesScreen(this)}
 
 {
 

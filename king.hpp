@@ -4,6 +4,8 @@
 
 #include "piece.hpp"
 
+namespace model{
+
 class King : public Piece
 {
 public:
@@ -12,4 +14,5 @@ public:
     bool isChecked_{false};
 };
 
+}
 #endif // KING_HPP

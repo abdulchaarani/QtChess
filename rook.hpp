@@ -4,6 +4,8 @@
 
 #include "piece.hpp"
 
+namespace model{
+
 class Rook : virtual public Piece
 {
 public:
@@ -12,5 +14,6 @@ public:
     void fillMovements(BoardView board) override;
 };
 
+}
 
 #endif // ROOK_HPP

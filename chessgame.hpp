@@ -6,10 +6,10 @@
 #include <array>
 #include <memory>
 
-#include "chessboard.hpp"
 #include "piece.hpp"
 #include "king.hpp"
-#include "box.hpp"
+
+namespace model{
 
 class ChessGame : public QObject
 {
@@ -21,7 +21,6 @@ public:
     static const int boardDim{8};
 
     std::array<std::array<std::shared_ptr<Piece>, boardDim>, boardDim> boardPieces_{};
-    std::array<std::array<Box*, boardDim>, boardDim> boardBoxes_{};
 
     template <typename T>
     void addPiece(Color color, int row, int column)
@@ -89,5 +88,5 @@ private slots:
    void startTestGame();
 };
 
-
+}
 #endif // CHESSGAME_HPP

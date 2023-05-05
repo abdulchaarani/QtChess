@@ -6,6 +6,8 @@
 #include <forward_list>
 #include <span>
 
+namespace model{
+
 class Piece
 {
 public:
@@ -24,4 +26,5 @@ public:
     virtual void fillMovements(BoardView board) = 0;
 };
 
+}
 #endif // PIECE_HPP

@@ -1,6 +1,8 @@
 
 #include "rook.hpp"
 
+namespace model{
+
 Rook::Rook(Color color, int row, int column) : Piece(color, row, column)
 {
     color_ == Color::white ? display_ = "♖" : display_ = "♜";
@@ -71,4 +73,5 @@ void Rook::fillMovements(BoardView board)
                 break;
     }
 
+}
 }

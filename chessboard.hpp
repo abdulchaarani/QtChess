@@ -2,7 +2,6 @@
 #ifndef CHESSBOARD_HPP
 #define CHESSBOARD_HPP
 
-
 #include <QWidget>
 #include <QGridLayout>
 #include <QPushButton>
@@ -12,6 +11,8 @@
 #include "layouts.hpp"
 #include "box.hpp"
 
+namespace view{
+
 class Chessboard : public QWidget
 {
     using Coordinates = std::pair<int, int>;
@@ -20,7 +21,7 @@ class Chessboard : public QWidget
 public:
     Chessboard(QWidget* parent = nullptr);
     QGridLayout* grid_;
-    QVBoxLayout* lay_;
+    QVBoxLayout* boardLayout__;
     QLabel*      label_;
 
 private:
@@ -49,4 +50,5 @@ signals:
     void sendClick(Coordinates coordinates);
 };
 
+}
 #endif // CHESSBOARD_HPP

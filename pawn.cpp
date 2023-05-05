@@ -1,6 +1,8 @@
 
 #include "pawn.hpp"
 
+namespace model{
+
 Pawn::Pawn(Color color, int row, int column) : Piece(color, row, column)
 {
     color_ == Color::white ? display_ = "♙" : display_ = "♟";
@@ -64,5 +66,7 @@ void Pawn::fillMovements(BoardView board)
                 movements.push_front({row + 1, column - 1});
     }
 
+
+}
 
 }

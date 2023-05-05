@@ -2,6 +2,8 @@
 #include "creditsscreen.hpp"
 #include "layouts.hpp"
 
+namespace view{
+
 CreditsScreen::CreditsScreen(QWidget* parent) :
     QWidget(parent),
     credits_(new QLabel(this)),
@@ -14,4 +16,6 @@ CreditsScreen::CreditsScreen(QWidget* parent) :
     creditsScreenLayout_->addWidget(credits_, 0, Qt::AlignHCenter);
     creditsScreenLayout_->addWidget(backButton_);
     backButton_->setStyleSheet(layouts::menuButtonFont);
+}
+
 }

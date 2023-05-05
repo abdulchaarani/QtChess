@@ -2,11 +2,13 @@
 #include "titlescreen.hpp"
 #include "layouts.hpp"
 
+namespace view{
+
 TitleScreen::TitleScreen(QWidget* parent)
     : QWidget(parent),
-    topButtonLayout(new QHBoxLayout),
-    bottomButtonLayout(new QHBoxLayout),
-    titleScreenLayout(new QGridLayout)
+    titleScreenLayout_(new QVBoxLayout),
+    title_(new QLabel),
+    buttonLayout_(new QGridLayout)
 {
     // Title screen buttons
     newGameButton_  = new QPushButton("Start",   this);
@@ -19,8 +21,6 @@ TitleScreen::TitleScreen(QWidget* parent)
     exitGameButton_-> setStyleSheet (layouts::menuButtonFont);
     endGameButton_ -> setStyleSheet (layouts::menuButtonFont);
 
-
-
     newGameButton_ -> setFixedWidth(200);
     endGameButton_ -> setFixedWidth(200);
     creditsButton_ -> setFixedWidth(200);
@@ -30,15 +30,18 @@ TitleScreen::TitleScreen(QWidget* parent)
     connect(exitGameButton_, &QPushButton::clicked, this, &TitleScreen::exit);
 
     // Alignment of our buttons.
-    topButtonLayout->   addWidget(newGameButton_,  0, Qt::AlignHCenter);
-    topButtonLayout->   addWidget(endGameButton_,  0, Qt::AlignHCenter);
-    bottomButtonLayout->addWidget(creditsButton_,  1, Qt::AlignHCenter);
-    bottomButtonLayout->addWidget(exitGameButton_, 1, Qt::AlignHCenter);
+    buttonLayout_->   addWidget(newGameButton_, 0, 0);
+    buttonLayout_->   addWidget(endGameButton_, 0, 1);
+    buttonLayout_->addWidget(creditsButton_, 1, 0);
+    buttonLayout_->addWidget(exitGameButton_, 1, 1);
 
-    titleScreenLayout->addLayout(topButtonLayout,    0, 0);
-    titleScreenLayout->addLayout(bottomButtonLayout, 1, 0);
+    title_->setText(titleText_);
+    title_->setFont(layouts::pieceFont);
 
-    setLayout(titleScreenLayout);
+    titleScreenLayout_->addWidget(title_);
+    titleScreenLayout_->addLayout(buttonLayout_);
+
+    setLayout(titleScreenLayout_);
 
 };
 
@@ -46,4 +49,6 @@ TitleScreen::TitleScreen(QWidget* parent)
 void TitleScreen::exit()
 {
     qApp->exit();
+}
+
 }

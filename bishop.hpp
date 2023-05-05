@@ -3,6 +3,7 @@
 #define BISHOP_HPP
 
 #include "piece.hpp"
+namespace model{
 
 class Bishop : virtual public Piece
 {
@@ -12,4 +13,5 @@ public:
     void fillMovements(BoardView board) override;
 };
 
+}
 #endif // BISHOP_HPP

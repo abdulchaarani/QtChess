@@ -3,6 +3,8 @@
 
 using namespace layouts;
 
+namespace view{
+
 QString Box::tempHeldPiece_{};
 Color Box::tempHeldColor_{};
 
@@ -63,4 +65,6 @@ void Box::occupyBox()
 {
     setDisplay(Box::tempHeldPiece_);
     heldColor_ = Box::tempHeldColor_;
+}
+
 }

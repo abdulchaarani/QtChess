@@ -10,6 +10,9 @@
 
 using namespace iter;
 
+namespace model{
+
+
 void ChessGame::generateMovements()
 {
     for (int row : range(boardDim))
@@ -347,4 +350,5 @@ void ChessGame::startTestGame()
     addPiece<Queen>(Color::black, 1, 6);
 
     startGame();
+}
 }

@@ -1,5 +1,6 @@
 
 #include "bishop.hpp"
+namespace model{
 
 Bishop::Bishop(Color color, int row, int column) : Piece(color, row, column)
 {
@@ -75,4 +76,5 @@ void Bishop::fillMovements(BoardView board)
                 break; // stop adding
     }
 
+}
 }

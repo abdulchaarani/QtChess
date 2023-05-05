@@ -4,6 +4,8 @@
 
 #include "piece.hpp"
 
+namespace model{
+
 class Pawn : public Piece{
 public:
     Pawn(Color color, int row, int column);
@@ -13,4 +15,5 @@ private:
     bool firstMove_{true};
 };
 
+}
 #endif // PAWN_HPP

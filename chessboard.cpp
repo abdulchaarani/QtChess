@@ -2,10 +2,12 @@
 
 using namespace layouts;
 
+namespace view{
+
 Chessboard::Chessboard(QWidget* parent) : QWidget(parent), parent_(parent)
 {
     // creates a 8x8 grid of boxes and connects correct signals
-    lay_ = new QVBoxLayout(this);
+    boardLayout__ = new QVBoxLayout(this);
     grid_ = new QGridLayout();
 
     label_ = new QLabel("White's turn");
@@ -13,8 +15,8 @@ Chessboard::Chessboard(QWidget* parent) : QWidget(parent), parent_(parent)
     label_->setStyleSheet(whiteTurnFont);
     label_->setAlignment(Qt::AlignCenter);
 
-    lay_->addWidget(label_);
-    lay_->addLayout(grid_);
+    boardLayout__->addWidget(label_);
+    boardLayout__->addLayout(grid_);
 
     for (int row = 0; row < 8; ++row) {
         for (int column = 0; column < 8; ++column) {
@@ -145,4 +147,5 @@ void Chessboard::displayWinner(Color winner)
         label_->setStyleSheet(blackTurnFont);
         label_->setText("Black wins!");
     }
+}
 }

@@ -5,6 +5,8 @@
 #include <QPushButton>
 #include "layouts.hpp"
 
+namespace view{
+
 class Box : public QPushButton
 {
     using Coordinates = std::pair<int, int>;
@@ -39,5 +41,5 @@ private:
 
 
 };
-
+}
 #endif // BOX_HPP

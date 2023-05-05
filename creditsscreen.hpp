@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 
+namespace view{
 
 class CreditsScreen : public QWidget
 {
@@ -14,11 +15,11 @@ class CreditsScreen : public QWidget
 public:
     explicit CreditsScreen(QWidget* parent);
 
-    friend class ChessCore;
+    QPushButton* const backButton_;
 
 private:
     QLabel*      const credits_;
-    QPushButton* const backButton_;
+
     QVBoxLayout* const creditsScreenLayout_;
 
     QString      const creditsText_
@@ -31,5 +32,5 @@ private:
 
     };
 };
-
+}
 #endif // CREDITSSCREEN_H

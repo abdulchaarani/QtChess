@@ -5,6 +5,8 @@
 #include "bishop.hpp"
 #include "rook.hpp"
 
+namespace model{
+
 class Queen : public Bishop, public Rook
 {
 public:
@@ -12,4 +14,5 @@ public:
     void fillMovements(BoardView board) override;
 };
 
+}
 #endif // QUEEN_HPP

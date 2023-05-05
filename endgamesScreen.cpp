@@ -2,6 +2,8 @@
 #include "endgamesScreen.hpp"
 #include "layouts.hpp"
 
+namespace view{
+
 EndGamesScreen::EndGamesScreen(QWidget* parent) : QWidget(parent),
     verticalButtonLayout_{new QVBoxLayout(this)}
 
@@ -25,3 +27,4 @@ EndGamesScreen::EndGamesScreen(QWidget* parent) : QWidget(parent),
     verticalButtonLayout_->addWidget(endGameButton5_);
 }
 
+}

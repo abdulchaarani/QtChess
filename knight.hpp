@@ -4,6 +4,8 @@
 
 #include "piece.hpp"
 
+namespace model{
+
 class Knight : public Piece
 {
 public:
@@ -11,4 +13,5 @@ public:
     void fillMovements(BoardView board) override;
 };
 
+}
 #endif // KNIGHT_HPP

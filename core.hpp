@@ -25,12 +25,12 @@ public slots:
     void onGameStarted();
 
 private:
-    ChessGame*      mainGame_;
-    Chessboard*     chessboard_;
+    model::ChessGame*      mainGame_;
+    view::Chessboard*     chessboard_;
     QStackedLayout* mainMenuLayout_;
-    TitleScreen*    titleScreen_;
-    CreditsScreen*  creditsScreen_;
-    EndGamesScreen* endGamesScreen_;
+    view::TitleScreen*    titleScreen_;
+    view::CreditsScreen*  creditsScreen_;
+    view::EndGamesScreen* endGamesScreen_;
 
     void connectSignals();
 };
