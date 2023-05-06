@@ -1,12 +1,14 @@
 /**
-* Program that defines the movements method and constructor of the Queen class.
-* \file   queen.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the movements of the Queen class.
+* Queen inherits both from Bishop and Rook
+* \file   Queen.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "queen.hpp"
+#include "Queen.hpp"
+
 namespace model{
 Queen::Queen(Color color, int row, int column)
     :Piece(color, row, column)
@@ -16,7 +18,7 @@ Queen::Queen(Color color, int row, int column)
 }
 
 void Queen::fillMovements(BoardView board){
-    movements.clear();
+    movements_.clear();
     Bishop::fillMovements(board);
     Rook::fillMovements(board);
 }

@@ -1,21 +1,22 @@
 /**
-* Program that defines the methods of the Chessgame class. Manages game rules 
-* (Legal piece movements, checks and checkmates, start games, etc.)
-* \file   chessgame.cpp
-* \author Abdul-Wahab et Hiba
-* \date   5 mai 2023
-* Créé le 3 mai 2023
+* Manages game rules
+* Model of the program
+* \file   ChessGame.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 3/05/2023
 */
 
 #include "cppitertools/itertools.hpp"
 
-#include "chessgame.hpp"
-#include "QDebug"
-#include "pawn.hpp"
-#include "knight.hpp"
-#include "rook.hpp"
-#include "bishop.hpp"
-#include "queen.hpp"
+#include "ChessGame.hpp"
+#include "Pawn.hpp"
+#include "Knight.hpp"
+#include "Rook.hpp"
+#include "Bishop.hpp"
+#include "Queen.hpp"
+
+#include <QDebug>
 
 using namespace iter;
 
@@ -57,8 +58,8 @@ void ChessGame::validateClick(Coordinates coordinates)
                 highlightMoves(clickedPiece);
                 return;
             }
-
-        for (auto&& move : lastPiecePressed_->movements){
+        
+        for (auto&& move : lastPiecePressed_->movements_){
             if (move == coordinates){
                 if (isValidMove(move))
                     movePiece(coordinates);
@@ -105,7 +106,7 @@ void ChessGame::revertHighlight()
 
 void ChessGame::highlightMoves(Piece* piece)
 {
-    for (auto&& move : piece->movements){
+    for (auto&& move : piece->movements_){
         auto [row,column] = move;
         if (boardPieces_[row][column] != nullptr){
             if (boardPieces_[row][column]->color_ != piece->color_){
@@ -152,7 +153,7 @@ bool ChessGame::isChecked()
         for (int column : range(boardDim))
             if (boardPieces_[row][column] != nullptr)
                 if (boardPieces_[row][column]->color_ != currentPlayer_)
-                    for (auto&& move : boardPieces_[row][column]->movements)
+                    for (auto&& move : boardPieces_[row][column]->movements_)
                         if (move == king->coordinates_){
                             return true;
                         }
@@ -167,7 +168,7 @@ void ChessGame::verifyCheck()
     King* king{getOpponentKing()};
 
     if (isGameStarted_)
-        for (auto&& move : attacker->movements){
+        for (auto&& move : attacker->movements_){
             if (move == king->coordinates_){
                 king->isChecked_ = true;
                 emit blinkCheckedKing(king->coordinates_, 500);
@@ -197,7 +198,7 @@ bool ChessGame::isValidMove(Coordinates position)
     piecePressed->coordinates_ = position;
     generateMovements();
     if (potentialVictim != nullptr)
-        potentialVictim->movements.clear();
+        potentialVictim->movements_.clear();
 
     // would the king be in check in new position
     bool isValid = !isChecked();
@@ -229,7 +230,7 @@ void ChessGame::verifyCheckmate(){
         for (int column : range(boardDim))
             if (boardPieces_[row][column] != nullptr)
                 if (boardPieces_[row][column]->color_ == currentPlayer_){
-                    std::forward_list<Coordinates> pieceMovements{boardPieces_[row][column]->movements};
+                    std::forward_list<Coordinates> pieceMovements{boardPieces_[row][column]->movements_};
                     for (auto&& move : pieceMovements){
                         lastPiecePressed_ = boardPieces_[row][column].get();
                         if (isValidMove(move))
@@ -246,7 +247,7 @@ void ChessGame::gameOver(){
     for (int row : range(boardDim))
         for (int column : range(boardDim))
             if (boardPieces_[row][column] != nullptr)
-                boardPieces_[row][column]->movements.clear();
+                boardPieces_[row][column]->movements_.clear();
 
     emit killKing(getFriendlyKing()->coordinates_);
     emit crownWinner(getOpponentKing()->color_);

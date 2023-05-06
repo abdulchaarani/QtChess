@@ -7,22 +7,22 @@ CONFIG += c++20 cmdline
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    bishop.cpp \
-    chessboard.cpp \
-    chessgame.cpp \
-    core.cpp \
-    creditsscreen.cpp \
-    endgamesScreen.cpp \
-    king.cpp \
-    knight.cpp \
+    Bishop.cpp \
+    Chessboard.cpp \
+    ChessGame.cpp \
+    ChessCore.cpp \
+    CreditsScreen.cpp \
+    EndGamesScreen.cpp \
+    King.cpp \
+    Knight.cpp \
     layouts.cpp \
         main.cpp \
-        box.cpp \
-    pawn.cpp \
-    piece.cpp \
-    queen.cpp \
-    rook.cpp \
-    titlescreen.cpp
+        Box.cpp \
+    Pawn.cpp \
+    Piece.cpp \
+    Queen.cpp \
+    Rook.cpp \
+    TitleScreen.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -30,21 +30,21 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    bishop.hpp \
-    box.hpp \
-    chessboard.hpp \
-    chessgame.hpp \
-    core.hpp \
-    creditsscreen.hpp \
-    endgamesScreen.hpp \
-    king.hpp \
-    knight.hpp \
+    Bishop.hpp \
+    Box.hpp \
+    Chessboard.hpp \
+    ChessGame.hpp \
+    ChessCore.hpp \
+    CreditsScreen.hpp \
+    EndGamesScreen.hpp \
+    King.hpp \
+    Knight.hpp \
     layouts.hpp \
-    pawn.hpp \
-    piece.hpp \
-    queen.hpp \
-    rook.hpp \
-    titlescreen.hpp
+    Pawn.hpp \
+    Piece.hpp \
+    Queen.hpp \
+    Rook.hpp \
+    TitleScreen.hpp
 
 
 QT += widgets

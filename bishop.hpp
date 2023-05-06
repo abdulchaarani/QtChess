@@ -1,7 +1,7 @@
 #ifndef BISHOP_HPP
 #define BISHOP_HPP
 
-#include "piece.hpp"
+#include "Piece.hpp"
 namespace model{
 
 class Bishop : virtual public Piece

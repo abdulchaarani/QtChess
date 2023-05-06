@@ -1,12 +1,13 @@
 /**
-* Program that defines the movement methods and constructor of the Bishop class.
-* \file   chessboard.cpp
-* \author Abdul-Wahab et Hiba
-* \date   5 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the movements of a Bishop.
+* Queen inherits from bishop
+* \file   Bishop.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "bishop.hpp"
+#include "Bishop.hpp"
 
 namespace model{
 
@@ -21,18 +22,18 @@ void Bishop::fillMovements(BoardView board)
     // if not a queen, since queens inherit from bishop
     // and shares same instance of movements
     if (display_ != "♕" && display_ != "♛")
-        movements.clear();
+        movements_.clear();
 
     auto [row, column] = coordinates_;
     // check south-east
     for (int nextRow{row + 1}, nextColumn{column + 1}; nextRow < 8 && nextColumn < 8; ++nextRow, ++nextColumn){
 
         if (board[nextRow][nextColumn] == nullptr) // if no one, add
-            movements.push_front({nextRow, nextColumn});
+            movements_.push_front({nextRow, nextColumn});
 
         else // if somone
             if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
-                movements.push_front({nextRow, nextColumn}); // add enemy to list
+                movements_.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
             else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
@@ -43,11 +44,11 @@ void Bishop::fillMovements(BoardView board)
     for (int nextRow{row + 1}, nextColumn{column - 1}; nextRow < 8 && nextColumn >= 0; ++nextRow, --nextColumn){
 
         if (board[nextRow][nextColumn] == nullptr) // if no one, add
-            movements.push_front({nextRow, nextColumn});
+            movements_.push_front({nextRow, nextColumn});
 
         else // if somone
             if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
-                movements.push_front({nextRow, nextColumn}); // add enemy to list
+                movements_.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
             else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
@@ -58,11 +59,11 @@ void Bishop::fillMovements(BoardView board)
     for (int nextRow{row - 1}, nextColumn{column - 1}; nextRow >= 0 && nextColumn >= 0; --nextRow, --nextColumn){
 
         if (board[nextRow][nextColumn] == nullptr) // if no one, add
-            movements.push_front({nextRow, nextColumn});
+            movements_.push_front({nextRow, nextColumn});
 
         else // if somone
             if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
-                movements.push_front({nextRow, nextColumn}); // add enemy to list
+                movements_.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
             else if (board[nextRow][nextColumn]->color_ == color_) // if friendly
@@ -73,11 +74,11 @@ void Bishop::fillMovements(BoardView board)
     for (int nextRow{row - 1}, nextColumn{column + 1}; nextRow >= 0 && nextColumn < 8; --nextRow, ++nextColumn){
 
         if (board[nextRow][nextColumn] == nullptr) // if no one, add
-            movements.push_front({nextRow, nextColumn});
+            movements_.push_front({nextRow, nextColumn});
 
         else // if somone
             if (board[nextRow][nextColumn]->color_ != color_){ // enemy in sight?
-                movements.push_front({nextRow, nextColumn}); // add enemy to list
+                movements_.push_front({nextRow, nextColumn}); // add enemy to list
                 break; // stop adding
             }
             else if (board[nextRow][nextColumn]->color_ == color_) // if friendly

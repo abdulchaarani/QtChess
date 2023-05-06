@@ -1,9 +1,12 @@
 /**
-* Program that defines the methods of the Box class. Manages the chessboard boxes (Position, colors, kill highlights, etc.)
-* \file   box.cpp
-* \author Abdul-Wahab et Hiba
-* \date   5 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the methods of the Box class.
+* Individual pieces of the Chessboard view
+* Boxes carry pieces
+* Each box is a QPushButton that signals when it is clicked
+* \file   Box.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
 #include "box.hpp"

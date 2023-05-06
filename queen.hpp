@@ -2,8 +2,8 @@
 #ifndef QUEEN_HPP
 #define QUEEN_HPP
 
-#include "bishop.hpp"
-#include "rook.hpp"
+#include "Bishop.hpp"
+#include "Rook.hpp"
 
 namespace model{
 

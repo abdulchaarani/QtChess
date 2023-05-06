@@ -2,7 +2,7 @@
 #ifndef ROOK_HPP
 #define ROOK_HPP
 
-#include "piece.hpp"
+#include "Piece.hpp"
 
 namespace model{
 

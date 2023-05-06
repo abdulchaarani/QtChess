@@ -1,12 +1,13 @@
 /**
-* Program that defines the constructor of the Piece class.
-* \file   piece.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the abstract class Piece
+* which all the other pieces inherit from
+* \file   Piece.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "piece.hpp"
+#include "Piece.hpp"
 
 namespace model{
 

@@ -9,7 +9,7 @@
 #include <QTimer>
 
 #include "layouts.hpp"
-#include "box.hpp"
+#include "Box.hpp"
 
 namespace view{
 

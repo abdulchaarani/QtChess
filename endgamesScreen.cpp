@@ -1,12 +1,13 @@
 /**
-* Program that defines the methods of the EndGamesScreen class (UI configurations).
-* \file   endgamesScreen.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 3 mai 2023
+* Program that defines the EndGamesScreen class (UI configurations).
+* Part of the View
+* \file   EndGamesScreen.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "endgamesScreen.hpp"
+#include "EndGamesScreen.hpp"
 #include "layouts.hpp"
 
 namespace view{

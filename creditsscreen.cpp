@@ -1,12 +1,13 @@
 /**
-* Program that defines the methods of the CreditsScreen class (UI configurations).
-* \file   creditsscreen.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the CreditsScreen class (UI configurations).
+* Part of the View
+* \file   CreditsScreen.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "creditsscreen.hpp"
+#include "CreditsScreen.hpp"
 #include "layouts.hpp"
 
 namespace view{

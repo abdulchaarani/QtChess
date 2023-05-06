@@ -1,9 +1,10 @@
 /**
-* Program that defines the methods of the Chessboard class. Manages pieces (Color, movement, move validation).
-* \file   chessboard.cpp
-* \author Abdul-Wahab et Hiba
-* \date   5 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the methods of the Chessboard class.
+* View of the program. Amalgam of Box objects
+* \file   Chessboard.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
 #include "chessboard.hpp"

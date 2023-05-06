@@ -1,12 +1,13 @@
 /**
 * Program that defines the UI configuration and methods of the TitleScreen class.
-* \file   titlescreen.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 9 avril 2023
+* Part of the View
+* \file   TitleScreen.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "titlescreen.hpp"
+#include "TitleScreen.hpp"
 #include "layouts.hpp"
 
 namespace view{

@@ -20,7 +20,7 @@ public:
     std::pair<int, int> coordinates_;
 
     using Coordinates = std::pair<int, int>;
-    std::forward_list<Coordinates> movements;
+    std::forward_list<Coordinates> movements_;
 
     using BoardView =std::array<std::array<std::shared_ptr<Piece>, 8>, 8>&;
     virtual void fillMovements(BoardView board) = 0;

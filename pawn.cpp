@@ -1,12 +1,12 @@
 /**
-* Program that defines the movements method and constructor of the Pawn class.
-* \file   pawn.cpp
-* \author Abdul-Wahab et Hiba
-* \date   4 mai 2023
-* Créé le 9 avril 2023
+* Program that defines the movements of the Pawn class.
+* \file   Pawn.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
 */
 
-#include "pawn.hpp"
+#include "Pawn.hpp"
 
 namespace model{
 
@@ -18,7 +18,7 @@ Pawn::Pawn(Color color, int row, int column) : Piece(color, row, column)
 
 void Pawn::fillMovements(BoardView board)
 {
-    movements.clear();
+    movements_.clear();
 
     auto [row, column] = coordinates_;
 
@@ -32,22 +32,22 @@ void Pawn::fillMovements(BoardView board)
         // check above
         if ((row - 1) >= 0)
             if(board[row - 1][column] == nullptr)
-                movements.push_front({row - 1, column});
+                movements_.push_front({row - 1, column});
 
         if (firstMove_)
             if ((row - 2) >= 0)
                 if(board[row - 2][column] == nullptr) // or enemy
-                    movements.push_front({row - 2, column});
+                    movements_.push_front({row - 2, column});
 
         // check diagonal right if ennemy
         if ((row - 1) >= 0 && (column + 1) < 8)
             if(board[row - 1][column + 1] != nullptr && board[row - 1][column + 1]->color_ != color_)
-                movements.push_front({row - 1, column + 1});
+                movements_.push_front({row - 1, column + 1});
 
         // check diagonal left if ennemy
         if ((row - 1) >= 0 && (column - 1) >= 0)
             if(board[row - 1][column - 1] != nullptr && board[row - 1][column - 1]->color_ != color_)
-                movements.push_front({row - 1, column - 1});
+                movements_.push_front({row - 1, column - 1});
     }
 
 
@@ -55,22 +55,22 @@ void Pawn::fillMovements(BoardView board)
 
         if ((row + 1) < 8)
             if(board[row + 1][column] == nullptr)
-                movements.push_front({row + 1, column});
+                movements_.push_front({row + 1, column});
 
         if (firstMove_)
             if ((row + 2) < 8)
                 if(board[row + 2][column] == nullptr) // or enemy
-                    movements.push_front({row + 2, column});
+                    movements_.push_front({row + 2, column});
 
         // check diagonal right if ennemy
         if ((row + 1) < 8 && (column + 1) < 8)
             if(board[row + 1][column + 1] != nullptr && board[row + 1][column + 1]->color_ != color_)
-                movements.push_front({row + 1, column + 1});
+                movements_.push_front({row + 1, column + 1});
 
         // check diagonal left if ennemy
         if ((row + 1) < 8 && (column - 1) >= 0)
             if(board[row + 1][column - 1] != nullptr && board[row + 1][column - 1]->color_ != color_)
-                movements.push_front({row + 1, column - 1});
+                movements_.push_front({row + 1, column - 1});
     }
 
 

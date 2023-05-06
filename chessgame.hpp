@@ -6,8 +6,8 @@
 #include <array>
 #include <memory>
 
-#include "piece.hpp"
-#include "king.hpp"
+#include "Piece.hpp"
+#include "King.hpp"
 
 namespace model{
 
@@ -43,18 +43,19 @@ public:
 
     Color currentPlayer_{Color::white};
 
-private:
-    Piece* lastPiecePressed_{nullptr};
     void movePiece(Coordinates newCoordinates);
+    void changeTurn();
+
+    Piece* lastPiecePressed_{ nullptr };
+
+    bool isValidMove(Coordinates position);
+    bool isGameStarted_{ false };
+private:
 
     void highlightMoves(Piece* piece);
     void revertHighlight();
 
     void startGame();
-    bool isGameStarted_{false};
-    void changeTurn();
-
-    bool isValidMove(Coordinates position);
 
     King* whiteKing_;
     King* blackKing_;
@@ -78,7 +79,7 @@ signals:
    void crownWinner(Color winner);
    void gameStarted();
 
-private slots:
+public slots:
    void validateClick(Coordinates coordinates);
    void startNewGame();
    void startQueenVRook();

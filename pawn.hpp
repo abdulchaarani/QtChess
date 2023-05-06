@@ -1,7 +1,7 @@
 #ifndef PAWN_HPP
 #define PAWN_HPP
 
-#include "piece.hpp"
+#include "Piece.hpp"
 
 namespace model{
 

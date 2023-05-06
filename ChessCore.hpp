@@ -2,16 +2,15 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
 
-#include "chessboard.hpp"
-#include "chessgame.hpp"
-#include "titlescreen.hpp"
-#include "creditsscreen.hpp"
-#include "endgamesScreen.hpp"
+#include "Chessboard.hpp"
+#include "ChessGame.hpp"
+#include "TitleScreen.hpp"
+#include "Creditsscreen.hpp"
+#include "EndGamesScreen.hpp"
 #include <memory>
 
 #include <QWidget>
 #include <QStackedLayout>
-#include <qdebug.h>
 
 class ChessCore : public QMainWindow
 {

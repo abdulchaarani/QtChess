@@ -1,5 +1,13 @@
+/**
+* Initialises the board and the game
+* Links the Model to the View
+* \file   ChessCore.cpp
+* \author Abdul-Wahab Chaarani 1793305 and Hiba Chaarani 2205674
+* \date   5/05/2023
+* Created on 9/04/2023
+*/
 
-#include "core.hpp"
+#include "ChessCore.hpp"
 #include <QDebug>
 
 ChessCore::ChessCore()
